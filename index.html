@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,27 +17,115 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
-    <body>
+    <body role="application">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        
+            <header>
+              <div class="layout-wrap">
+                <a href="#"><img src="https://googledrive.com/host/0B6ZIsommzsgVMVA2MzdKUjN2S0U/logo-netcraft.svg" alt="netcraft"></a>
+
+                <form class="search-box" method="get" action="http://www.google.com" role="search">
+                    <input type="search" name="q" placeholder="search">
+                </form>
+              </div>
+            </header>
+
+            <div class="page-body layout-wrap" role="main">
+                <div class="notifications">
+                </div>
+
+                <nav role="navigation">
+                    <div class="nav-section">
+                        <p><span>Select</span> Reporting Platform</p>
+
+                        <div class="menu" role="menubar">
+                            <div class="menu-hint">
+                                <p>Choose QS report</p>
+                                <div class="arrow"></div>
+                            </div>
+
+                            <ul class="action-list">
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="nav-section">
+                        <p><span>Select</span> Dashboard</p>
+
+                        <div class="menu" role="menubar">
+                            <div class="menu-hint">
+                                <p>Choose dashboard</p>
+                                <div class="arrow"></div>
+                            </div>
+
+                            <ul class="action-list">
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="nav-section">
+                        <p><span>Help &amp;</span> Tutorials</p>
+
+                        <div class="menu" role="menubar">
+                            <div class="menu-hint">
+                                <p>Choose guide</p>
+                                <div class="arrow"></div>
+                            </div>
+
+                            <ul class="action-list">
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                                <li role="menuitem"><a href="#">link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="tabs" role="tabpanel">
+                    <ul role="tablist">
+                        <li role="tab"><a href="#quick-reports">Quick Reports</a>
+                        </li>
+                        <li role="tab"><a href="#fmy-folders">My Folders</a>
+                        </li>
+                        <li role="tab"><a href="#my-team-folders">My Team Folders</a>
+                        </li>
+                        <li role="tab"><a href="#public-folders">Public Folders</a>
+                        </li>
+                    </ul>
+
+                    <div id="quick-reports">
+                    </div>
+
+                    <div id="fmy-folders">
+                    </div>
+
+                    <div id="my-team-folders">
+                    </div>
+
+                    <div id="public-folders">
+                    </div>
+                </div>
+            </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
     </body>
 </html>
