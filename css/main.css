@@ -138,7 +138,7 @@ header a {
     margin-top: 28px;
     margin-bottom: 28px;
     position: absolute;
-    padding: 0px 21px;
+    padding: 0px 20px;
     top: 0px;
     right: 0px;
 }
@@ -183,7 +183,7 @@ nav:after {
 }
 
 .nav-section {
-    width: calc(31%);
+    width: 31%;
     display: inline-block;
     vertical-align: top;
     background: black;
@@ -314,7 +314,7 @@ nav:after {
 }
 
 .tabs label {
-    width: calc(24%);
+    width: 23.5%;
     text-align: center;
     height: 40px;
     line-height: 40px;
@@ -324,10 +324,6 @@ nav:after {
     background: #333;
     cursor: pointer;
     overflow: hidden;
-}
-
-.tabs label:last-child {
-    margin-right: 0;
 }
 
 #quick-reports, #fmy-folders, #my-team-folders, #public-folders {
