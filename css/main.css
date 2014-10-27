@@ -239,7 +239,11 @@ nav:after {
     background:lightgrey;
     border: 1px solid lightgrey;
     border-bottom: 0px;
+}
+
+.menu-hint p {
     overflow: hidden;
+    max-height: 35px;
 }
 
 .arrow img {
