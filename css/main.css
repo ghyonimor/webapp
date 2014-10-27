@@ -150,6 +150,7 @@ header a {
 
 p, a {
     margin: 0;
+    overflow: hidden;
 }
 
 ul {
@@ -215,7 +216,6 @@ nav:after {
     margin-top: 20px;
     color: white;
     text-align: center;
-    overflow: hidden;
 }
 
 .nav-section > p > span {
@@ -242,7 +242,6 @@ nav:after {
 }
 
 .menu-hint p {
-    overflow: hidden;
     max-height: 35px;
 }
 
