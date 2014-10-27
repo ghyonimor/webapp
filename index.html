@@ -26,7 +26,7 @@
         
             <header>
               <div class="layout-wrap">
-                <a href="#"><img src="https://googledrive.com/host/0B6ZIsommzsgVMVA2MzdKUjN2S0U/logo-netcraft.svg" alt="netcraft"></a>
+                <a href="#"><img src="img/logo_netcraft.svg" alt="netcraft"></a>
 
                 <form class="search-box" method="get" action="http://www.google.com" role="search">
                     <input type="search" name="q" placeholder="search">
@@ -98,29 +98,26 @@
                 </nav>
 
                 <div class="tabs" role="tabpanel">
-                    <ul role="tablist">
-                        <!--Attach a radio button to each tab for pure CSS interactivity-->
-                        <li role="tab"><a href="#quick-reports">Quick Reports</a>
-                        </li>
-                        <li role="tab"><a href="#fmy-folders">My Folders</a>
-                        </li>
-                        <li role="tab"><a href="#my-team-folders">My Team Folders</a>
-                        </li>
-                        <li role="tab"><a href="#public-folders">Public Folders</a>
-                        </li>
-                    </ul>
-                    
+                    <input type="radio" name="radio" id="quickReports" checked>
                     <div id="quick-reports">
                     </div>
-
+                    
+                    <input type="radio" name="radio" id="fmyFolders">
                     <div id="fmy-folders">
                     </div>
-
+                    
+                    <input type="radio" name="radio" id="myTeamFolders">
                     <div id="my-team-folders">
                     </div>
-
+                    
+                    <input type="radio" name="radio" id="publicFolders">
                     <div id="public-folders">
                     </div>
+
+                    <label for="quickReports">Quick Reports</label>
+                    <label for="fmyFolders">My Folders</label>    
+                    <label for="myTeamFolders">My Team Folders</label>
+                    <label for="publicFolders">Public Folders</label>
                 </div>
             </div>
 

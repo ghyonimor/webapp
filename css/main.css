@@ -103,6 +103,7 @@ textarea {
 body {
     background-image: url('../img/body-background.jpg');
     background-size: cover;
+    z-index: 1;
 }
 
 .layout-wrap {
@@ -220,6 +221,7 @@ nav {
     position: absolute;
     top: 125px;
     width: 100%;
+    z-index: 3;
 }
 
 .menu-hint {
@@ -293,33 +295,75 @@ nav {
     width: 100%;
     height: 600px;
     margin-top: 20px;
+    position: relative;
 }
 
-.tabs ul {
-    height: 35px;
-}
-
-.tabs ul li {
+.tabs label {
     float: left;
     width: calc(25% - 19px);
     margin-right: 25.3px;
     text-align: center;
     height: 35px;
     line-height: 35px;
-}
-
-.tabs ul li:last-child {
-    margin-right: 0;
-}
-
-.tabs ul li a {
     display: block;
     color: white;
     background: #333;
+    cursor: pointer;
 }
 
+.tabs label:last-child {
+    margin-right: 0;
+}
 
+#quick-reports, #fmy-folders, #my-team-folders, #public-folders {
+    width: 100%;
+    height:565px;
+    background: lightgrey;
+    display: none;
+    position: absolute;
+    top: 35px;
+    z-index: 2;
+}
 
+input[type="radio"] {
+    display: none;
+}
+
+#quickReports:checked ~ #quick-reports {
+    display: block;
+}
+
+#quickReports:checked ~ [for~="quickReports"] {
+    color: black;
+    background: lightgrey;
+}
+
+#fmyFolders:checked ~ #fmy-folders {
+    display: block;
+}
+
+#fmyFolders:checked ~ [for~="fmyFolders"] {
+    color: black;
+    background: lightgrey;
+}
+
+#myTeamFolders:checked ~ #my-team-folders {
+    display: block;
+}
+
+#myTeamFolders:checked ~ [for~="myTeamFolders"] {
+    color: black;
+    background: lightgrey;
+}
+
+#publicFolders:checked ~ #public-folders {
+    display: block;
+}
+
+#publicFolders:checked ~ [for~="publicFolders"] {
+    color: black;
+    background: lightgrey;
+}
 
 
 
