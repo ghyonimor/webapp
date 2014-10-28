@@ -164,22 +164,27 @@ li {
 
 /*Later to be changed with JS*/
 .notifications {
-    display: none;
     width: 100%;
-    height: 30px;
+    height: 40px;
+    padding: 0px 20px;
+    line-height: 40px;
     margin-bottom: 20px;
     background: lightgrey;
+    overflow: hidden;
+}
+
+.justify {
+    text-align: justify;
+}
+
+.justify:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
 }
 
 nav {
     width: 100%;
-    text-align: justify;
-}
-
-nav:after {
-    content: "";
-    width: 100%;
-    display: inline-block;
 }
 
 .nav-section {
@@ -304,16 +309,9 @@ nav:after {
     width: 100%;
     height: 600px;
     position: relative;
-    text-align: justify;
 }
 
-.tabs:after {
-    content: "";
-    width: 100%;
-    display: inline-block;
-}
-
-.tabs label {
+.tabs > label {
     width: 23.5%;
     text-align: center;
     height: 40px;
@@ -334,6 +332,7 @@ nav:after {
     position: absolute;
     top: 40px;
     z-index: 2;
+    padding:20px;
 }
 
 input[type="radio"] {
@@ -413,6 +412,70 @@ input[type="radio"] {
 }
 .icon-folder-open-o:before {
     content: "\f115";
+}
+
+#quick-reports > div > img {
+    float: right;
+    padding: 10px;
+    background: white;
+}
+
+.enterSite {
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+}
+
+.enterSite fieldset {
+    padding:7px;
+    height: 41px;
+    overflow: hidden;
+    background: #c8c8c8;
+    margin-bottom: 20px;
+    border: 1px solid #b8b8b8;
+}
+
+.wrapLabelInput {
+    display: inline-block;
+    width: 39%;
+    overflow: hidden;
+}
+
+.enterSite legend {
+    float: left;
+    height:25px;
+    line-height: 25px;
+    overflow: hidden;
+    width: 20%;
+}
+
+.wrapLabelInput label, .enterSite input {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.wrapLabelInput label {
+    width: 45px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.wrapLabelInput input {
+    width: calc(100% - 50px);
+    border: 0px;
+    height: 25px;
+    padding: 2px;
+}
+
+.enterSite input[type="submit"] {
+    float: right;
+    background: black;
+    color: white;
+    border: 0;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    padding: 0;
 }
 
 
