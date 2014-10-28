@@ -414,10 +414,19 @@ input[type="radio"] {
     content: "\f115";
 }
 
-#quick-reports > div > img {
+#quick-reports > div > img, #my-team-folders > div > img {
     float: right;
     padding: 10px;
     background: white;
+    height: 40px;
+    width: 40px;
+}
+
+#fmy-folders > div > img, #public-folders > div > img {
+    float: right;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
 }
 
 .enterSite {
@@ -476,6 +485,12 @@ input[type="radio"] {
     height: 35px;
     line-height: 35px;
     padding: 0;
+}
+
+.tabs iframe {
+    width: 100%;
+    height: calc(100% - 40px);
+    border: 0px;
 }
 
 
