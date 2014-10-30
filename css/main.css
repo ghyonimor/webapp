@@ -102,15 +102,10 @@ textarea {
     box-sizing: border-box;
 }
 
-html {
-    height: 100%;
-}
-
 body {
     background-image: url('../img/body-background.jpg');
     background-size: cover;
     z-index: 1;
-    height: 100%;
 }
 
 p, a {
@@ -334,7 +329,7 @@ TABS
 ============*/
 
 .tabs {
-    height: 600px;
+    height: 700px;
     width: 100%;
     position: relative;
 }
@@ -355,7 +350,7 @@ TABS
 #quick-reports, #fmy-folders, #my-team-folders, #public-folders {
     display: none;
     position: absolute;
-    height:560px;
+    height:660px;
     width: 100%;
     background: lightgrey;
     padding:20px;
