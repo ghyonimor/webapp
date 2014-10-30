@@ -102,11 +102,14 @@ textarea {
     box-sizing: border-box;
 }
 
+html {
+    min-height: 100%;
+}
+
 body {
     background-image: url('../img/body-background.jpg');
     background-size: cover;
     z-index: 1;
-    min-height: 100%;
 }
 
 p, a {
