@@ -331,6 +331,7 @@ TABS
 
 .tabs {
     height: 600px;
+    min-height: 100vh;
     width: 100%;
     position: relative;
 }
@@ -351,7 +352,7 @@ TABS
 #quick-reports, #fmy-folders, #my-team-folders, #public-folders {
     display: none;
     position: absolute;
-    height:560px;
+    height:calc(100% - 40px);
     width: 100%;
     background: lightgrey;
     padding:20px;
