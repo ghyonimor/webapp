@@ -154,7 +154,8 @@ input[type="radio"] {
 .layout-wrap {
     position: relative;
     height: 100%;
-    width: 80%;
+    width: 100%;
+    max-width: 1079px;
     padding: 0px 20px;
     margin: 0 auto;
 }
