@@ -102,6 +102,10 @@ textarea {
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background-image: url('../img/body-background.jpg');
     background-size: cover;
