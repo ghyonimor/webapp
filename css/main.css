@@ -329,7 +329,7 @@ TABS
 ============*/
 
 .tabs {
-    height: 700px;
+    height: 800px;
     width: 100%;
     position: relative;
 }
@@ -350,7 +350,7 @@ TABS
 #quick-reports, #fmy-folders, #my-team-folders, #public-folders {
     display: none;
     position: absolute;
-    height:660px;
+    height:760px;
     width: 100%;
     background: lightgrey;
     padding:20px;
