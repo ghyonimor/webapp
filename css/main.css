@@ -136,7 +136,7 @@ header {
 header a {
     display: inline-block;
     position: absolute;
-    padding: 0px 20px;
+    margin-left: 20px;
     margin-top: 26px;
     margin-bottom: 26px;
     top: 0px;
@@ -163,7 +163,7 @@ input[type="radio"] {
 
 .search-box {
     position: absolute;
-    padding: 0px 20px;
+    margin-right: 20px;
     margin-top: 28px;
     margin-bottom: 28px;
     top: 0px;
@@ -476,6 +476,13 @@ TABS
     height: calc(100% - 40px);
     width: 100%;
     border: 0px;
+}
+
+/*Keyboard accessibility*/
+:focus {
+    background: pink!important;
+    border: 0px!important;
+    outline: none!important;
 }
 
 /*ICON FONTS*/
