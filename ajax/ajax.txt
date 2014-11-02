@@ -1,0 +1,5 @@
+Lesson
+title: AJAX
+teacher: Alex Ilyaev
+length: 4 hours
+coolness: Awesome!

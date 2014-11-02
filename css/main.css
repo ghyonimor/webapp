@@ -177,6 +177,7 @@ input[type="radio"] {
 
 /*Dynamically change with JS*/
 .notifications {
+    display: none;
     height: 40px;
     line-height: 40px;
     width: 100%;
@@ -398,6 +399,7 @@ TABS
 
 /*Image icons*/
 #quick-reports > div > img, #my-team-folders > div > img {
+    cursor: pointer;
     float: right;
     height: 40px;
     width: 40px;
@@ -406,10 +408,11 @@ TABS
 }
 
 #fmy-folders > div > img, #public-folders > div > img {
+    cursor: pointer;
     float: right;
     height: 40px;
-    width: 40px;
     padding: 10px;
+    width: 40px;
 }
 
 /*Form*/

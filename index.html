@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> 
+<!--[if gt IE 8]><!-->
 <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
@@ -18,30 +18,13 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
 
-    <!--Accessibility notes:
-        1. Make the tabs, menu, links and other parts keyboard accessible with tabindex and :focus.
-        2. Make hidden content have aria-hidden="true" and vice versa.
-        3. Make selected tabs have aria-selected="true" and vice versa.
-        4. Add aria-controls attributes to tabs.
-        5. Connect tabs and content with aria-owns.
-        6. Add required and validations to focused fieldsets (with JS).
-        7. Improve roles and HTML5 accessibility: http://www.w3.org/TR/2008/WD-wai-aria-20080806/#roles
-        8. Add aria-describedby to elements that are described by other elements.
-        9. Add aria-multiselectable to tablist.
-        10. Form accessibility: fieldsets, legends, labels (for="") and inputs.
-        11. Progressive enhancement with JS (first make the best usability possible without JS and then add JS).
-        12. html lang="en".
-        13. Images with alt texts.
-        14. Checklist: http://a11yproject.com/checklist.html
-    -->
-
     <body role="application">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        
+
             <header>
               <div class="layout-wrap">
                 <a href="#" tabindex="1"><img src="img/logo_netcraft.svg" alt="netcraft"></a>
@@ -53,8 +36,7 @@
             </header>
 
             <div class="page-body layout-wrap" role="main">
-                <div class="notifications" tabindex="3">This is a soon-to-be-dynamic notification.
-                </div>
+                <div class="notifications" tabindex="3"></div>
 
                 <nav class="justify" role="navigation">
                     <div class="nav-section">
@@ -158,13 +140,13 @@
                             </form>
                         </div>
                     </div>
-                    
+
                     <input type="radio" name="radio" id="fmyFolders" aria-hidden="true">
                     <div id="fmy-folders" role="tabpanel" aria-describedby="fmyFolders">
                         <div class="clearfix"><img src="img/expand.png"></div>
                         <iframe src="http://netcraft.co.il"></iframe>
                     </div>
-                    
+
                     <input type="radio" name="radio" id="myTeamFolders" aria-hidden="true">
                     <div id="my-team-folders" role="tabpanel" aria-describedby="myTeamFolders">
                         <div class="clearfix"><img src="img/settings.png"></div>
@@ -207,7 +189,7 @@
                             </form>
                         </div>
                     </div>
-                    
+
                     <input type="radio" name="radio" id="publicFolders" aria-hidden="true">
                     <div id="public-folders" role="tabpanel" aria-describedby="publicFolders">
                         <div class="clearfix"><img src="img/expand.png"></div>
@@ -215,14 +197,14 @@
                     </div>
 
                     <label for="quickReports" role="tab" aria-controls="quick-reports" aria-owns="quick-reports"><i class="icon-external-link"></i> Quick Reports</label>
-                    <label for="fmyFolders" role="tab" aria-controls="fmy-folders" aria-owns="fmy-folders"><i class="icon-star-o"></i> My Folders</label>    
+                    <label for="fmyFolders" role="tab" aria-controls="fmy-folders" aria-owns="fmy-folders"><i class="icon-star-o"></i> My Folders</label>
                     <label for="myTeamFolders" role="tab" aria-controls="my-team-folders" aria-owns="my-team-folders"><i class="icon-folder-open-o"></i> My Team Folders</label>
                     <label for="publicFolders" role="tab" aria-controls="public-folders" aria-owns="public-folders"><i class="icon-copy"></i> Public Folders</label>
                 </div>
             </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
     </body>
