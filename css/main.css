@@ -337,7 +337,11 @@ TABS
     position: relative;
 }
 
-.tabs > label {
+.tablist {
+    height: 40px;
+}
+
+.tablist > a {
     display: inline-block;
     text-align: center;
     height: 40px;
@@ -350,51 +354,22 @@ TABS
     overflow: hidden;
 }
 
-#quick-reports, #fmy-folders, #my-team-folders, #public-folders {
+.tabPanel {
     display: none;
-    position: absolute;
-    height:calc(100% - 40px);
+    position: relative;
+    height: calc(100% - 40px);
     width: 100%;
     background: lightgrey;
     padding:20px;
-    top: 40px;
-    z-index: 2;
 }
 
-#quickReports:checked ~ #quick-reports {
-    display: block;
-}
-
-#quickReports:checked ~ [for~="quickReports"] {
+.tablist > .activeTab {
     background: lightgrey;
     color: black;
 }
 
-#fmyFolders:checked ~ #fmy-folders {
+.activePanel {
     display: block;
-}
-
-#fmyFolders:checked ~ [for~="fmyFolders"] {
-    background: lightgrey;
-    color: black;
-}
-
-#myTeamFolders:checked ~ #my-team-folders {
-    display: block;
-}
-
-#myTeamFolders:checked ~ [for~="myTeamFolders"] {
-    background: lightgrey;
-    color: black;
-}
-
-#publicFolders:checked ~ #public-folders {
-    display: block;
-}
-
-#publicFolders:checked ~ [for~="publicFolders"] {
-    background: lightgrey;
-    color: black;
 }
 
 /*Image icons*/

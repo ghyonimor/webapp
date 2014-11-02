@@ -116,3 +116,25 @@ var UTILS = (function () {
         }
     };
 }());
+
+/**
+ * This function defines cross browser addEvent(elem, type, handler) and removeEvent(elem, type, handler)
+ * functions.
+ */
+
+    if (document.addEventListener) {
+        var addEvent = function(elem, type, handler) {
+            elem.addEventListener(type, handler, false);
+        };
+        var removeEvent = function(elem, type, handler) {
+            elem.removeEventListener(type, handler, false);
+        };
+    } else {
+        var addEvent = function(elem, type, handler) {
+            elem.attachEvent('on' + type, handler);
+        };
+        var removeEvent = function(elem, type, handler) {
+            elem.detachEvent('on' + type, handler);
+        };
+    }
+

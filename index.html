@@ -19,11 +19,11 @@
     </head>
 
     <body role="application">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+            <!--[if lt IE 7]>
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
 
-        <!-- Add your site or application content here -->
+            <!-- Add your site or application content here -->
 
             <header>
               <div class="layout-wrap">
@@ -97,9 +97,15 @@
                     </div>
                 </nav>
 
-                <div class="tabs justify" role="tablist" aria-multiselectable="false">
-                    <input type="radio" name="radio" id="quickReports" aria-hidden="true" checked>
-                    <div id="quick-reports" role="tabpanel" aria-describedby="quickReports">
+                <div class="tabs" aria-multiselectable="false">
+                    <div class="tablist justify" role="tablist">
+                        <a href="#quick-reports" class="tab" id="quickReports" role="tab" aria-controls="quick-reports" aria-owns="quick-reports"><i class="icon-external-link"></i> Quick Reports</a>
+                        <a href="#fmy-folders" class="tab" id="fmyFolders" role="tab" aria-controls="fmy-folders" aria-owns="fmy-folders"><i class="icon-star-o"></i> My Folders</a>
+                        <a href="#my-team-folders" class="tab" id="myTeamFolders" role="tab" aria-controls="my-team-folders" aria-owns="my-team-folders"><i class="icon-folder-open-o"></i> My Team Folders</a>
+                        <a href="#public-folders" class="tab" id="publicFolders" role="tab" aria-controls="public-folders" aria-owns="public-folders"><i class="icon-copy"></i> Public Folders</a>
+                    </div>
+
+                    <div class="tabPanel" id="quick-reports" role="tabpanel" aria-describedby="quickReports">
                         <div class="clearfix"><img src="img/settings.png"></div>
                         <div class="formWrap">
                             <form class="enterSite clearfix">
@@ -141,14 +147,12 @@
                         </div>
                     </div>
 
-                    <input type="radio" name="radio" id="fmyFolders" aria-hidden="true">
-                    <div id="fmy-folders" role="tabpanel" aria-describedby="fmyFolders">
+                    <div class="tabPanel" id="fmy-folders" role="tabpanel" aria-describedby="fmyFolders">
                         <div class="clearfix"><img src="img/expand.png"></div>
                         <iframe src="http://netcraft.co.il"></iframe>
                     </div>
 
-                    <input type="radio" name="radio" id="myTeamFolders" aria-hidden="true">
-                    <div id="my-team-folders" role="tabpanel" aria-describedby="myTeamFolders">
+                    <div class="tabPanel" id="my-team-folders" role="tabpanel" aria-describedby="myTeamFolders">
                         <div class="clearfix"><img src="img/settings.png"></div>
                         <div class="formWrap">
                             <form class="enterSite clearfix">
@@ -190,22 +194,16 @@
                         </div>
                     </div>
 
-                    <input type="radio" name="radio" id="publicFolders" aria-hidden="true">
-                    <div id="public-folders" role="tabpanel" aria-describedby="publicFolders">
+                    <div class="tabPanel" id="public-folders" role="tabpanel" aria-describedby="publicFolders">
                         <div class="clearfix"><img src="img/expand.png"></div>
                         <iframe src="http://ynet.co.il"></iframe>
                     </div>
-
-                    <label for="quickReports" role="tab" aria-controls="quick-reports" aria-owns="quick-reports"><i class="icon-external-link"></i> Quick Reports</label>
-                    <label for="fmyFolders" role="tab" aria-controls="fmy-folders" aria-owns="fmy-folders"><i class="icon-star-o"></i> My Folders</label>
-                    <label for="myTeamFolders" role="tab" aria-controls="my-team-folders" aria-owns="my-team-folders"><i class="icon-folder-open-o"></i> My Team Folders</label>
-                    <label for="publicFolders" role="tab" aria-controls="public-folders" aria-owns="public-folders"><i class="icon-copy"></i> Public Folders</label>
                 </div>
             </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
+            <script src="js/plugins.js"></script>
+            <script src="js/main.js"></script>
     </body>
 </html>
