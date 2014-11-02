@@ -3,7 +3,7 @@
 /**
  * Call UTILS library.
  */
-UTILS.ajax('../data/notification.txt', {
+UTILS.ajax('../Web-App/data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
 		if (response && response !== '') {
