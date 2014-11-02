@@ -1,5 +1,5 @@
 /* globals UTILS*/
-UTILS.ajax('/data/notification.txt', {
+UTILS.ajax('data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
 		if (response && response !== '') {
