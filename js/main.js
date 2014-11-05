@@ -1,8 +1,10 @@
-/* globals UTILS, addEvent*/
+/* globals UTILS */
 
-/**
- * Call UTILS library.
- */
+/*================================================
+AJAX NOTIFICATION.
+================================================*/
+
+// Call UTILS.ajax.
 UTILS.ajax('../Web-App/data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
@@ -17,74 +19,125 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 	}
 });
 
-/**
- * Display / hide tab panels on tab click using addEvent function (keyboard too).
- */
-var display = function(e) {
-	e.preventDefault();
-	var activeTab = document.getElementsByClassName('activeTab')[0];
-	var activePanel = document.getElementsByClassName('activePanel')[0];
-	if (e.currentTarget.id !== activeTab.id) {
-		activeTab.className = activeTab.className.replace(/\bactiveTab\b/,'');
-		activePanel.className = activePanel.className.replace(/\bactivePanel\b/,'');
-		e.currentTarget.className = e.currentTarget.className + ' activeTab';
-		var anchor = e.currentTarget.getAttribute('href').replace('#', '');
-		var tabPanel = document.getElementById(anchor);
-		tabPanel.className = tabPanel.className + ' activePanel';
-		window.location.hash = 'panel-' + anchor;
-		activeTab.removeAttribute('aria-selected');
-		activeTab.setAttribute('aria-selected', 'false');
-		activePanel.removeAttribute('aria-hidden');
-		activePanel.setAttribute('aria-hidden', 'true');
-		e.currentTarget.removeAttribute('aria-selected');
-		e.currentTarget.setAttribute('aria-selected', 'true');
-		tabPanel.removeAttribute('aria-hidden');
-		tabPanel.setAttribute('aria-hidden', 'false');
+/*================================================
+TABS BEHAVIOR.
+================================================*/
+
+// Get a panel connected to a tab.
+var getPanel = function(tab) {
+	var anchor = tab.getAttribute('href');
+	var panel = document.getElementById(anchor.replace('#', ''));
+	return panel;
+};
+
+// Hash jumping prefix.
+var clearJump = function(tab) {
+	var anchor = tab.getAttribute('href');
+	window.location.hash = 'panel-' + anchor.replace('#', '');
+};
+
+// Add activeTab class, connect it with a panel (activePanel), show the panel and disable other tabs.
+var activate = function(tab) {
+	// If another tab is activated, and it's equal to the new tab, break the function.
+	if (document.getElementsByClassName('activeTab')[0] && tab === document.getElementsByClassName('activeTab')[0]) {
+		return;
+	}
+	else {
+		// Get the panel related to this tab.
+		var panel = getPanel(tab);
+		// Check if another tab has an active state and remove it.
+		if (document.getElementsByClassName('activeTab')[0]) {
+			var activeTab = document.getElementsByClassName('activeTab')[0];
+			activeTab.className = activeTab.className.replace(/\bactiveTab\b/,'');
+			// Remove aria-selected attribute from previously active tab.
+			activeTab.removeAttribute('aria-selected');
+			// Set aria-selected='false' to previously active tab.
+			activeTab.setAttribute('aria-selected', 'false');
+			// Get the active panel.
+			var activePanel = getPanel(activeTab);
+			activePanel.className = activePanel.className.replace(/\bactivePanel\b/,'');
+			// Remove aria-hidden attribute from previously active panel.
+			activePanel.removeAttribute('aria-hidden');
+			// Set aria-hidden='true' to previously active panel.
+			activePanel.setAttribute('aria-hidden', 'true');
+		}
+		// Activate new tab.
+		tab.className = tab.className + ' activeTab';
+		// Add aria-selected='true' attribute.
+		tab.setAttribute('aria-selected', 'true');
+		// Activate new Panel.
+		panel.className = panel.className + ' activePanel';
+		// Add aria-hidden='false' attribute.
+		panel.setAttribute('aria-hidden', 'false');
+		// Jumping prefix.
+		clearJump(tab);
 	}
 };
 
+// Activate tab on click / keypress.
+var display = function(e) {
+	e.preventDefault();
+	// Get the clicked element.
+	var target = e.target;
+	// Check that it's a tab and not a container.
+	if (target.classList.contains('tab')) {
+		console.log(target);
+		activate(target);
+	}
+};
+
+// Validate enter key.
 var isEnter = function(e) {
     if (event.which === 13 || event.keyCode === 13) {
         display(e);
     }
 };
 
+// Get all tabs.
 var tabs = document.getElementsByClassName('tab');
+// Get inserted URL hash value.
 var hash = window.location.hash;
-tabs[0].className = tabs[0].className + ' activeTab';
-var activeTab = tabs[0];
+console.log(hash);
+// Count for inserted URL activations.
+var count = 0;
+// Iterate on tabs.
 for (var i = 0; i < tabs.length; i++) {
 	var tab = tabs[i];
-	var anchor = tab.getAttribute('href').replace('#', '');
-	var tabPanel = document.getElementById(anchor);
+	// Get the panel related to this tab.
+	var panel = getPanel(tab);
+	console.log(panel);
+	// Default aria attributes.
+	tab.setAttribute('aria-selected', 'false');
+	panel.setAttribute('aria-hidden', 'true');
+	// Get tab's hash value.
+	var anchor = tab.getAttribute('href');
+	// Activate inserted URL tab.
+	console.log('panel-' + anchor.replace('#', ''));
 	console.log(hash);
-	console.log('#panel-' + anchor);
-	if (tab !== activeTab && hash === ('#panel-' + anchor)){
-		activeTab.className = activeTab.className.replace(/\bactiveTab\b/,'');
-		if (document.getElementsByClassName('activePanel')[0]) {
-			var activePanel = document.getElementsByClassName('activePanel')[0];
-			activePanel.className = activePanel.className.replace(/\bactivePanel\b/,'');
-		}
-		tab.className = tab.className + ' activeTab';
-		activeTab = tab;
+	if (hash === '#panel-' + anchor.replace('#', '')) {
+		activate(tab);
+		//If count === 0 after all iterations activate default outside the loop.
+		count = count + 1;
 	}
-	if (tab === document.getElementsByClassName('activeTab')[0]) {
-		tabPanel.className = tabPanel.className + ' activePanel';
-		tab.removeAttribute('aria-selected');
-		tab.setAttribute('aria-selected', 'true');
-		tabPanel.removeAttribute('aria-hidden');
-		tabPanel.setAttribute('aria-hidden', 'false');
-		window.location.hash = 'panel-' + anchor;
-	}
-	else {
-		tab.removeAttribute('aria-selected');
-		tab.setAttribute('aria-selected', 'false');
-		tabPanel.removeAttribute('aria-hidden');
-		tabPanel.setAttribute('aria-hidden', 'true');
-	}
-	addEvent(tab, 'click', display);
-	addEvent(tab, 'keypress', isEnter);
 }
+
+// Activate default.
+if (count === 0) {
+	activate(tabs[0]);
+}
+
+// Get tabs wrapper.
+var tablist = document.getElementById('tablist');
+
+// Call UTILS.addEvent.
+UTILS.addEvent(tablist, 'click', display);
+UTILS.addEvent(tablist, 'keypress', isEnter);
+
+
+
+
+
+
 
 
 

@@ -113,28 +113,25 @@ var UTILS = (function () {
 
             // Fire the request
             xhr.send(null);
+        },
+
+        // Cross browser addEvent.
+        addEvent: function(elem, type, handler) {
+            if (document.addEventListener) { // Modern
+                elem.addEventListener(type, handler, false);
+                console.log('An event listener has been added!');
+            } else if (elem.attachEvent) { // Internet Explorer
+                elem.attachEvent('on' + type, handler);
+            }
+        },
+
+        removeEvent: function(elem, type, handler) {
+            if (document.removeEventListener) { // Modern
+                elem.removeEventListener(type, handler, false);
+            } else if (elem.detachEvent) { // Internet Explorer
+                elem.detachEvent('on' + type, handler);
+            }
         }
     };
 }());
-
-/**
- * This function defines cross browser addEvent(elem, type, handler) and removeEvent(elem, type, handler)
- * functions.
- */
-
-    if (document.addEventListener) {
-        var addEvent = function(elem, type, handler) {
-            elem.addEventListener(type, handler, false);
-        };
-        var removeEvent = function(elem, type, handler) {
-            elem.removeEventListener(type, handler, false);
-        };
-    } else {
-        var addEvent = function(elem, type, handler) {
-            elem.attachEvent('on' + type, handler);
-        };
-        var removeEvent = function(elem, type, handler) {
-            elem.detachEvent('on' + type, handler);
-        };
-    }
 
