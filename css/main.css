@@ -455,6 +455,10 @@ TABS
     border: 0px;
 }
 
+/*============
+ADDITIONAL
+============*/
+
 /*Keyboard accessibility*/
 :focus {
     background: pink!important;
