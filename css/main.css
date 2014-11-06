@@ -281,6 +281,7 @@ NAVIGATION
 }
 
 .action-list {
+    visibility: hidden;
     height: 0px;
     max-height: 0px;
     width: 100%;
@@ -293,20 +294,21 @@ NAVIGATION
     transition: max-height 1s;
 }
 
-.nav-section:hover .action-list {
+.nav-section:hover .action-list, .active-menu .action-list {
+    visibility: visible;
     height: auto;
     max-height:500px;
 }
 
-.nav-section:hover .menu {
+.nav-section:hover .menu, .active-menu .menu {
     box-shadow: 3px 5px 5px rgba(0,0,0,0.4);
 }
 
-.nav-section:hover .menu-hint {
+.nav-section:hover .menu-hint, .active-menu .menu-hint {
     background: rgba(255, 255, 255 , 0.9);
 }
 
-.nav-section:hover .menu-hint .arrow img {
+.nav-section:hover .menu-hint .arrow img, .active-menu .menu-hint .arrow img {
     transform: rotate(180deg);
 }
 

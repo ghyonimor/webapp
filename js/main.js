@@ -88,7 +88,7 @@ var display = function(e) {
 
 // Validate enter key.
 var isEnter = function(e) {
-    if (event.which === 13 || event.keyCode === 13) {
+    if (e.which === 13 || e.keyCode === 13) {
         display(e);
     }
 };
@@ -132,6 +132,31 @@ var tablist = document.getElementById('tablist');
 // Call UTILS.addEvent.
 UTILS.addEvent(tablist, 'click', display);
 UTILS.addEvent(tablist, 'keypress', isEnter);
+
+// Close key activated dropdown while hovering on other dropdowns.
+var closeDropdown = function() {
+    if (document.getElementsByClassName('active-menu')[0]) {
+	    var activeMenu = document.getElementsByClassName('active-menu')[0];
+	    activeMenu.className = activeMenu.className.replace(/\bactive-menu\b/,'');
+   	}
+   	return activeMenu;
+};
+
+// Open a dropdown on key press, or close an already active one.
+var openDropdown = function(e) {
+	if (e.which === 13 || e.keyCode === 13) {
+        var target = e.target;
+        var activeMenu = closeDropdown();
+		// Check that it's a nav-section and not a container.
+		if (activeMenu !== target) {
+			target.className = target.className+ ' active-menu';
+		}
+	}
+};
+
+var nav = document.getElementById('navigation');
+UTILS.addEvent(nav, 'keypress', openDropdown);
+UTILS.addEvent(nav, 'mouseover', closeDropdown);
 
 
 
