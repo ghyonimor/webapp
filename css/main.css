@@ -468,6 +468,11 @@ ADDITIONAL
     outline: none!important;
 }
 
+/*IE hack*/
+body:focus {
+    background: transparent!important;
+}
+
 /*ICON FONTS*/
 @font-face {
     font-family: 'icons';
