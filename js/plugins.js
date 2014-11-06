@@ -125,6 +125,7 @@ var UTILS = (function () {
             }
         },
 
+        // Cross browser removeEvent.
         removeEvent: function(elem, type, handler) {
             if (document.removeEventListener) { // Modern
                 elem.removeEventListener(type, handler, false);
