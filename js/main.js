@@ -133,7 +133,11 @@ var tablist = document.getElementById('tablist');
 UTILS.addEvent(tablist, 'click', display);
 UTILS.addEvent(tablist, 'keypress', isEnter);
 
-// Close key activated dropdown while hovering on other dropdowns.
+/*================================================
+DROPDOWNS BEHAVIOR.
+================================================*/
+
+// Close a key activated dropdown while hovering on other dropdowns.
 var closeDropdown = function() {
     if (document.getElementsByClassName('active-menu')[0]) {
 	    var activeMenu = document.getElementsByClassName('active-menu')[0];
@@ -144,12 +148,15 @@ var closeDropdown = function() {
 
 // Open a dropdown on key press, or close an already active one.
 var openDropdown = function(e) {
+	// isEnter
 	if (e.which === 13 || e.keyCode === 13) {
         var target = e.target;
-        var activeMenu = closeDropdown();
-		// Check that it's a nav-section and not a container.
-		if (activeMenu !== target) {
-			target.className = target.className+ ' active-menu';
+        // Check that it's a nav-section and not a container.
+        if (target.classList.contains('nav-section')) {
+	        var activeMenu = closeDropdown();
+			if (activeMenu !== target) {
+				target.className = target.className+ ' active-menu';
+			}
 		}
 	}
 };
