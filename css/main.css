@@ -462,15 +462,10 @@ ADDITIONAL
 ============*/
 
 /*Keyboard accessibility*/
-:focus {
+body :focus {
     background: pink!important;
     border: 0px!important;
     outline: none!important;
-}
-
-/*IE hack*/
-body:focus {
-    background: transparent!important;
 }
 
 /*ICON FONTS*/
