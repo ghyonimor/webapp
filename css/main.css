@@ -106,6 +106,12 @@ body {
     background-size: cover;
     z-index: 1;
     min-height: 100vh;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='../img/body-background.jpg',
+    sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='../img/body-background.jpg',
+    sizingMethod='scale')";
 }
 
 p, a {
@@ -160,6 +166,10 @@ input[type="radio"] {
     margin: 0 auto;
 }
 
+#logo {
+    height: 28px;
+}
+
 .search-box {
     position: absolute;
     margin-right: 20px;
@@ -170,7 +180,7 @@ input[type="radio"] {
 }
 
 .page-body {
-    background: rgba(102,102,102,0.8);
+    background: #666666;
     padding: 20px;
 }
 
@@ -209,24 +219,24 @@ NAVIGATION
     vertical-align: top;
 }
 
-.nav-section:nth-child(1) {
+.nav-section:first-child {
     background-image: url('../img/action-report-new.png');
-    background-size: 100px 100px;
-    background-position: 50% 130%;
+    background-size: 117px 117px;
+    background-position: 50% 170%;
     background-repeat: no-repeat;
 }
 
-.nav-section:nth-child(2) {
+.nav-section:first-child + .nav-section {
     background-image: url('../img/action-report-top.png');
-    background-size: 100px 100px;
-    background-position: 50% 130%;
+    background-size: 117px 117px;
+    background-position: 50% 170%;
     background-repeat: no-repeat;
 }
 
-.nav-section:nth-child(3) {
+.nav-section:first-child + .nav-section + .nav-section {
     background-image: url('../img/actions-help.png');
-    background-size: 100px 100px;
-    background-position: 50% 130%;
+    background-size: 117px 117px;
+    background-position: 50% 170%;
     background-repeat: no-repeat;
 }
 
@@ -362,6 +372,7 @@ TABS
     width: 100%;
     background: lightgrey;
     padding:20px;
+    min-height: 550px;
 }
 
 .tablist > .activeTab {
@@ -383,19 +394,32 @@ TABS
     padding: 10px;
 }
 
-#fmy-folders > div > img, #public-folders > div > img {
+#fmy-folders > div > a, #public-folders > div > a {
     cursor: pointer;
+    display: block;
     float: right;
     height: 40px;
     padding: 10px;
     width: 40px;
 }
 
+#fmy-folders > div > a > img, #public-folders > div > a > img {
+    height: 100%;
+    vertical-align: top;
+    width: 100%;
+}
+
 /*Form*/
+.form-wrap{
+    position: absolute;
+    padding: 0px 20px;
+    width: 100%;
+    right: 0px;
+}
 .enterSite {
     background: white;
     padding: 20px;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+    box-shadow: 0px 4px 3px rgba(0,0,0,0.4);
 }
 
 .enterSite fieldset {
@@ -453,6 +477,7 @@ TABS
 /*iframe*/
 .tabs iframe {
     height: calc(100% - 40px);
+    min-height: 450px;
     width: 100%;
     border: 0px;
 }

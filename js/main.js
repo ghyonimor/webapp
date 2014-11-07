@@ -188,6 +188,25 @@ var nav = document.getElementById('navigation');
 UTILS.addEvent(nav, 'keypress', openDropdown);
 UTILS.addEvent(nav, 'mouseover', closeDropdown);
 
+/*================================================
+TAB PANELS INTERACTIVITY.
+================================================*/
+
+// Get websites from the input fields and insert to dropdowns.
+var insert = function(e) {
+
+};
+
+// Select a website from the dropdown, display in an iframe and make the arrow button point at it.
+var select = function(e) {
+
+};
+
+// 'submit' event (connect to 'insert' function).
+
+// 'change' event (connect to 'select' function).
+
+
 
 
 
