@@ -93,6 +93,12 @@ var display = function(e) {
 
 // Validate enter or space keypress.
 var isEnterOrSpace = function(e) {
+	if (e.preventDefault) {
+		e.preventDefault();
+	}
+	else {
+		e.returnValue = false;
+	}
 	console.log(e.keyCode);
 	console.log(e.which);
     if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
@@ -156,6 +162,12 @@ var closeDropdown = function() {
 
 // Open a dropdown on key press, or close an already active one.
 var openDropdown = function(e) {
+	if (e.preventDefault) {
+		e.preventDefault();
+	}
+	else {
+		e.returnValue = false;
+	}
 	// is enter or space.
 	if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
         var target = e.target || e.srcElement;
