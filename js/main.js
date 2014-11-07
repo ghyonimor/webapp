@@ -91,11 +91,11 @@ var display = function(e) {
 	}
 };
 
-// Validate enter key.
-var isEnter = function(e) {
+// Validate enter or space keypress.
+var isEnterOrSpace = function(e) {
 	console.log(e.keyCode);
 	console.log(e.which);
-    if (e.which === 13 || e.keyCode === 13) {
+    if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
         display(e);
     }
 };
@@ -139,7 +139,7 @@ var tablist = document.getElementById('tablist');
 
 // Attach listeners to tabs using UTILS.addEvent.
 UTILS.addEvent(tablist, 'click', display);
-UTILS.addEvent(tablist, 'keypress', isEnter);
+UTILS.addEvent(tablist, 'keypress', isEnterOrSpace);
 
 /*================================================
 DROPDOWNS BEHAVIOR.
@@ -156,8 +156,8 @@ var closeDropdown = function() {
 
 // Open a dropdown on key press, or close an already active one.
 var openDropdown = function(e) {
-	// isEnter
-	if (e.which === 13 || e.keyCode === 13) {
+	// is enter or space.
+	if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
         var target = e.target || e.srcElement;
         // Check that it's a nav-section and not a container.
         if (UTILS.hasClass(target, 'nav-section')) {
