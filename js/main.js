@@ -9,7 +9,7 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
 		if (response && response !== '') {
-			var message = document.getElementsByClassName('notifications')[0];
+			var message = document.querySelectorAll('.notifications')[0];
 			message.innerHTML = response;
 			message.style.display = 'block';
 		}
@@ -39,15 +39,15 @@ var clearJump = function(tab) {
 // Add activeTab class, connect it with a panel (activePanel), show the panel and disable other tabs.
 var activate = function(tab) {
 	// If another tab is activated, and it's equal to the new tab, break the function.
-	if (document.getElementsByClassName('activeTab')[0] && tab === document.getElementsByClassName('activeTab')[0]) {
+	if (document.querySelectorAll('.activeTab')[0] && tab === document.querySelectorAll('.activeTab')[0]) {
 		return;
 	}
 	else {
 		// Get the panel related to this tab.
 		var panel = getPanel(tab);
 		// Check if another tab has an active state and remove it.
-		if (document.getElementsByClassName('activeTab')[0]) {
-			var activeTab = document.getElementsByClassName('activeTab')[0];
+		if (document.querySelectorAll('.activeTab')[0]) {
+			var activeTab = document.querySelectorAll('.activeTab')[0];
 			activeTab.className = activeTab.className.replace(/\bactiveTab\b/,'');
 			// Remove aria-selected attribute from previously active tab.
 			activeTab.removeAttribute('aria-selected');
@@ -94,7 +94,7 @@ var isEnter = function(e) {
 };
 
 // Get all tabs.
-var tabs = document.getElementsByClassName('tab');
+var tabs = document.querySelectorAll('.tab');
 // Get inserted URL hash value.
 var hash = window.location.hash;
 console.log(hash);
@@ -140,8 +140,8 @@ DROPDOWNS BEHAVIOR.
 
 // Close a key activated dropdown while hovering on other dropdowns.
 var closeDropdown = function() {
-    if (document.getElementsByClassName('active-menu')[0]) {
-	    var activeMenu = document.getElementsByClassName('active-menu')[0];
+    if (document.querySelectorAll('.active-menu')[0]) {
+	    var activeMenu = document.querySelectorAll('.active-menu')[0];
 	    activeMenu.className = activeMenu.className.replace(/\bactive-menu\b/,'');
    	}
    	return activeMenu;
