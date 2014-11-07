@@ -76,7 +76,12 @@ var activate = function(tab) {
 
 // Activate tab on click / keypress.
 var display = function(e) {
-	e.preventDefault();
+	if (e.preventDefault) {
+		e.preventDefault();
+	}
+	else {
+		e.returnValue = false;
+	}
 	// Get the clicked element.
 	var target = e.target || e.srcElement;
 	// Check that it's a tab and not a container.

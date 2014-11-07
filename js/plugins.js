@@ -121,20 +121,7 @@ var UTILS = (function () {
                 elem.addEventListener(type, handler, false);
                 console.log('An event listener has been added!');
             } else if (window.attachEvent) { // Internet Explorer
-                elem.attachEvent('on' + type, function(e) {
-                    e.target = e.target || e.srcElement;
-                    e.currentTarget = elem;
-
-                    e.stopPropagation = e.stopPropagation || function() {
-                        e.cancelBubble = true;
-                    };
-
-                    e.preventDefault = e.preventDefault || function() {
-                        e.returnValue = false;
-                    };
-
-                    handler.call(elem, e);
-                });
+                elem.attachEvent('on' + type, handler);
             }
         },
 
