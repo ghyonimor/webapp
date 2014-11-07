@@ -145,6 +145,19 @@ var UTILS = (function () {
             } else if (window.detachEvent) { // Internet Explorer
                 elem.detachEvent('on' + type, handler);
             }
+        },
+
+        // Check if a node has a class.
+        hasClass: function(node, cls) {
+            var arr = node.className.split(' ');
+            var bool = false;
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] === cls) {
+                    bool = true;
+                    return bool;
+                }
+            }
+            return bool;
         }
     };
 }());

@@ -80,7 +80,7 @@ var display = function(e) {
 	// Get the clicked element.
 	var target = e.target || e.srcElement;
 	// Check that it's a tab and not a container.
-	if (target.classList.contains('tab')) {
+	if (UTILS.hasClass(target, 'tab')) {
 		console.log(target);
 		activate(target);
 	}
@@ -88,6 +88,8 @@ var display = function(e) {
 
 // Validate enter key.
 var isEnter = function(e) {
+	console.log(e.keyCode);
+	console.log(e.which);
     if (e.which === 13 || e.keyCode === 13) {
         display(e);
     }
@@ -153,7 +155,7 @@ var openDropdown = function(e) {
 	if (e.which === 13 || e.keyCode === 13) {
         var target = e.target || e.srcElement;
         // Check that it's a nav-section and not a container.
-        if (target.classList.contains('nav-section')) {
+        if (UTILS.hasClass(target, 'nav-section')) {
 	        var activeMenu = closeDropdown();
 			if (activeMenu !== target) {
 				target.className = target.className+ ' active-menu';
