@@ -464,7 +464,6 @@ ADDITIONAL
 /*Keyboard accessibility*/
 body :focus {
     background: pink!important;
-    border: 0px!important;
     outline: none!important;
 }
 

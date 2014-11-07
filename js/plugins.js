@@ -117,19 +117,32 @@ var UTILS = (function () {
 
         // Cross browser addEvent.
         addEvent: function(elem, type, handler) {
-            if (document.addEventListener) { // Modern
+            if (window.addEventListener) { // Modern
                 elem.addEventListener(type, handler, false);
                 console.log('An event listener has been added!');
-            } else if (elem.attachEvent) { // Internet Explorer
-                elem.attachEvent('on' + type, handler);
+            } else if (window.attachEvent) { // Internet Explorer
+                elem.attachEvent('on' + type, function(e) {
+                    e.target = e.target || e.srcElement;
+                    e.currentTarget = elem;
+
+                    e.stopPropagation = e.stopPropagation || function() {
+                        e.cancelBubble = true;
+                    };
+
+                    e.preventDefault = e.preventDefault || function() {
+                        e.returnValue = false;
+                    };
+
+                    handler.call(elem, e);
+                });
             }
         },
 
         // Cross browser removeEvent.
         removeEvent: function(elem, type, handler) {
-            if (document.removeEventListener) { // Modern
+            if (window.removeEventListener) { // Modern
                 elem.removeEventListener(type, handler, false);
-            } else if (elem.detachEvent) { // Internet Explorer
+            } else if (window.detachEvent) { // Internet Explorer
                 elem.detachEvent('on' + type, handler);
             }
         }

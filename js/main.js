@@ -4,7 +4,7 @@
 AJAX NOTIFICATION.
 ================================================*/
 
-// Call UTILS.ajax.
+// Display an ajax notification using UTILS.ajax.
 UTILS.ajax('../Web-App/data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
@@ -78,7 +78,7 @@ var activate = function(tab) {
 var display = function(e) {
 	e.preventDefault();
 	// Get the clicked element.
-	var target = e.target;
+	var target = e.target || e.srcElement;
 	// Check that it's a tab and not a container.
 	if (target.classList.contains('tab')) {
 		console.log(target);
@@ -111,17 +111,18 @@ for (var i = 0; i < tabs.length; i++) {
 	panel.setAttribute('aria-hidden', 'true');
 	// Get tab's hash value.
 	var anchor = tab.getAttribute('href');
-	// Activate inserted URL tab.
-	console.log('panel-' + anchor.replace('#', ''));
+	console.log(anchor);
 	console.log(hash);
+	// Activate inserted URL tab.
 	if (hash === '#panel-' + anchor.replace('#', '')) {
-		activate(tab);
-		//If count === 0 after all iterations activate default outside the loop.
+		// Count how many times a hashed URL related to a tab was entered (0 or 1).
 		count = count + 1;
+		// Activate the tab related to the URL.
+		activate(tab);
 	}
 }
 
-// Activate default.
+// Activate default (first tab) if the URL didn't have an hash value related to a tab.
 if (count === 0) {
 	activate(tabs[0]);
 }
@@ -129,7 +130,7 @@ if (count === 0) {
 // Get tabs wrapper.
 var tablist = document.getElementById('tablist');
 
-// Call UTILS.addEvent.
+// Attach listeners to tabs using UTILS.addEvent.
 UTILS.addEvent(tablist, 'click', display);
 UTILS.addEvent(tablist, 'keypress', isEnter);
 
@@ -150,7 +151,7 @@ var closeDropdown = function() {
 var openDropdown = function(e) {
 	// isEnter
 	if (e.which === 13 || e.keyCode === 13) {
-        var target = e.target;
+        var target = e.target || e.srcElement;
         // Check that it's a nav-section and not a container.
         if (target.classList.contains('nav-section')) {
 	        var activeMenu = closeDropdown();
@@ -161,7 +162,10 @@ var openDropdown = function(e) {
 	}
 };
 
+// Get dropdowns' wrapper.
 var nav = document.getElementById('navigation');
+
+// Attach listeners to dropdowns using UTILS.addEvent.
 UTILS.addEvent(nav, 'keypress', openDropdown);
 UTILS.addEvent(nav, 'mouseover', closeDropdown);
 
