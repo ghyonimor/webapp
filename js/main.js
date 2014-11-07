@@ -168,7 +168,7 @@ var openDropdown = function(e) {
 	else {
 		e.returnValue = false;
 	}
-	// is enter or space.
+	// Validate enter or space keypress
 	if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
         var target = e.target || e.srcElement;
         // Check that it's a nav-section and not a container.
