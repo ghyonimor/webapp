@@ -106,8 +106,9 @@
                 </div>
 
                 <div class="tabPanel" id="quick-reports" role="tabpanel" aria-describedby="quickReports">
-                    <div class="clearfix"><img src="img/settings.png"></div>
-                    <div class="form-wrap">
+                    <div class="clearfix"><select class='site-select hidden'></select><a class='form-control' tabindex="0"><img src="img/settings.png"></a><a class='to-website hidden' tabindex="0"><img src="img/expand.png"></a></div>
+                    <iframe class='hidden'></iframe>
+                    <div class="form-wrap visible-form">
                         <form class="enterSite clearfix">
                             <fieldset class="report-01 justify">
                                 <legend>Report 01:</legend>
@@ -148,13 +149,14 @@
                 </div>
 
                 <div class="tabPanel" id="fmy-folders" role="tabpanel" aria-describedby="fmyFolders">
-                    <div class="clearfix"><a><img src="img/expand.png"></a></div>
+                    <div class="clearfix settings"><a class='to-website' href="http://netcraft.co.il"><img src="img/expand.png"></a></div>
                     <iframe src="http://netcraft.co.il"></iframe>
                 </div>
 
                 <div class="tabPanel" id="my-team-folders" role="tabpanel" aria-describedby="myTeamFolders">
-                    <div class="clearfix"><img src="img/settings.png"></div>
-                    <div class="form-wrap">
+                    <div class="clearfix"><select class='site-select hidden'></select><a class='form-control' tabindex="0"><img src="img/settings.png"></a><a class='to-website hidden' tabindex="0"><img src="img/expand.png"></a></div>
+                    <iframe class='hidden'></iframe>
+                    <div class="form-wrap visible-form">
                         <form class="enterSite clearfix">
                             <fieldset class="report-01 justify">
                                 <legend>Report 01:</legend>
@@ -195,7 +197,7 @@
                 </div>
 
                 <div class="tabPanel" id="public-folders" role="tabpanel" aria-describedby="publicFolders">
-                    <div class="clearfix"><a><img src="img/expand.png"></a></div>
+                    <div class="clearfix settings"><a class='to-website' href="http://ynet.co.il"><img src="img/expand.png"></a></div>
                     <iframe src="http://ynet.co.il"></iframe>
                 </div>
             </div>

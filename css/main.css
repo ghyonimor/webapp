@@ -384,26 +384,43 @@ TABS
     display: block;
 }
 
+.site-select {
+    float: left;
+    height: 35px;
+    width: 30%;
+    border: 0;
+    border-radius: 0;
+}
+
 /*Image icons*/
-#quick-reports > div > img, #my-team-folders > div > img {
+.form-control {
     cursor: pointer;
+    display: block;
     float: right;
     height: 40px;
     width: 40px;
     background: white;
     padding: 10px;
+    overflow: hidden;
 }
 
-#fmy-folders > div > a, #public-folders > div > a {
+.form-control img {
+    height: 100%;
+    vertical-align: top;
+    width: 100%;
+}
+
+.to-website {
     cursor: pointer;
     display: block;
     float: right;
     height: 40px;
     padding: 10px;
     width: 40px;
+    overflow: hidden;
 }
 
-#fmy-folders > div > a > img, #public-folders > div > a > img {
+.to-website > img {
     height: 100%;
     vertical-align: top;
     width: 100%;
@@ -411,15 +428,31 @@ TABS
 
 /*Form*/
 .form-wrap{
+    visibility: hidden;
+    height: 0;
+    max-height: 0;
     position: absolute;
     padding: 0px 20px;
+    padding-bottom: 10px;
     width: 100%;
     right: 0px;
+    overflow: hidden;
+    top: 60px;
+    transition: max-height 1s;
 }
+
+.visible-form {
+    visibility: visible;
+    height: auto;
+    max-height: 1000px;
+}
+
 .enterSite {
     background: white;
     padding: 20px;
     box-shadow: 0px 4px 3px rgba(0,0,0,0.4);
+    height: 100%;
+    vertical-align: top;
 }
 
 .enterSite fieldset {

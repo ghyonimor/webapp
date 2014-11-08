@@ -192,7 +192,20 @@ UTILS.addEvent(nav, 'mouseover', closeDropdown);
 TAB PANELS INTERACTIVITY.
 ================================================*/
 
+// Add / remove a 'visible-form' class to display / hide a form.
+// Use DRY code with other methods ('display', 'openDropdown').
+var displayForm = function(e) {
+
+};
+
+// Validate form input using HTML5 'required'.
+// Validate URL if a site name was entered.
+var validate = function(e) {
+
+};
+
 // Get websites from the input fields and insert to dropdowns.
+// Remove hidden classes from the right '.site-select', '.to-website' and 'iframe' elements.
 var insert = function(e) {
 
 };
@@ -201,6 +214,10 @@ var insert = function(e) {
 var select = function(e) {
 
 };
+
+// 'click' event (connect to 'displayForm' function).
+
+// 'submit' event (connect to 'validate' function).
 
 // 'submit' event (connect to 'insert' function).
 
