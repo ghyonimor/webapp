@@ -400,7 +400,6 @@ TABS
     height: 40px;
     width: 40px;
     background: white;
-    padding: 10px;
     overflow: hidden;
 }
 
@@ -408,6 +407,7 @@ TABS
     height: 100%;
     vertical-align: top;
     width: 100%;
+    padding: 10px;
 }
 
 .to-website {

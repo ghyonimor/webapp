@@ -9,7 +9,7 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
 		if (response && response !== '') {
-			var message = document.querySelectorAll('.notifications')[0];
+			var message = UTILS.qsa('.notifications')[0];
 			message.innerHTML = response;
 			message.style.display = 'block';
 		}
@@ -39,34 +39,36 @@ var clearJump = function(tab) {
 // Add activeTab class, connect it with a panel (activePanel), show the panel and disable other tabs.
 var activate = function(tab) {
 	// If another tab is activated, and it's equal to the new tab, break the function.
-	if (document.querySelectorAll('.activeTab')[0] && tab === document.querySelectorAll('.activeTab')[0]) {
+	if (UTILS.qsa('.activeTab')[0] && tab === UTILS.qsa('.activeTab')[0]) {
 		return;
 	}
 	else {
 		// Get the panel related to this tab.
 		var panel = getPanel(tab);
 		// Check if another tab has an active state and remove it.
-		if (document.querySelectorAll('.activeTab')[0]) {
-			var activeTab = document.querySelectorAll('.activeTab')[0];
-			activeTab.className = activeTab.className.replace(/\bactiveTab\b/,'');
+		if (UTILS.qsa('.activeTab')[0]) {
+			var activeTab = UTILS.qsa('.activeTab')[0];
+			// Remove activeTab class.
+			UTILS.removeClass(activeTab, 'activeTab');
 			// Remove aria-selected attribute from previously active tab.
 			activeTab.removeAttribute('aria-selected');
 			// Set aria-selected='false' to previously active tab.
 			activeTab.setAttribute('aria-selected', 'false');
 			// Get the active panel.
 			var activePanel = getPanel(activeTab);
-			activePanel.className = activePanel.className.replace(/\bactivePanel\b/,'');
+			// Remove activePanel class.
+			UTILS.removeClass(activePanel, 'activePanel');
 			// Remove aria-hidden attribute from previously active panel.
 			activePanel.removeAttribute('aria-hidden');
 			// Set aria-hidden='true' to previously active panel.
 			activePanel.setAttribute('aria-hidden', 'true');
 		}
 		// Activate new tab.
-		tab.className = tab.className + ' activeTab';
+		UTILS.addClass(tab, 'activeTab');
 		// Add aria-selected='true' attribute.
 		tab.setAttribute('aria-selected', 'true');
 		// Activate new Panel.
-		panel.className = panel.className + ' activePanel';
+		UTILS.addClass(panel, 'activePanel');
 		// Add aria-hidden='false' attribute.
 		panel.setAttribute('aria-hidden', 'false');
 		// Jumping prefix.
@@ -76,38 +78,18 @@ var activate = function(tab) {
 
 // Activate tab on click / keypress.
 var display = function(e) {
-	if (e.preventDefault) {
-		e.preventDefault();
-	}
-	else {
-		e.returnValue = false;
-	}
 	// Get the clicked element.
 	var target = e.target || e.srcElement;
 	// Check that it's a tab and not a container.
 	if (UTILS.hasClass(target, 'tab')) {
+		UTILS.preventEvent(e);
 		console.log(target);
 		activate(target);
 	}
 };
 
-// Validate enter or space keypress.
-var isEnterOrSpace = function(e) {
-	if (e.preventDefault) {
-		e.preventDefault();
-	}
-	else {
-		e.returnValue = false;
-	}
-	console.log(e.keyCode);
-	console.log(e.which);
-    if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
-        display(e);
-    }
-};
-
 // Get all tabs.
-var tabs = document.querySelectorAll('.tab');
+var tabs = UTILS.qsa('.tab');
 // Get inserted URL hash value.
 var hash = window.location.hash;
 console.log(hash);
@@ -145,7 +127,7 @@ var tablist = document.getElementById('tablist');
 
 // Attach listeners to tabs using UTILS.addEvent.
 UTILS.addEvent(tablist, 'click', display);
-UTILS.addEvent(tablist, 'keypress', isEnterOrSpace);
+UTILS.addEvent(tablist, 'keypress', UTILS.isEnterOrSpace(display));
 
 /*================================================
 DROPDOWNS BEHAVIOR.
@@ -153,30 +135,22 @@ DROPDOWNS BEHAVIOR.
 
 // Close a key activated dropdown while hovering on other dropdowns.
 var closeDropdown = function() {
-    if (document.querySelectorAll('.active-menu')[0]) {
-	    var activeMenu = document.querySelectorAll('.active-menu')[0];
-	    activeMenu.className = activeMenu.className.replace(/\bactive-menu\b/,'');
+    if (UTILS.qsa('.active-menu')[0]) {
+	    var activeMenu = UTILS.qsa('.active-menu')[0];
+	    UTILS.removeClass(activeMenu, 'active-menu');
    	}
    	return activeMenu;
 };
 
 // Open a dropdown on key press, or close an already active one.
 var openDropdown = function(e) {
-	if (e.preventDefault) {
-		e.preventDefault();
-	}
-	else {
-		e.returnValue = false;
-	}
-	// Validate enter or space keypress
-	if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
-        var target = e.target || e.srcElement;
-        // Check that it's a nav-section and not a container.
-        if (UTILS.hasClass(target, 'nav-section')) {
-	        var activeMenu = closeDropdown();
-			if (activeMenu !== target) {
-				target.className = target.className+ ' active-menu';
-			}
+	var target = e.target || e.srcElement;
+    // Check that it's a nav-section and not a container.
+    if (UTILS.hasClass(target, 'nav-section')) {
+    	UTILS.preventEvent(e);
+	    var activeMenu = closeDropdown();
+		if (activeMenu !== target) {
+			UTILS.addClass(target, 'active-menu');
 		}
 	}
 };
@@ -185,7 +159,7 @@ var openDropdown = function(e) {
 var nav = document.getElementById('navigation');
 
 // Attach listeners to dropdowns using UTILS.addEvent.
-UTILS.addEvent(nav, 'keypress', openDropdown);
+UTILS.addEvent(nav, 'keypress', UTILS.isEnterOrSpace(openDropdown));
 UTILS.addEvent(nav, 'mouseover', closeDropdown);
 
 /*================================================
@@ -193,33 +167,70 @@ TAB PANELS INTERACTIVITY.
 ================================================*/
 
 // Add / remove a 'visible-form' class to display / hide a form.
-// Use DRY code with other methods ('display', 'openDropdown').
 var displayForm = function(e) {
+	if (UTILS.hasClass(e.target, 'form-control-img')) {
+		UTILS.preventEvent(e);
+		var control = e.target;
+		var connectedFormId = control.getAttribute('aria-controls');
+		var connectedForm = document.getElementById(connectedFormId);
+		if (UTILS.hasClass(connectedForm, 'visible-form')) {
+			UTILS.removeClass(connectedForm, 'visible-form');
+		}
+		else {
+			UTILS.addClass(connectedForm, 'visible-form');
+		}
 
+	}
 };
+
+// Get form controls.
+var controls = UTILS.qsa('.form-control');
+// Iterate on form controls.
+for (var i = 0; i < controls.length; i++) {
+	var control = controls[i];
+	// 'click' event (connect to 'displayForm' function).
+	UTILS.addEvent(control, 'click', displayForm);
+	// 'keypress' event (connect to 'displayForm' function). Use DRY code (UTILS.isEnterOrSpace(func) function).
+	UTILS.addEvent(control, 'keypress', UTILS.isEnterOrSpace(displayForm));
+}
 
 // Validate form input using HTML5 'required'.
 // Validate URL if a site name was entered.
-var validate = function(e) {
+var validate = function(form) {
+	// Get all child fieldsets.
+	var sets = form.getElementsByTagName('FIELDSET');
+	// Inside each fieldset, if any of the fieldset's fields is not empty, activate validations.
+	// Validations are: Name must not be empty, URL must be a legal URL.
+	for (var i = 0; i < sets.length; i++) {
+		var set = sets[i];
+		var name = set.getElementsByTagName('INPUT')[0];
+		var URL = set.getElementsByTagName('INPUT')[1];
 
+	}
 };
 
+// Get forms.
+var forms = UTILS.qsa('.enterSite');
+// Iterate forms.
+for (var i = 0; i < forms.length; i++) {
+	var form = forms[i];
+	// 'submit' event (connect to 'validate' function).
+	UTILS.addEvent(form, 'submit', validate(form));
+}
+
+
 // Get websites from the input fields and insert to dropdowns.
-// Remove hidden classes from the right '.site-select', '.to-website' and 'iframe' elements.
+// Remove .hidden classes from the right '.site-select', '.to-website' and 'iframe' elements.
 var insert = function(e) {
 
 };
+
+// 'submit' event (connect to 'insert' function).
 
 // Select a website from the dropdown, display in an iframe and make the arrow button point at it.
 var select = function(e) {
 
 };
-
-// 'click' event (connect to 'displayForm' function).
-
-// 'submit' event (connect to 'validate' function).
-
-// 'submit' event (connect to 'insert' function).
 
 // 'change' event (connect to 'select' function).
 

@@ -30,6 +30,25 @@
 var UTILS = (function () {
 
     return {
+        // Cross browser prevent default.
+        preventEvent: function(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            else {
+                e.returnValue = false;
+            }
+        },
+
+        // Validate enter or space keypress, and activate a function.
+        isEnterOrSpace: function(func) {
+            return function(e) {
+                if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
+                    func(e);
+                }
+            };
+        },
+
         // Check if a node has a class.
         hasClass: function(node, cls) {
             var arr = node.className.split(' ');
@@ -43,10 +62,23 @@ var UTILS = (function () {
             return bool;
         },
 
+        // Add a class to a node.
+        addClass: function(node, cls) {
+          node.className = node.className + ' ' + cls;
+        },
+
+        // Remove a class from a node.
+        removeClass: function(node, cls) {
+          var regex = new RegExp('\\b' + cls + '\\b');
+          node.className = node.className.replace(regex,'');
+        },
+
+        // querySelector.
         qs: function (selector) {
             return document.querySelector(selector);
         },
 
+        // querySelectorAll.
         qsa: function (selector) {
             return document.querySelectorAll(selector);
         },
