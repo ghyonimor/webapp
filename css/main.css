@@ -507,6 +507,10 @@ TABS
     border: 0;
 }
 
+.invalid {
+    border: 1px solid red!important;
+}
+
 /*iframe*/
 .tabs iframe {
     height: calc(100% - 40px);

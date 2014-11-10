@@ -194,19 +194,62 @@ for (var i = 0; i < controls.length; i++) {
 	UTILS.addEvent(control, 'keypress', UTILS.isEnterOrSpace(displayForm));
 }
 
+// Validate a fieldset (name and URL). Mark invalid fields with a red border.
+var validateFieldset = function(e, name, url) {
+	// If invalid name.
+	if (name.value === '' && UTILS.hasClass(name, 'invalid') === false) {
+		// Prevent form submission.
+		UTILS.preventEvent(e);
+		// Add invalid class.
+		UTILS.addClass(name, 'invalid');
+	}
+	else {
+		if (UTILS.hasClass(name, 'invalid')) {
+			UTILS.removeClass(name, 'invalid');
+		}
+	}
+	// If invalid URL.
+	if (/regex/.test(url.value) && UTILS.hasClass(url, 'invalid') === false) {
+		// Prevent form submission.
+		UTILS.preventEvent(e);
+		// Add invalid class.
+		UTILS.addClass(url, 'invalid');
+	}
+	else {
+		if (UTILS.hasClass(url, 'invalid')) {
+			UTILS.removeClass(url, 'invalid');
+		}
+	}
+};
+
 // Validate form input using HTML5 'required'.
 // Validate URL if a site name was entered.
-var validate = function(form) {
-	// Get all child fieldsets.
-	var sets = form.getElementsByTagName('FIELDSET');
-	// Inside each fieldset, if any of the fieldset's fields is not empty, activate validations.
-	// Validations are: Name must not be empty, URL must be a legal URL.
-	for (var i = 0; i < sets.length; i++) {
-		var set = sets[i];
-		var name = set.getElementsByTagName('INPUT')[0];
-		var URL = set.getElementsByTagName('INPUT')[1];
-
-	}
+var validateForm = function(form) {
+	return function(e) {
+		// Get all child fieldsets.
+		var sets = form.getElementsByTagName('FIELDSET');
+		// Inside each fieldset, if any of the fieldset's fields is not empty, activate validations.
+		// Validations are: Name must not be empty, URL must be a legal URL.
+		for (var i = 0; i < sets.length; i++) {
+			var set = sets[i];
+			var name = set.getElementsByTagName('INPUT')[0];
+			var url = set.getElementsByTagName('INPUT')[1];
+			// Only if one of the fields is not empty, start a fieldset validation process.
+			if (name.value !== '' || url.value !== '') {
+				console.log('start validation!');
+				validateFieldset(e, name, url);
+			}
+			else {
+				if (UTILS.hasClass(name, 'invalid')) {
+					UTILS.removeClass(name, 'invalid');
+				}
+				if (UTILS.hasClass(url, 'invalid')) {
+					UTILS.removeClass(url, 'invalid');
+				}
+			}
+		}
+		// Focus on the first invalid field.
+	};
 };
 
 // Get forms.
@@ -214,8 +257,8 @@ var forms = UTILS.qsa('.enterSite');
 // Iterate forms.
 for (var i = 0; i < forms.length; i++) {
 	var form = forms[i];
-	// 'submit' event (connect to 'validate' function).
-	UTILS.addEvent(form, 'submit', validate(form));
+	// 'submit' event (connect to 'validateForm' function).
+	UTILS.addEvent(form, 'submit', validateForm(form));
 }
 
 
