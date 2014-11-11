@@ -206,7 +206,7 @@ window.onload = (function() {
 	// Gets the relevant form and siteArray, displays / hides iframe/select/button and updates site list based on changes.
 	var displayWebsites = function(form, siteArray) {
 		// Get form ID and use it as a class selector.
-		var selector = '.' + form.parentNode.id;
+		var selector = '.' + UTILS.qs('.activePanel').querySelector('.form-wrap').id;
 		// Get iframe/select/button connected to this ID with a class of the same name.
 		var elements = UTILS.qsa(selector);
 		// Iterate on all elements connected to form.
@@ -323,20 +323,32 @@ window.onload = (function() {
 		UTILS.addEvent(form, 'submit', validateForm(form));
 	}
 
-
-	// Get websites from the input fields and insert to dropdowns.
-	// Remove .hidden classes from the right '.site-select', '.to-website' and 'iframe' elements.
-	var insert = function(e) {
-
-	};
-
-	// 'submit' event (connect to 'insert' function).
-
 	// Select a website from the dropdown, display in an iframe and make the arrow button point at it.
-	var select = function(e) {
-
+	var selectHandler = function(e) {
+		if (e.target.tagName === 'SELECT') {
+			var target = e.target;
+			// Get selected value.
+			var getValue = target.options[target.selectedIndex].value;
+			console.log(getValue);
+			// Get the active panel.
+			var panel = UTILS.qs('.activePanel');
+			// Get the iframe.
+			var iframe = panel.querySelector('iframe');
+			// Get the button.
+			var button = panel.querySelector('.to-website');
+			// CHange atributes.
+			iframe.setAttribute('src', getValue);
+			button.setAttribute('href', getValue);
+		}
 	};
 
 	// 'change' event (connect to 'select' function).
+	var selects = document.getElementsByTagName('SELECT');
+	// Iterate on selects.
+	for (var i = 0; i < selects.length; i++) {
+		var select = selects[i];
+		console.log(select);
+		UTILS.addEvent(select, 'change', selectHandler);
+	}
 
 }());
