@@ -235,9 +235,26 @@ var validateFieldset = function(e, name, url, siteArray) {
 
 // Gets the relevant form and siteArray, displays / hides iframe/select/button and updates site list based on changes.
 var displayWebsites = function(form, siteArray) {
-	// This function first checks if any valid object exists, if not it checks if the elements are hidden
-	// and it removes / adds classes accordingly.
-
+	// Get form ID and use it as a class selector.
+	var selector = '.' + form.parentNode.id;
+	// Get iframe/select/button connected to this ID with a class of the same name.
+	var elements = UTILS.qsa(selector);
+	// Iterate on all elements connected to form.
+	for (var i = 0; i < elements.length; i++) {
+		var elm = elements[i];
+		console.log(elm);
+		// If the array is empty, hide the element if it's not hidden.
+		if (!siteArray[0] && !UTILS.hasClass(elm, 'hidden')) {
+			UTILS.addClass(elm, 'hidden');
+		}
+		else {
+			if (UTILS.hasClass(elm, 'hidden')) {
+				UTILS.removeClass(elm, 'hidden');
+			}
+			// Hide form if valid.
+			UTILS.removeClass(form.parentNode, 'visible-form');
+		}
+	}
 };
 
 // Validate form input using HTML5 'required'.
@@ -276,9 +293,9 @@ var validateForm = function(form) {
 			form.querySelectorAll('.invalid')[0].focus();
 		}
 		else {
+			UTILS.preventEvent(e);
 			// Catch valid objects containing site name and site URL (inside of siteArray).
 			displayWebsites(form, siteArray);
-			UTILS.preventEvent(e);
 		}
 	};
 };
