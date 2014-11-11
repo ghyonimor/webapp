@@ -233,6 +233,12 @@ var validateFieldset = function(e, name, url, siteArray) {
 	}
 };
 
+// Gets the relevant form and siteArray, displays / hides iframe/select/button and updates site list based on changes.
+var displayWebsites = function(form, siteArray) {
+
+
+};
+
 // Validate form input using HTML5 'required'.
 // Validate URL if a site name was entered.
 var validateForm = function(form) {
@@ -269,13 +275,13 @@ var validateForm = function(form) {
 			form.querySelectorAll('.invalid')[0].focus();
 		}
 		else {
-			// Catch valid objects containing site name and site URL (inside of siteArray).
-			for (var j = 0; j < siteArray.length; j++) {
-				console.log(siteArray[j].siteName + ' ' + siteArray[j].siteUrl);
+			// Catch valid objects containing site name and site URL if exist (inside of siteArray).
+			if (siteArray[0]) {
+				displayWebsites(form, siteArray);
+				UTILS.removeClass(form.parentNode, 'visible-form');
 			}
 			UTILS.preventEvent(e);
 			// Hide form if valid.
-			UTILS.removeClass(form.parentNode, 'visible-form');
 		}
 	};
 };
