@@ -234,6 +234,10 @@ window.onload = (function() {
 				// Hide all.
 				UTILS.addClass(elm, 'hidden');
 			}
+			// If array is empty on first iteration.
+			else if (!siteArray[0]) {
+				console.log('do nothing!');
+			}
 			// If array is not empty, display elements and add attributes.
 			else {
 				// Display element.
