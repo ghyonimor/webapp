@@ -235,7 +235,8 @@ var validateFieldset = function(e, name, url, siteArray) {
 
 // Gets the relevant form and siteArray, displays / hides iframe/select/button and updates site list based on changes.
 var displayWebsites = function(form, siteArray) {
-
+	// This function first checks if any valid object exists, if not it checks if the elements are hidden
+	// and it removes / adds classes accordingly.
 
 };
 
@@ -275,13 +276,9 @@ var validateForm = function(form) {
 			form.querySelectorAll('.invalid')[0].focus();
 		}
 		else {
-			// Catch valid objects containing site name and site URL if exist (inside of siteArray).
-			if (siteArray[0]) {
-				displayWebsites(form, siteArray);
-				UTILS.removeClass(form.parentNode, 'visible-form');
-			}
+			// Catch valid objects containing site name and site URL (inside of siteArray).
+			displayWebsites(form, siteArray);
 			UTILS.preventEvent(e);
-			// Hide form if valid.
 		}
 	};
 };
