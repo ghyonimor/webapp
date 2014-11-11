@@ -245,27 +245,55 @@ var displayWebsites = function(form, siteArray) {
 		console.log(elm);
 		// If the array is empty, hide the element if it's not hidden and remove all attributes.
 		if (!siteArray[0] && !UTILS.hasClass(elm, 'hidden')) {
+			// If element is an iframe.
 			if (elm.removeAttribute('src')) {
 				console.log(elm.tagName);
 				elm.removeAttribute('src', siteArray[0].siteUrl);
 			}
+			// If element is a button.
 			if (elm.removeAttribute('href')) {
 				elm.removeAttribute('href', siteArray[0].siteUrl);
 			}
+			// If element is a dropdown.
+			if (elm.tagName === 'SELECT') {
+				// init.
+				while (elm.firstChild) {
+				    elm.removeChild(elm.firstChild);
+				}
+			}
+			// Hide all.
 			UTILS.addClass(elm, 'hidden');
 		}
 		// If array is not empty, display elements and add attributes.
 		else {
+			// Display element.
 			if (UTILS.hasClass(elm, 'hidden')) {
 				UTILS.removeClass(elm, 'hidden');
 			}
-			console.log(elm.tagName);
+			// If element is an iframe
 			if (elm.tagName === 'IFRAME') {
 				console.log(elm.tagName);
 				elm.setAttribute('src', siteArray[0].siteUrl);
 			}
+			// If element is a button.
 			if (UTILS.hasClass(elm, 'to-website')) {
 				elm.setAttribute('href', siteArray[0].siteUrl);
+			}
+
+			// If element is a dropdown.
+			if (elm.tagName === 'SELECT') {
+				// init.
+				while (elm.firstChild) {
+				    elm.removeChild(elm.firstChild);
+				}
+				// Create an option for each object in siteArray, with a name and a value.
+				for (var j = 0; j < siteArray.length; j ++) {
+					var option = document.createElement('OPTION');
+					var text = document.createTextNode(siteArray[j].siteName);
+					option.appendChild(text);
+					option.setAttribute('value', siteArray[j].siteUrl);
+					elm.appendChild(option);
+				}
 			}
 			// Hide form if valid.
 			UTILS.removeClass(form.parentNode, 'visible-form');
