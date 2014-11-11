@@ -38,6 +38,8 @@ var clearJump = function(tab) {
 
 // Add activeTab class, connect it with a panel (activePanel), show the panel and disable other tabs.
 var activate = function(tab) {
+	// Jumping prefix.
+	clearJump(tab);
 	// If another tab is activated, and it's equal to the new tab, break the function.
 	if (UTILS.qsa('.activeTab')[0] && tab === UTILS.qsa('.activeTab')[0]) {
 		return;
@@ -71,8 +73,6 @@ var activate = function(tab) {
 		UTILS.addClass(panel, 'activePanel');
 		// Add aria-hidden='false' attribute.
 		panel.setAttribute('aria-hidden', 'false');
-		// Jumping prefix.
-		clearJump(tab);
 	}
 };
 
@@ -179,7 +179,6 @@ var displayForm = function(e) {
 		else {
 			UTILS.addClass(connectedForm, 'visible-form');
 		}
-
 	}
 };
 
@@ -195,30 +194,42 @@ for (var i = 0; i < controls.length; i++) {
 }
 
 // Validate a fieldset (name and URL). Mark invalid fields with a red border.
-var validateFieldset = function(e, name, url) {
+var validateFieldset = function(e, name, url, siteArray) {
 	// If invalid name.
-	if (name.value === '' && UTILS.hasClass(name, 'invalid') === false) {
+	if (name.value === '') {
 		// Prevent form submission.
 		UTILS.preventEvent(e);
-		// Add invalid class.
-		UTILS.addClass(name, 'invalid');
+		// Add invalid class if it doesn't already exist.
+		if (!UTILS.hasClass(name, 'invalid')) {
+			UTILS.addClass(name, 'invalid');
+		}
 	}
 	else {
 		if (UTILS.hasClass(name, 'invalid')) {
 			UTILS.removeClass(name, 'invalid');
 		}
 	}
-	// If invalid URL.
-	if (/regex/.test(url.value) && UTILS.hasClass(url, 'invalid') === false) {
+	// If invalid URL (later with regex).
+	if (url.value === '') {
 		// Prevent form submission.
 		UTILS.preventEvent(e);
-		// Add invalid class.
-		UTILS.addClass(url, 'invalid');
+		// Add invalid class if it doesn't already exist.
+		if (!UTILS.hasClass(url, 'invalid')) {
+			UTILS.addClass(url, 'invalid');
+		}
 	}
 	else {
 		if (UTILS.hasClass(url, 'invalid')) {
 			UTILS.removeClass(url, 'invalid');
 		}
+	}
+	// If fields are filled and validated, make an object with name and url.
+	if (!UTILS.hasClass(name, 'invalid') && !UTILS.hasClass(url, 'invalid')) {
+		var obj = {
+			siteName: name.value,
+			siteUrl: url.value
+		};
+		siteArray.push(obj);
 	}
 };
 
@@ -226,6 +237,8 @@ var validateFieldset = function(e, name, url) {
 // Validate URL if a site name was entered.
 var validateForm = function(form) {
 	return function(e) {
+		// Contains name + URL objects.
+		var siteArray = [];
 		// Get all child fieldsets.
 		var sets = form.getElementsByTagName('FIELDSET');
 		// Inside each fieldset, if any of the fieldset's fields is not empty, activate validations.
@@ -237,7 +250,7 @@ var validateForm = function(form) {
 			// Only if one of the fields is not empty, start a fieldset validation process.
 			if (name.value !== '' || url.value !== '') {
 				console.log('start validation!');
-				validateFieldset(e, name, url);
+				validateFieldset(e, name, url, siteArray);
 			}
 			else {
 				if (UTILS.hasClass(name, 'invalid')) {
@@ -248,7 +261,22 @@ var validateForm = function(form) {
 				}
 			}
 		}
-		// Focus on the first invalid field.
+
+		// Find if the form is valid.
+		if (form.querySelectorAll('.invalid')[0]) {
+			// Focus on the first invalid field.
+			console.log('some invalid');
+			form.querySelectorAll('.invalid')[0].focus();
+		}
+		else {
+			// Catch valid objects containing site name and site URL (inside of siteArray).
+			for (var j = 0; j < siteArray.length; j++) {
+				console.log(siteArray[j].siteName + ' ' + siteArray[j].siteUrl);
+			}
+			UTILS.preventEvent(e);
+			// Hide form if valid.
+			UTILS.removeClass(form.parentNode, 'visible-form');
+		}
 	};
 };
 
