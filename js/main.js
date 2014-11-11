@@ -243,13 +243,29 @@ var displayWebsites = function(form, siteArray) {
 	for (var i = 0; i < elements.length; i++) {
 		var elm = elements[i];
 		console.log(elm);
-		// If the array is empty, hide the element if it's not hidden.
+		// If the array is empty, hide the element if it's not hidden and remove all attributes.
 		if (!siteArray[0] && !UTILS.hasClass(elm, 'hidden')) {
+			if (elm.removeAttribute('src')) {
+				console.log(elm.tagName);
+				elm.removeAttribute('src', siteArray[0].siteUrl);
+			}
+			if (elm.removeAttribute('href')) {
+				elm.removeAttribute('href', siteArray[0].siteUrl);
+			}
 			UTILS.addClass(elm, 'hidden');
 		}
+		// If array is not empty, display elements and add attributes.
 		else {
 			if (UTILS.hasClass(elm, 'hidden')) {
 				UTILS.removeClass(elm, 'hidden');
+			}
+			console.log(elm.tagName);
+			if (elm.tagName === 'IFRAME') {
+				console.log(elm.tagName);
+				elm.setAttribute('src', siteArray[0].siteUrl);
+			}
+			if (UTILS.hasClass(elm, 'to-website')) {
+				elm.setAttribute('href', siteArray[0].siteUrl);
 			}
 			// Hide form if valid.
 			UTILS.removeClass(form.parentNode, 'visible-form');
