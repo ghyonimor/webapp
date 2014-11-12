@@ -9,7 +9,7 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 	method: 'GET',
 	done: function (response) {
 		if (response && response !== '') {
-			var message = UTILS.qsa('.notifications')[0];
+			var message = UTILS.qs('.notifications');
 			message.innerHTML = response;
 			message.style.display = 'block';
 		}
@@ -35,15 +35,15 @@ var getPanel = function(tab) {
 // Add activeTab class, connect it with a panel (activePanel), show the panel and disable other tabs.
 var activate = function(tab) {
 	// If another tab is activated, and it's equal to the new tab, break the function.
-	if (UTILS.qsa('.activeTab')[0] && tab === UTILS.qsa('.activeTab')[0]) {
+	if (UTILS.qs('.activeTab') && tab === UTILS.qs('.activeTab')) {
 		return;
 	}
 	else {
 		// Get the panel related to this tab.
 		var panel = getPanel(tab);
 		// Check if another tab has an active state and remove it.
-		if (UTILS.qsa('.activeTab')[0]) {
-			var activeTab = UTILS.qsa('.activeTab')[0];
+		if (UTILS.qs('.activeTab')) {
+			var activeTab = UTILS.qs('.activeTab');
 			// Remove activeTab class.
 			UTILS.removeClass(activeTab, 'activeTab');
 			// Remove aria-selected attribute from previously active tab.
@@ -105,8 +105,8 @@ DROPDOWNS BEHAVIOR.
 
 // Close a key activated dropdown while hovering on other dropdowns.
 var closeDropdown = function() {
-    if (UTILS.qsa('.active-menu')[0]) {
-	    var activeMenu = UTILS.qsa('.active-menu')[0];
+    if (UTILS.qs('.active-menu')) {
+	    var activeMenu = UTILS.qs('.active-menu');
 	    UTILS.removeClass(activeMenu, 'active-menu');
    	}
    	return activeMenu;
