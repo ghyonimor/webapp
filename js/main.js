@@ -114,7 +114,7 @@ var closeDropdown = function() {
 
 // Open a dropdown on key press, or close an already active one.
 var openDropdown = function(e) {
-	var target = e.target || e.srcElement;
+	var target = e.target;
     // Check that it's a nav-section and not a container.
     if (UTILS.hasClass(target, 'nav-section')) {
     	UTILS.preventEvent(e);
