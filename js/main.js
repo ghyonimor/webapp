@@ -134,31 +134,54 @@ UTILS.addEvent(nav, 'mouseover', closeDropdown);
 TAB PANELS INTERACTIVITY.
 ================================================*/
 
+// Used to display / hide form.
+var getFormWrap = function() {
+	var activePanel = UTILS.qs('.active-panel');
+	var formWrap = activePanel.querySelector('.form-wrap');
+	return formWrap;
+};
+
+// Add visible-form class to display a form.
+var displayForm = function() {
+	var connectedForm = getFormWrap();
+	UTILS.addClass(connectedForm, 'visible-form');
+};
+
+// Remove visible-form class to hide a form.
+var hideForm = function() {
+	var connectedForm = getFormWrap();
+	UTILS.removeClass(connectedForm, 'visible-form');
+};
+
 // Add / remove a 'visible-form' class to display / hide a form.
-var displayForm = function(e) {
+var displayOrHideForm = function(e) {
 	if (UTILS.hasClass(e.target, 'form-control-img')) {
 		UTILS.preventEvent(e);
 		var control = e.target;
-		var connectedFormId = control.getAttribute('aria-controls');
-		var connectedForm = document.getElementById(connectedFormId);
+		var connectedForm = getFormWrap();
 		if (UTILS.hasClass(connectedForm, 'visible-form')) {
-			UTILS.removeClass(connectedForm, 'visible-form');
+			hideForm();
 		}
 		else {
-			UTILS.addClass(connectedForm, 'visible-form');
+			displayForm();
 		}
 	}
 };
 
-// Get form controls.
+// Attach listeners to form control (display / hide form).
 var controls = UTILS.qsa('.form-control');
-// Iterate on form controls.
 for (var i = 0; i < controls.length; i++) {
 	var control = controls[i];
-	// 'click' event (connect to 'displayForm' function).
-	UTILS.addEvent(control, 'click', displayForm);
-	// 'keypress' event (connect to 'displayForm' function). Use DRY code (UTILS.isEnterOrSpace(func) function).
-	UTILS.addEvent(control, 'keypress', UTILS.isEnterOrSpace(displayForm));
+	UTILS.addEvent(control, 'click', displayOrHideForm);
+	UTILS.addEvent(control, 'keypress', UTILS.isEnterOrSpace(displayOrHideForm));
+}
+
+// Attach listeners to cancel buttons (hide form).
+var cancels = UTILS.qsa('.cancel');
+for (var i = 0; i < cancels.length; i++) {
+	var cancel = cancels[i];
+	UTILS.addEvent(cancel, 'click', hideForm);
+	UTILS.addEvent(cancel, 'keypress', UTILS.isEnterOrSpace(hideForm));
 }
 
 // Validate a fieldset (name and URL). Mark invalid fields with a red border.
