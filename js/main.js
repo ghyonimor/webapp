@@ -30,39 +30,39 @@ var getPanel = function(tab) {
 	return panel;
 };
 
-// Add activeTab class, connect it with a panel (activePanel), show the panel and disable other tabs.
+// Add active-tab class, connect it with a panel (activePanel), show the panel and disable other tabs.
 var activate = function(tab) {
 	// If another tab is activated, and it's equal to the new tab, break the function.
-	if (UTILS.qs('.activeTab') && tab === UTILS.qs('.activeTab')) {
+	if (UTILS.qs('.active-tab') && tab === UTILS.qs('.active-tab')) {
 		return;
 	}
 	else {
 		// Get the panel related to this tab.
 		var panel = getPanel(tab);
 		// Check if another tab has an active state and remove it.
-		if (UTILS.qs('.activeTab')) {
-			var activeTab = UTILS.qs('.activeTab');
-			// Remove activeTab class.
-			UTILS.removeClass(activeTab, 'activeTab');
+		if (UTILS.qs('.active-tab')) {
+			var activeTab = UTILS.qs('.active-tab');
+			// Remove active-tab class.
+			UTILS.removeClass(activeTab, 'active-tab');
 			// Remove aria-selected attribute from previously active tab.
 			activeTab.removeAttribute('aria-selected');
 			// Set aria-selected='false' to previously active tab.
 			activeTab.setAttribute('aria-selected', 'false');
 			// Get the active panel.
 			var activePanel = getPanel(activeTab);
-			// Remove activePanel class.
-			UTILS.removeClass(activePanel, 'activePanel');
+			// Remove active-panel class.
+			UTILS.removeClass(activePanel, 'active-panel');
 			// Remove aria-hidden attribute from previously active panel.
 			activePanel.removeAttribute('aria-hidden');
 			// Set aria-hidden='true' to previously active panel.
 			activePanel.setAttribute('aria-hidden', 'true');
 		}
 		// Activate new tab.
-		UTILS.addClass(tab, 'activeTab');
+		UTILS.addClass(tab, 'active-tab');
 		// Add aria-selected='true' attribute.
 		tab.setAttribute('aria-selected', 'true');
 		// Activate new Panel.
-		UTILS.addClass(panel, 'activePanel');
+		UTILS.addClass(panel, 'active-panel');
 		// Add aria-hidden='false' attribute.
 		panel.setAttribute('aria-hidden', 'false');
 	}
@@ -204,7 +204,7 @@ var validateFieldset = function(e, name, url, siteArray) {
 // Gets the relevant form and siteArray, displays / hides iframe/select/button and updates site list based on changes.
 var displayWebsites = function(form, siteArray) {
 	// Get form ID and use it as a class selector.
-	var selector = '.' + UTILS.qs('.activePanel').querySelector('.form-wrap').id;
+	var selector = '.' + UTILS.qs('.active-panel').querySelector('.form-wrap').id;
 	// Get iframe/select/button connected to this ID with a class of the same name.
 	var elements = UTILS.qsa(selector);
 	// Iterate on all elements connected to form.
@@ -317,7 +317,7 @@ var validateForm = function(form) {
 };
 
 // Get forms.
-var forms = UTILS.qsa('.enterSite');
+var forms = UTILS.qsa('.enter-site');
 // Iterate forms.
 for (var i = 0; i < forms.length; i++) {
 	var form = forms[i];
@@ -333,7 +333,7 @@ var selectHandler = function(e) {
 		var getValue = target.options[target.selectedIndex].value;
 		console.log(getValue);
 		// Get the active panel.
-		var panel = UTILS.qs('.activePanel');
+		var panel = UTILS.qs('.active-panel');
 		// Get the iframe.
 		var iframe = panel.querySelector('iframe');
 		// Get the button.

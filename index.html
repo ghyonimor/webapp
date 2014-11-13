@@ -99,16 +99,16 @@
 
             <div class="tabs" aria-multiselectable="false">
                 <div id="tablist" class="tablist justify" role="tablist">
-                    <a href="#quick-reports" class="tab" id="quickReports" role="tab" aria-controls="quick-reports" aria-owns="quick-reports"><i class="icon-external-link"></i> Quick Reports</a>
-                    <a href="#fmy-folders" class="tab" id="fmyFolders" role="tab" aria-controls="fmy-folders" aria-owns="fmy-folders"><i class="icon-star-o"></i> My Folders</a>
-                    <a href="#my-team-folders" class="tab" id="myTeamFolders" role="tab" aria-controls="my-team-folders" aria-owns="my-team-folders"><i class="icon-folder-open-o"></i> My Team Folders</a>
-                    <a href="#public-folders" class="tab" id="publicFolders" role="tab" aria-controls="public-folders" aria-owns="public-folders"><i class="icon-copy"></i> Public Folders</a>
+                    <a href="#quick-reports" class="tab" role="tab" aria-controls="quick-reports" aria-owns="quick-reports"><i class="icon-external-link"></i> Quick Reports</a>
+                    <a href="#fmy-folders" class="tab" role="tab" aria-controls="fmy-folders" aria-owns="fmy-folders"><i class="icon-star-o"></i> My Folders</a>
+                    <a href="#my-team-folders" class="tab" role="tab" aria-controls="my-team-folders" aria-owns="my-team-folders"><i class="icon-folder-open-o"></i> My Team Folders</a>
+                    <a href="#public-folders" class="tab" role="tab" aria-controls="public-folders" aria-owns="public-folders"><i class="icon-copy"></i> Public Folders</a>
                 </div>
 
-                <div class="tabPanel" id="quick-reports-panel" role="tabpanel" aria-describedby="quickReports">
-                    <div class="clearfix"><select class='site-select form1 hidden'></select><a class='form-control'><img class="form-control-img" src="img/settings.png" aria-controls="form1" aria-owns="form1" tabindex="0"></a><a class='to-website hidden form1' target='_blank' tabindex="0"><img src="img/expand.png"></a></div>
+                <div class="tab-panel" id="quick-reports-panel" role="tabpanel" aria-describedby="quickReports">
+                    <div class="clearfix"><select class="site-select form1 hidden"></select><a class="form-control"><img class="form-control-img" src="img/settings.png" aria-controls="form1" aria-owns="form1" tabindex="0"></a><a class="to-website hidden form1" target="_blank" tabindex="0"><img src="img/expand.png"></a></div>
                     <div id="form1" class="form-wrap visible-form">
-                        <form class="enterSite clearfix" novalidate>
+                        <form class="enter-site clearfix" novalidate>
                             <fieldset class="report-01 justify">
                                 <legend>Report 01:</legend>
                                 <div class="form-group">
@@ -145,18 +145,18 @@
                             <input type="submit" name="submit" value="save" role="button">
                         </form>
                     </div>
-                    <iframe class='hidden form1'></iframe>
+                    <iframe class="hidden form1"></iframe>
                 </div>
 
-                <div class="tabPanel" id="fmy-folders-panel" role="tabpanel" aria-describedby="fmyFolders">
-                    <div class="clearfix settings"><a class='to-website' href="http://netcraft.co.il" target='_blank'><img src="img/expand.png"></a></div>
+                <div class="tab-panel" id="fmy-folders-panel" role="tabpanel" aria-describedby="fmyFolders">
+                    <div class="clearfix settings"><a class="to-website" href="http://netcraft.co.il" target="_blank"><img src="img/expand.png"></a></div>
                     <iframe src="http://netcraft.co.il"></iframe>
                 </div>
 
-                <div class="tabPanel" id="my-team-folders-panel" role="tabpanel" aria-describedby="myTeamFolders">
-                    <div class="clearfix"><select class='site-select hidden form2'></select><a class='form-control'><img class="form-control-img" src="img/settings.png"  aria-controls="form2" aria-owns="form2" tabindex="0"></a><a class='to-website hidden form2' target='_blank' tabindex="0"><img src="img/expand.png"></a></div>
+                <div class="tab-panel" id="my-team-folders-panel" role="tabpanel" aria-describedby="myTeamFolders">
+                    <div class="clearfix"><select class="site-select hidden form2"></select><a class="form-control"><img class="form-control-img" src="img/settings.png"  aria-controls="form2" aria-owns="form2" tabindex="0"></a><a class="to-website hidden form2" target="_blank" tabindex="0"><img src="img/expand.png"></a></div>
                     <div id="form2" class="form-wrap visible-form">
-                        <form class="enterSite clearfix" novalidate>
+                        <form class="enter-site clearfix" novalidate>
                             <fieldset class="report-01 justify">
                                 <legend>Report 01:</legend>
                                 <div class="form-group">
@@ -193,11 +193,11 @@
                             <input type="submit" name="submit" value="save" role="button">
                         </form>
                     </div>
-                    <iframe class='hidden form2'></iframe>
+                    <iframe class="hidden form2"></iframe>
                 </div>
 
-                <div class="tabPanel" id="public-folders-panel" role="tabpanel" aria-describedby="publicFolders">
-                    <div class="clearfix settings"><a class='to-website' href="http://ynet.co.il" target='_blank'><img src="img/expand.png"></a></div>
+                <div class="tab-panel" id="public-folders-panel" role="tabpanel" aria-describedby="publicFolders">
+                    <div class="clearfix settings"><a class="to-website" href="http://ynet.co.il" target="_blank"><img src="img/expand.png"></a></div>
                     <iframe src="http://ynet.co.il"></iframe>
                 </div>
             </div>

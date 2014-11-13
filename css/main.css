@@ -365,7 +365,7 @@ TABS
     overflow: hidden;
 }
 
-.tabPanel {
+.tab-panel {
     display: none;
     position: relative;
     height: calc(100% - 40px);
@@ -375,12 +375,12 @@ TABS
     min-height: 550px;
 }
 
-.tablist > .activeTab {
+.tablist > .active-tab {
     background: lightgrey;
     color: black;
 }
 
-.activePanel {
+.active-panel {
     display: block;
 }
 
@@ -447,7 +447,7 @@ TABS
     max-height: 1000px;
 }
 
-.enterSite {
+.enter-site {
     background: white;
     padding: 20px;
     box-shadow: 0px 4px 3px rgba(0,0,0,0.4);
@@ -455,7 +455,7 @@ TABS
     vertical-align: top;
 }
 
-.enterSite fieldset {
+.enter-site fieldset {
     height: 41px;
     background: #c8c8c8;
     padding:7px;
@@ -464,7 +464,7 @@ TABS
     overflow: hidden;
 }
 
-.enterSite legend {
+.enter-site legend {
     float: left;
     height:25px;
     line-height: 25px;
@@ -478,7 +478,7 @@ TABS
     overflow: hidden;
 }
 
-.form-group label, .enterSite input {
+.form-group label, .enter-site input {
     display: inline-block;
     vertical-align: top;
 }
@@ -496,7 +496,7 @@ TABS
     border: 0px;
 }
 
-.enterSite input[type="submit"] {
+.enter-site input[type="submit"] {
     float: right;
     height: 35px;
     line-height: 35px;
