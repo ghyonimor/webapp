@@ -23,8 +23,6 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 TABS BEHAVIOR.
 ================================================*/
 
-
-
 // Get a panel connected to a tab.
 var getPanel = function(tab) {
 	var anchor = tab.getAttribute('href');
@@ -305,10 +303,10 @@ var validateForm = function(form) {
 		}
 
 		// Find if the form is valid.
-		if (form.querySelectorAll('.invalid')[0]) {
+		if (form.querySelector('.invalid')) {
 			// Focus on the first invalid field.
 			console.log('some invalid');
-			form.querySelectorAll('.invalid')[0].focus();
+			form.querySelector('.invalid').focus();
 		}
 		else {
 			UTILS.preventEvent(e);
@@ -347,7 +345,7 @@ var selectHandler = function(e) {
 };
 
 // 'change' event (connect to 'select' function).
-var selects = document.getElementsByTagName('SELECT');
+var selects = UTILS.qsa('.site-select');
 // Iterate on selects.
 for (var i = 0; i < selects.length; i++) {
 	var select = selects[i];

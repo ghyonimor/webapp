@@ -472,24 +472,24 @@ TABS
     overflow: hidden;
 }
 
-.wrapLabelInput {
+.form-group {
     display: inline-block;
     width: 39%;
     overflow: hidden;
 }
 
-.wrapLabelInput label, .enterSite input {
+.form-group label, .enterSite input {
     display: inline-block;
     vertical-align: top;
 }
 
-.wrapLabelInput label {
+.form-group label {
     height: 25px;
     line-height: 25px;
     width: 45px;
 }
 
-.wrapLabelInput input {
+.form-group input {
     height: 25px;
     width: calc(100% - 50px);
     padding: 2px;
@@ -525,7 +525,7 @@ ADDITIONAL
 
 /*Keyboard accessibility*/
 body :focus {
-    background: pink!important;
+    background: orange!important;
     outline: none!important;
 }
 
