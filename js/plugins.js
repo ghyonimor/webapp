@@ -30,16 +30,6 @@
 var UTILS = (function () {
 
     return {
-        // Cross browser prevent default.
-        preventEvent: function(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            else {
-                e.returnValue = false;
-            }
-        },
-
         // Validate enter or space keypress, and activate a function.
         isEnterOrSpace: function(func) {
             return function(e) {

@@ -115,7 +115,7 @@ var openDropdown = function(e) {
 	var target = e.target;
     // Check that it's a nav-section and not a container.
     if (UTILS.hasClass(target, 'nav-section')) {
-    	UTILS.preventEvent(e);
+    	e.preventDefault();
 	    var activeMenu = closeDropdown();
 		if (activeMenu !== target) {
 			UTILS.addClass(target, 'active-menu');
@@ -145,6 +145,7 @@ var getFormWrap = function() {
 var displayForm = function() {
 	var connectedForm = getFormWrap();
 	UTILS.addClass(connectedForm, 'visible-form');
+	connectedForm.querySelector('input').focus();
 };
 
 // Remove visible-form class to hide a form.
@@ -156,7 +157,7 @@ var hideForm = function() {
 // Add / remove a 'visible-form' class to display / hide a form.
 var displayOrHideForm = function(e) {
 	if (UTILS.hasClass(e.target, 'form-control-img')) {
-		UTILS.preventEvent(e);
+		e.preventDefault();
 		var control = e.target;
 		var connectedForm = getFormWrap();
 		if (UTILS.hasClass(connectedForm, 'visible-form')) {
@@ -189,7 +190,7 @@ var validateFieldset = function(e, name, url, siteArray) {
 	// If invalid name.
 	if (name.value === '') {
 		// Prevent form submission.
-		UTILS.preventEvent(e);
+		e.preventDefault();
 		// Add invalid class if it doesn't already exist.
 		if (!UTILS.hasClass(name, 'invalid')) {
 			UTILS.addClass(name, 'invalid');
@@ -203,7 +204,7 @@ var validateFieldset = function(e, name, url, siteArray) {
 	// If invalid URL (later with regex).
 	if (url.value === '') {
 		// Prevent form submission.
-		UTILS.preventEvent(e);
+		e.preventDefault();
 		// Add invalid class if it doesn't already exist.
 		if (!UTILS.hasClass(url, 'invalid')) {
 			UTILS.addClass(url, 'invalid');
@@ -220,7 +221,7 @@ var validateFieldset = function(e, name, url, siteArray) {
 			siteName: name.value,
 			siteUrl: url.value
 		};
-		siteArray.push(obj);
+		siteArray.unshift(obj);
 	}
 };
 
@@ -332,7 +333,7 @@ var validateForm = function(form) {
 			form.querySelector('.invalid').focus();
 		}
 		else {
-			UTILS.preventEvent(e);
+			e.preventDefault();
 			// Catch valid objects containing site name and site URL (inside of siteArray).
 			displayWebsites(form, siteArray);
 		}
