@@ -135,7 +135,11 @@ var dropdownsObj = {
 var nav = document.getElementById('navigation');
 
 // Attach listeners to dropdowns using UTILS.addEvent.
-UTILS.addEvent(nav, 'keypress', UTILS.isEnterOrSpace(dropdownsObj.openDropdown.bind(dropdownsObj)));
+UTILS.addEvent(nav, 'keydown', function(e) {
+	if (UTILS.isEnterOrSpace(e)) {
+		dropdownsObj.openDropdown.call(dropdownsObj, e);
+	}
+});
 UTILS.addEvent(nav, 'mouseover', dropdownsObj.closeDropdown);
 
 /*================================================
@@ -360,7 +364,11 @@ var controls = UTILS.qsa('.form-control');
 for (var i = 0; i < controls.length; i++) {
 	var control = controls[i];
 	UTILS.addEvent(control, 'click', interactivityObj.displayOrHideForm.bind(interactivityObj));
-	UTILS.addEvent(control, 'keypress', UTILS.isEnterOrSpace(interactivityObj.displayOrHideForm.bind(interactivityObj)));
+	UTILS.addEvent(control, 'keydown', function(e) {
+		if (UTILS.isEnterOrSpace(e)) {
+			interactivityObj.displayOrHideForm.call(interactivityObj, e);
+		}
+	});
 }
 
 // Attach listeners to cancel buttons (hide form).
@@ -368,7 +376,11 @@ var cancels = UTILS.qsa('.cancel');
 for (var i = 0; i < cancels.length; i++) {
 	var cancel = cancels[i];
 	UTILS.addEvent(cancel, 'click', interactivityObj.hideForm.bind(interactivityObj));
-	UTILS.addEvent(cancel, 'keypress', UTILS.isEnterOrSpace(interactivityObj.hideForm.bind(interactivityObj)));
+	UTILS.addEvent(cancel, 'keydown', function(e) {
+		if (UTILS.isEnterOrSpace(e)) {
+			interactivityObj.hideForm.call(interactivityObj);
+		}
+	});
 }
 
 // Get forms.

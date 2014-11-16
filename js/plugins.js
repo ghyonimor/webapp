@@ -62,12 +62,13 @@ var UTILS = (function () {
 
     return {
         // Validate enter or space keypress, and activate a function.
-        isEnterOrSpace: function(func) {
-            return function(e) {
-                if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
-                    func(e);
-                }
-            };
+        isEnterOrSpace: function(e) {
+            if (e.which === 13 || e.keyCode === 13 || e.which === 32 || e.keyCode === 32) {
+                return true;
+            }
+            else {
+                return false;
+            }
         },
 
         // Check if a node has a class.
