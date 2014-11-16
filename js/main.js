@@ -378,6 +378,18 @@ for (var i = 0; i < forms.length; i++) {
 	var form = forms[i];
 	// 'submit' event (connect to 'validateForm' function).
 	UTILS.addEvent(form, 'submit', interactivityObj.validateForm(form).bind(interactivityObj));
+	// Attach esc. key listener to inputs (hide form).
+	var inputs = form.querySelectorAll('input');
+	for (var j = 0; j < inputs.length; j++) {
+		var input = inputs[j];
+		console.log(input);
+		UTILS.addEvent(input, 'keydown', function(e){
+			if (e.keyCode === 27 || e.which === 27) {
+				console.log('esc');
+				interactivityObj.hideForm.call(interactivityObj);
+			}
+		});
+	}
 }
 
 // 'change' event (connect to 'select' function).
