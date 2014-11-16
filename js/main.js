@@ -106,6 +106,7 @@ DROPDOWNS BEHAVIOR.
 ================================================*/
 
 var dropdownsObj = {
+
 	// Close a key activated dropdown while hovering on other dropdowns.
 	closeDropdown: function() {
 	    if (UTILS.qs('.active-menu')) {
@@ -127,6 +128,7 @@ var dropdownsObj = {
 			}
 		}
 	}
+
 };
 
 // Get dropdowns' wrapper.
@@ -141,6 +143,7 @@ TAB PANELS INTERACTIVITY.
 ================================================*/
 
 var interactivityObj = {
+
 	// Used to display / hide form.
 	getFormWrap: function() {
 		var activePanel = UTILS.qs('.active-panel');
@@ -349,6 +352,7 @@ var interactivityObj = {
 			button.setAttribute('href', getValue);
 		}
 	}
+
 };
 
 // Attach listeners to form control (display / hide form).
