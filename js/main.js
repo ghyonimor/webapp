@@ -101,6 +101,16 @@ UTILS.addEvent(window, 'hashchange', tabsObj.hash.bind(tabsObj));
 // On page load.
 tabsObj.hash();
 
+// Attach keydown listener to tabs (activate on enter or space).
+var tabs = UTILS.qs('.tablist');
+console.log(tabs);
+UTILS.addEvent(tabs, 'keydown', function(e) {
+	if (UTILS.isEnterOrSpace(e) && UTILS.hasClass(e.target, 'tab')) {
+		tabsObj.activate(e.target);
+		e.preventDefault();
+	}
+});
+
 /*================================================
 DROPDOWNS BEHAVIOR.
 ================================================*/
