@@ -382,12 +382,22 @@ TABS
     display: block;
 }
 
+.select-wrap {
+    display: inline-block;
+    height: auto;
+    width: 30%;
+    overflow: hidden;
+    border: 0!important;
+}
+
 .site-select {
+    background: url('../img/arrow.png') right no-repeat;
+    background-position: 86% 50%;
     background-color: white;
     float: left;
     height: 35px;
-    width: 30%;
-    border: 0;
+    width: 110%;
+    border: 0!important;
     border-radius: 0;
 }
 
