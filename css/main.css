@@ -108,6 +108,7 @@ html, body {
 body {
     background-image: url('../img/body-background.jpg');
     background-size: cover;
+    background-attachment: fixed;
     z-index: 1;
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
     src='../img/body-background.jpg',
