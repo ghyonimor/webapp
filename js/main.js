@@ -384,12 +384,6 @@ var cancels = UTILS.qsa('.cancel');
 for (var i = 0; i < cancels.length; i++) {
 	var cancel = cancels[i];
 	UTILS.addEvent(cancel, 'click', interactivityObj.hideForm.bind(interactivityObj));
-	UTILS.addEvent(cancel, 'keydown', function(e) {
-		if (UTILS.isEnterOrSpace(e)) {
-			e.preventDefault();
-			interactivityObj.hideForm.call(interactivityObj);
-		}
-	});
 }
 
 // Get forms.
