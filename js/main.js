@@ -386,6 +386,7 @@ for (var i = 0; i < cancels.length; i++) {
 	UTILS.addEvent(cancel, 'click', interactivityObj.hideForm.bind(interactivityObj));
 	UTILS.addEvent(cancel, 'keydown', function(e) {
 		if (UTILS.isEnterOrSpace(e)) {
+			e.preventDefault();
 			interactivityObj.hideForm.call(interactivityObj);
 		}
 	});
