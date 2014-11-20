@@ -177,17 +177,13 @@ var interactivityObj = {
 	},
 
 	// Add / remove a 'visible-form' class to display / hide a form.
-	displayOrHideForm: function(e) {
-		if (UTILS.hasClass(e.target, 'form-control-img')) {
-			e.preventDefault();
-			var control = e.target;
-			var connectedForm = this.getFormWrap();
-			if (UTILS.hasClass(connectedForm, 'visible-form')) {
-				this.hideForm();
-			}
-			else {
-				this.displayForm();
-			}
+	displayOrHideForm: function() {
+		var connectedForm = this.getFormWrap();
+		if (UTILS.hasClass(connectedForm, 'visible-form')) {
+			this.hideForm();
+		}
+		else {
+			this.displayForm();
 		}
 	},
 
@@ -372,11 +368,6 @@ var controls = UTILS.qsa('.form-control');
 for (var i = 0; i < controls.length; i++) {
 	var control = controls[i];
 	UTILS.addEvent(control, 'click', interactivityObj.displayOrHideForm.bind(interactivityObj));
-	UTILS.addEvent(control, 'keydown', function(e) {
-		if (UTILS.isEnterOrSpace(e)) {
-			interactivityObj.displayOrHideForm.call(interactivityObj, e);
-		}
-	});
 }
 
 // Attach listeners to cancel buttons (hide form).
