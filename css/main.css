@@ -139,6 +139,7 @@ header {
     background: black;
     position: relative;
     z-index: 1;
+    width: 100%;
 }
 
 header a {
@@ -185,28 +186,20 @@ input[type="radio"] {
     background: #666666;
     padding: 20px;
     min-height: 100%;
-    margin: -80px auto 0;
-}
-
-.page-body:before {
-  content: "Placeholder for header";
-  display: block;
-}
-
-.page-body:before {
-  height: 80px;
+    margin: 0 auto;
 }
 
 /*Dynamically change with JS*/
 .notifications {
     display: none;
-    height: 40px;
+    height: 60px;
     line-height: 40px;
     width: 100%;
     background: lightgrey;
     padding: 0px 20px;
-    margin-bottom: 20px;
     overflow: hidden;
+    border: 20px solid #666666;
+    border-bottom: 0;
 }
 
 /*Helper class*/
@@ -354,22 +347,14 @@ NAVIGATION
 TABS
 ============*/
 
-.wrap-tabs {
-    position: relative;
-    height: auto;
-    width: 100%;
-}
-
 .tabs {
-    box-sizing: content-box;
     background: lightgrey;
     width: 100%;
     border: 20px solid #666666;
-    border-top: 0;
     position: absolute;
-    top: 0px;
+    top: 180px;
     bottom: 0;
-    left: -20px;
+    left: 0;
     right: 0;
     min-height: 700px;
 }
