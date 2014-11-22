@@ -110,13 +110,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    -ms-behavior: url(../backgroundsize.htc);
     z-index: 1;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-    src='../img/body-background.jpg',
-    sizingMethod='scale');
-    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
-    src='../img/body-background.jpg',
-    sizingMethod='scale')";
+    position: relative;
 }
 
 p, a {
@@ -358,19 +354,29 @@ NAVIGATION
 TABS
 ============*/
 
+.wrap-tabs {
+    position: relative;
+    height: auto;
+    width: 100%;
+}
+
 .tabs {
+    box-sizing: content-box;
+    background: lightgrey;
     width: 100%;
     border: 20px solid #666666;
+    border-top: 0;
     position: absolute;
-    top: 320px;
+    top: 0px;
     bottom: 0;
-    left: 0;
+    left: -20px;
     right: 0;
     min-height: 700px;
 }
 
 .tablist {
     height: 40px;
+    background: #666666;
 }
 
 .tablist > a {
@@ -391,7 +397,6 @@ TABS
     position: relative;
     height: calc(100% - 40px);
     width: 100%;
-    background: lightgrey;
     padding:20px;
     min-height: 550px;
 }
