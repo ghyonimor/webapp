@@ -182,13 +182,6 @@ input[type="radio"] {
     right: 0px;
 }
 
-.page-body {
-    background: #666666;
-    padding: 20px;
-    min-height: calc(100% - 80px);
-    margin: 0 auto;
-}
-
 /*Dynamically change with JS*/
 .notifications {
     display: none;
@@ -200,6 +193,17 @@ input[type="radio"] {
     overflow: hidden;
     border: 20px solid #666666;
     border-bottom: 0;
+}
+
+.page-body {
+    background: #666666;
+    padding: 20px;
+    min-height: calc(100% - 80px);
+    margin: 0 auto;
+}
+
+.notifications[style] + .page-body {
+    min-height: calc(100% - 140px);
 }
 
 /*Helper class*/
