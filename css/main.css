@@ -107,6 +107,7 @@ html, body {
 
 body {
     background-image: url('../img/body-background.jpg');
+    background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     z-index: 1;
