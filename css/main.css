@@ -106,12 +106,8 @@ html, body {
 }
 
 body {
-    background-image: url('../img/body-background.jpg');
-    background-repeat: no-repeat;
+    background: url('../img/body-background_resized.jpg') no-repeat fixed;
     background-size: cover;
-    background-attachment: fixed;
-    -ms-behavior: url(../backgroundsize.htc);
-    z-index: 1;
     position: relative;
 }
 
@@ -551,7 +547,7 @@ TABS
 /*iframe*/
 .tabs iframe {
     height: calc(100% - 40px);
-    min-height: 450px;
+    min-height: 540px;
     width: 100%;
     border: 0px;
 }
