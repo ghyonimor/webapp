@@ -364,7 +364,7 @@ TABS
     background: #666666;
 }
 
-.tablist > a {
+.tab {
     display: inline-block;
     text-align: center;
     height: 40px;
@@ -400,7 +400,7 @@ TABS
     height: auto;
     width: 30%;
     overflow: hidden;
-    border: 0!important;
+    border: 0;
 }
 
 .site-select {
@@ -410,7 +410,7 @@ TABS
     float: left;
     height: 35px;
     width: 110%;
-    border: 0!important;
+    border: 0;
     border-radius: 0;
 }
 
@@ -558,8 +558,13 @@ ADDITIONAL
 
 /*Keyboard accessibility*/
 body :focus {
-    background-color: orange!important;
-    outline: none!important;
+    outline: 1px solid orange;
+}
+
+.tab:focus {
+    background-color: lightgrey;
+    color: black;
+    outline: none;
 }
 
 /*ICON FONTS*/
