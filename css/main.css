@@ -111,6 +111,11 @@ body {
     position: relative;
 }
 
+body :focus {
+    outline: none;
+    background-color: orange!important;
+}
+
 p, a {
     margin: 0;
     overflow: hidden;
@@ -386,8 +391,8 @@ TABS
     min-height: 550px;
 }
 
-.tablist > .active-tab {
-    background: lightgrey;
+.tablist > .active-tab, .tab:focus {
+    background: lightgrey!important;
     color: black;
 }
 
@@ -555,17 +560,6 @@ TABS
 /*============
 ADDITIONAL
 ============*/
-
-/*Keyboard accessibility*/
-body :focus {
-    outline: 1px solid orange;
-}
-
-.tab:focus {
-    background-color: lightgrey;
-    color: black;
-    outline: none;
-}
 
 /*ICON FONTS*/
 @font-face {
