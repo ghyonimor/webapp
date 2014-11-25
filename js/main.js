@@ -13,7 +13,7 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 			message.innerHTML = response;
 			message.style.display = 'block';
 			var container = UTILS.qs('.notifications-wrap');
-			UTILS.addClass(container, '.active-ajax');
+			UTILS.addClass(container, 'active-ajax');
 		}
 	},
 	fail: function (err) {
