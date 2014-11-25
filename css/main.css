@@ -183,6 +183,10 @@ input[type="radio"] {
     right: 0px;
 }
 
+.notifications-wrap {
+    background: #666666;
+}
+
 /*Dynamically change with JS*/
 .notifications {
     display: none;
@@ -191,9 +195,8 @@ input[type="radio"] {
     width: 100%;
     background: lightgrey;
     padding: 0px 20px;
+    border-top: 20px solid #666666;
     overflow: hidden;
-    border: 20px solid #666666;
-    border-bottom: 0;
 }
 
 .page-body {
