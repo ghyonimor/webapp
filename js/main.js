@@ -215,8 +215,42 @@ var interactivityObj = {
 			}
 		}
 		else {
-			if (UTILS.hasClass(url, 'invalid')) {
-				UTILS.removeClass(url, 'invalid');
+			// Check if the URL is valid.
+			var isValidUrl = function(url) {
+				var re = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+				if (re.test(url.value)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			};
+
+			// If valid URL, remove any 'invalid' classes.
+			if (isValidUrl(url)) {
+				if (UTILS.hasClass(url, 'invalid')) {
+					UTILS.removeClass(url, 'invalid');
+				}
+				// If 'http://' is not provided, add it to the URL.
+				var setHttp = function(url) {
+					var re = /^(https?:\/\/)/;
+					if (re.test(url.value)) {
+						return;
+					}
+					else {
+						url.value = 'http://' + url.value;
+					}
+				    return;
+				};
+				setHttp(url);
+			}
+
+			// Else add an 'invalid' class if necessary and prevent form submittion..
+			else {
+				e.preventDefault();
+				if (!UTILS.hasClass(url, 'invalid')) {
+					UTILS.addClass(url, 'invalid');
+				}
 			}
 		}
 		// If fields are filled and validated, make an object with name and url.
