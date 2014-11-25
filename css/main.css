@@ -206,7 +206,7 @@ input[type="radio"] {
     margin: 0 auto;
 }
 
-.notifications[style] + .page-body {
+.active-ajax + .page-body {
     min-height: calc(100% - 140px);
 }
 

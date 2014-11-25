@@ -12,6 +12,8 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 			var message = UTILS.qs('.notifications');
 			message.innerHTML = response;
 			message.style.display = 'block';
+			var container = UTILS.qs('.notifications-wrap');
+			UTILS.addClass(container, '.active-ajax');
 		}
 	},
 	fail: function (err) {
