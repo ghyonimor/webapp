@@ -443,4 +443,61 @@ for (var i = 0; i < selects.length; i++) {
 	UTILS.addEvent(select, 'change', interactivityObj.selectHandler.bind(interactivityObj));
 }
 
+/*================================================
+SEARCH BOX BEHAVIOR.
+================================================*/
+
+var searchBox = {
+	searchHandler: function(e) {
+		if (e.which === 13 || e.keyCode === 13) {
+			var searchTerm = this.value;
+			e.preventDefault();
+			console.log(searchTerm);
+			// Search 'searchTerm' in every select.option.value.
+			// Get the first and third tabs, iterate on their options. If a match exists -
+			// activate the tab and option and break the function.
+			var tab1 = UTILS.qs('.tab1');
+			console.log(tab1);
+			var panel1 = tabsObj.getPanel(tab1);
+			var tab3 = UTILS.qs('.tab3');
+			var panel3 = tabsObj.getPanel(tab3);
+			console.log(tab3);
+			var select1 = panel1.querySelector('.site-select');
+			var options1 = select1.querySelectorAll('option');
+			console.log(options1);
+			var select3 = panel3.querySelector('.site-select');
+			var options3 = select3.querySelectorAll('option');
+			console.log(options3);
+			for (var i = 0; i < options1.length; i++) {
+				console.log(options1[i]);
+				if (options1[i].textContent === searchTerm) {
+					// Activate tab.
+					tab1.click();
+					// Select the option.
+					select1.selectedIndex = i;
+					panel1.querySelector('iframe').setAttribute('src', options1[i].value);
+					panel1.querySelector('.to-website').setAttribute('href', options1[i].value);
+					return;
+				}
+			}
+			for (var j = 0; j < options3.length; j++) {
+				console.log(options1[j]);
+				if (options3[j].textContent === searchTerm) {
+					// Activate tab.
+					tab3.click();
+					// Select the option.
+					select3.selectedIndex = j;
+					panel3.querySelector('iframe').setAttribute('src', options3[j].value);
+					panel3.querySelector('.to-website').setAttribute('href', options3[j].value);
+					return;
+				}
+			}
+		}
+	}
+};
+
+var searchElm = UTILS.qs('input[type="search"]');
+console.log(searchElm);
+UTILS.addEvent(searchElm, 'keydown', searchBox.searchHandler.bind(searchElm));
+
 
