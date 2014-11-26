@@ -217,7 +217,7 @@ var interactivityObj = {
 		else {
 			// Check if the URL is valid.
 			var isValidUrl = function(url) {
-				var re = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+				var re = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 				if (re.test(url.value)) {
 					return true;
 				}
@@ -233,12 +233,13 @@ var interactivityObj = {
 				}
 				// If 'http://' is not provided, add it to the URL.
 				var setHttp = function(url) {
-					var re = /^(https?:\/\/)/;
+					var re = /^(https?:\/\/)/i;
 					if (re.test(url.value)) {
+						url.value = url.value.toLowerCase();
 						return;
 					}
 					else {
-						url.value = 'http://' + url.value;
+						url.value = 'http://' + url.value.toLowerCase();
 					}
 				    return;
 				};
@@ -470,7 +471,7 @@ var searchBox = {
 			console.log(options3);
 			for (var i = 0; i < options1.length; i++) {
 				console.log(options1[i]);
-				if (options1[i].textContent === searchTerm) {
+				if (options1[i].textContent.toLowerCase() === searchTerm.toLowerCase()) {
 					// Activate tab.
 					tab1.click();
 					// Select the option.
@@ -482,7 +483,7 @@ var searchBox = {
 			}
 			for (var j = 0; j < options3.length; j++) {
 				console.log(options1[j]);
-				if (options3[j].textContent === searchTerm) {
+				if (options3[j].textContent.toLowerCase() === searchTerm.toLowerCase()) {
 					// Activate tab.
 					tab3.click();
 					// Select the option.
