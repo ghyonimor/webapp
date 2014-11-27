@@ -202,23 +202,25 @@ input[type="radio"] {
 .body-wrap {
     margin: 0 auto;
     width: 100%;
-    max-width: 1119px;
+    max-width: 1079px;
     height: auto;
-    padding: 0px 20px;
+    position: relative;
+    height: 500px;
 }
 
 .page-body {
+    left: 0;
+    right: 0;
     background: #666666;
     padding: 20px;
     position: absolute;
-    top: 80px;
+    top: 0px;
     bottom: 0;
-    width: 100%;
-    max-width: 1079px;
+    height: 200px;
 }
 
 .active-ajax + .body-wrap .page-body {
-    top: 140px;
+    top: 60px;
 }
 
 /*Helper class*/
