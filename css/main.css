@@ -189,7 +189,7 @@ input[type="radio"] {
 
 /*Dynamically change with JS*/
 .notifications {
-    display: none;
+    display: block;
     height: 60px;
     line-height: 40px;
     width: 100%;
@@ -204,7 +204,7 @@ input[type="radio"] {
     width: 100%;
     max-width: 1079px;
     height: auto;
-    padding: 0;
+    padding: 10px;
 }
 
 .page-body {
