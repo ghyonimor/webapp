@@ -166,6 +166,7 @@ input[type="radio"] {
     position: relative;
     width: 100%;
     max-width: 1079px;
+    padding: 0px 20px;
     margin: 0 auto;
 }
 
@@ -201,26 +202,23 @@ input[type="radio"] {
 .body-wrap {
     margin: 0 auto;
     width: 100%;
-    max-width: 1079px;
+    max-width: 1119px;
     height: auto;
-    position: relative;
-    height: 500px;
+    padding: 0px 20px;
 }
 
 .page-body {
-    left: 0;
-    right: 0;
     background: #666666;
     padding: 20px;
     position: absolute;
-    top: 0px;
+    top: 80px;
     bottom: 0;
-    height: 200px;
-    text-align: center
+    width: 100%;
+    max-width: 1079px;
 }
 
 .active-ajax + .body-wrap .page-body {
-    top: 60px;
+    top: 140px;
 }
 
 /*Helper class*/
