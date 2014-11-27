@@ -204,6 +204,7 @@ input[type="radio"] {
     width: 100%;
     max-width: 1119px;
     height: auto;
+    padding: 0px 20px;
 }
 
 .page-body {
