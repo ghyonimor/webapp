@@ -206,13 +206,14 @@ input[type="radio"] {
 }
 
 .page-body {
+    width: 100%;
+    max-width: 1079px;
     background: #666666;
     padding: 20px;
     position: absolute;
     top: 80px;
     bottom: 0;
     width: 100%;
-    max-width: 1079px;
 }
 
 .active-ajax + .body-wrap .page-body {
