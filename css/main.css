@@ -199,15 +199,26 @@ input[type="radio"] {
     overflow: hidden;
 }
 
+.body-wrap {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1079px;
+    height: auto;
+}
+
 .page-body {
     background: #666666;
     padding: 20px;
-    min-height: calc(100% - 80px);
+    position: absolute;
+    top: 80px;
+    bottom: 0;
     margin: 0 auto;
+    width: 100%;
+    max-width: 1079px;
 }
 
-.active-ajax + .page-body {
-    min-height: calc(100% - 140px);
+.active-ajax + .body-wrap .page-body {
+    top: 140px;
 }
 
 /*Helper class*/
@@ -387,11 +398,11 @@ TABS
 
 .tab-panel {
     display: none;
-    position: relative;
-    height: calc(100% - 40px);
+    position: absolute;
     width: 100%;
     padding:20px;
-    min-height: 550px;
+    top: 40px;
+    bottom: 0;
 }
 
 .tablist > .active-tab, .tab:focus {
@@ -516,12 +527,14 @@ TABS
 .form-group label {
     height: 25px;
     line-height: 25px;
-    width: 45px;
+    width: 20%;
+    text-align: right;
 }
 
 .form-group input {
     height: 25px;
-    width: calc(100% - 50px);
+    width: 76%;
+    margin-left: 2%;
     padding: 2px;
     border: 0px;
 }
@@ -553,13 +566,20 @@ TABS
 }
 
 /*iframe*/
-.tabs iframe {
-    height: calc(100% - 40px);
-    min-height: 540px;
-    width: 100%;
+.iframe-wrap {
+    position: absolute;
+    top: 60px;
+    bottom: 20px;
+    left: 0px;
     border: 0px;
+    width: 100%;
+    padding: 0px 20px;
 }
 
+.iframe-wrap iframe {
+    width: 100%;
+    height: 100%;
+}
 /*============
 ADDITIONAL
 ============*/
