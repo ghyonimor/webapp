@@ -196,7 +196,8 @@ input[type="radio"] {
     width: 100%;
     background: lightgrey;
     padding: 0px 20px;
-    border-top: 20px solid #666666;
+    border: 20px solid #666666;
+    border-bottom: 0;
     overflow: hidden;
 }
 
