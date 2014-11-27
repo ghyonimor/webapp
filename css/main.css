@@ -205,7 +205,6 @@ input[type="radio"] {
     max-width: 1079px;
     height: auto;
     padding: 0;
-    background: black;
 }
 
 .page-body {
@@ -214,7 +213,6 @@ input[type="radio"] {
     position: absolute;
     top: 80px;
     bottom: 0;
-    margin: 0 auto;
     width: 100%;
     max-width: 1079px;
 }
