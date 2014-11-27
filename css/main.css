@@ -166,7 +166,6 @@ input[type="radio"] {
     position: relative;
     width: 100%;
     max-width: 1079px;
-    padding: 0px 20px;
     margin: 0 auto;
 }
 
@@ -203,7 +202,6 @@ input[type="radio"] {
     margin: 0 auto;
     width: 100%;
     max-width: 1079px;
-    padding: 0px 20px;
     height: auto;
     position: relative;
     height: 500px;
@@ -218,6 +216,7 @@ input[type="radio"] {
     top: 0px;
     bottom: 0;
     height: 200px;
+    text-align: center
 }
 
 .active-ajax + .body-wrap .page-body {
