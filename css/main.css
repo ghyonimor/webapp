@@ -106,7 +106,7 @@ html, body {
 }
 
 body {
-    background: url('../img/body-background_resized.jpg') no-repeat fixed;
+    background: url('../img/body-background.jpg') no-repeat fixed;
     background-size: cover;
     position: relative;
 }
