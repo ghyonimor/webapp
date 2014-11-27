@@ -184,6 +184,7 @@ input[type="radio"] {
 
 .notifications-wrap {
     background: #666666;
+    top:80px;
 }
 
 /*Dynamically change with JS*/
@@ -215,9 +216,6 @@ input[type="radio"] {
     bottom: 0;
 }
 
-.active-ajax + .body-wrap .page-body {
-    top: 140px;
-}
 
 /*Helper class*/
 .justify {
