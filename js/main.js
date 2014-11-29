@@ -17,7 +17,6 @@ UTILS.ajax('../Web-App/data/notification.txt', {
 		}
 	},
 	fail: function (err) {
-		console.log(err.message);
 	}
 });
 
@@ -85,17 +84,28 @@ var tabsObj = {
 		var myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML;
 		var selectedIndex1 = UTILS.qs('#quick-reports-panel .site-select').selectedIndex;
 		var selectedIndex2 = UTILS.qs('#my-team-folders-panel .site-select').selectedIndex;
-		console.log(selectedIndex1);
-		console.log(selectedIndex2);
+		var formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input');
+		var formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
+		var formValues1 = [];
+		var formValues2 = [];
+		for (var i = 0; i < formInputs1.length; i++) {
+			formValues1.push(formInputs1[i].value);
+			console.log(formInputs1[i].value);
+		}
+		for (var j = 0; j < formInputs2.length; j++) {
+			formValues2.push(formInputs2[j].value);
+			console.log(formInputs1[j].value);
+		}
 		var formsObj = {
 			form1 : quickReports,
 			form2: myTeamFolders,
 			i1: selectedIndex1,
-			i2: selectedIndex2
+			i2: selectedIndex2,
+			val1: formValues1,
+			val2: formValues2
 		};
 		if (localStorage.setItem('forms', JSON.stringify(formsObj))) {
 			localStorage.setItem('forms', JSON.stringify(formsObj));
-			console.log(localStorage);
 		}
 	},
 
@@ -105,65 +115,39 @@ var tabsObj = {
 		 */
 		if (localStorage.getItem('forms')) {
 			var tabNodes = JSON.parse(localStorage.getItem('forms'));
-			console.log(tabNodes);
 			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes['form1'];
 			UTILS.qs('#my-team-folders-panel').innerHTML = tabNodes['form2'];
-			if (UTILS.qsa('#quick-reports-panel .site-select option')) {
-				var options1 = UTILS.qsa('#quick-reports-panel .site-select option');
-				var j = 0;
-				for (var i = options1.length - 1; i >= 0; i--) {
-					var option = options1[i];
-					console.log(option);
-					var name = option.innerText;
-					var value = option.getAttribute('value');
-					var inputs = UTILS.qsa('#form1 .form-group input');
-					inputs[j].value = name;
-					inputs[j + 1].value = value;
-					j = j + 2;
-				}
-
-				if (tabNodes['i1'] >= 0) {
-					var select1 = UTILS.qs('#quick-reports-panel .site-select');
-					select1.selectedIndex = tabNodes['i1'];
-					console.log(tabNodes['i1']);
-					console.log(select1.options);
-					var value1 = select1.options[select1.selectedIndex].value;
-					console.log(value1);
-					var iframe1 = UTILS.qs('#quick-reports-panel iframe');
-					// Get the button.
-					var button1 = UTILS.qs('#quick-reports-panel .to-website');
-					// CHange atributes.
-					iframe1.setAttribute('src', value1);
-					button1.setAttribute('href', value1);
-				}
+			var formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input');
+			var formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
+			for (var i = 0; i < formInputs1.length; i++) {
+				formInputs1[i].value = tabNodes['val1'][i];
+			}
+			for (var j = 0; j < formInputs2.length; j++) {
+				formInputs2[j].value = tabNodes['val2'][j];
 			}
 
-			if (UTILS.qsa('#my-team-folders-panel .site-select option')) {
-				var options2 = UTILS.qsa('#my-team-folders-panel .site-select option');
-				var j = 0;
-				for (var i = options2.length - 1; i >= 0; i--) {
-					var option = options2[i];
-					console.log(option);
-					var name = option.innerText;
-					var value = option.getAttribute('value');
-					var inputs = UTILS.qsa('#form2 .form-group input');
-					inputs[j].value = name;
-					inputs[j + 1].value = value;
-					j = j + 2;
-				}
+			if (tabNodes['i1'] >= 0) {
+				var select1 = UTILS.qs('#quick-reports-panel .site-select');
+				select1.selectedIndex = tabNodes['i1'];
+				var value1 = select1.options[select1.selectedIndex].value;
+				var iframe1 = UTILS.qs('#quick-reports-panel iframe');
+				// Get the button.
+				var button1 = UTILS.qs('#quick-reports-panel .to-website');
+				// CHange atributes.
+				iframe1.setAttribute('src', value1);
+				button1.setAttribute('href', value1);
+			}
 
-				if (tabNodes['i2'] >= 0) {
-					var select2 = UTILS.qs('#my-team-folders-panel .site-select');
-					select2.selectedIndex = tabNodes['i2'];
-					var value2 = select2.options[select2.selectedIndex].value;
-					console.log(value2);
-					var iframe2 = UTILS.qs('#my-team-folders-panel iframe');
-					// Get the button.
-					var button2 = UTILS.qs('#my-team-folders-panel .to-website');
-					// CHange atributes.
-					iframe2.setAttribute('src', value2);
-					button2.setAttribute('href', value2);
-				}
+			if (tabNodes['i2'] >= 0) {
+				var select2 = UTILS.qs('#my-team-folders-panel .site-select');
+				select2.selectedIndex = tabNodes['i2'];
+				var value2 = select2.options[select2.selectedIndex].value;
+				var iframe2 = UTILS.qs('#my-team-folders-panel iframe');
+				// Get the button.
+				var button2 = UTILS.qs('#my-team-folders-panel .to-website');
+				// CHange atributes.
+				iframe2.setAttribute('src', value2);
+				button2.setAttribute('href', value2);
 			}
 		}
 	},
@@ -370,12 +354,10 @@ var interactivityObj = {
 		// Iterate on all elements connected to form.
 		for (var i = 0; i < elements.length; i++) {
 			var elm = elements[i];
-			console.log(elm);
 			// If the array is empty, hide the element if it's not hidden and remove all attributes.
 			if (!siteArray[0] && !UTILS.hasClass(elm, 'hidden')) {
 				// If element is an iframe.
 				if (elm.removeAttribute('src')) {
-					console.log(elm.tagName);
 					elm.removeAttribute('src', siteArray[0].siteUrl);
 				}
 				// If element is a button.
@@ -394,7 +376,7 @@ var interactivityObj = {
 			}
 			// If array is empty on first iteration.
 			else if (!siteArray[0]) {
-				console.log('do nothing!');
+				console.log();
 			}
 			// If array is not empty, display elements and add attributes.
 			else {
@@ -404,7 +386,6 @@ var interactivityObj = {
 				}
 				// If element is an iframe
 				if (elm.tagName === 'IFRAME') {
-					console.log(elm.tagName);
 					elm.setAttribute('src', siteArray[0].siteUrl);
 				}
 				// If element is a button.
@@ -448,7 +429,6 @@ var interactivityObj = {
 				var url = set.getElementsByTagName('INPUT')[1];
 				// Only if one of the fields is not empty, start a fieldset validation process.
 				if (name.value !== '' || url.value !== '') {
-					console.log('start validation!');
 					this.validateFieldset(e, name, url, siteArray);
 				}
 				else {
@@ -464,7 +444,6 @@ var interactivityObj = {
 			// Find if the form is valid.
 			if (form.querySelector('.invalid')) {
 				// Focus on the first invalid field.
-				console.log('some invalid');
 				form.querySelector('.invalid').focus();
 			}
 			else {
@@ -482,7 +461,6 @@ var interactivityObj = {
 			var target = e.target;
 			// Get selected value.
 			var getValue = target.options[target.selectedIndex].value;
-			console.log(getValue);
 			// Get the active panel.
 			var panel = UTILS.qs('.active-panel');
 			// Get the iframe.
@@ -523,10 +501,8 @@ for (var i = 0; i < forms.length; i++) {
 	var inputs = form.querySelectorAll('input');
 	for (var j = 0; j < inputs.length; j++) {
 		var input = inputs[j];
-		console.log(input);
 		UTILS.addEvent(input, 'keydown', function(e){
 			if (e.keyCode === 27 || e.which === 27) {
-				console.log('esc');
 				interactivityObj.hideForm.call(interactivityObj);
 			}
 		});
@@ -538,7 +514,6 @@ var selects = UTILS.qsa('.site-select');
 // Iterate on selects.
 for (var i = 0; i < selects.length; i++) {
 	var select = selects[i];
-	console.log(select);
 	UTILS.addEvent(select, 'change', interactivityObj.selectHandler.bind(interactivityObj));
 }
 
@@ -554,7 +529,6 @@ var searchBox = {
 			var notifications = UTILS.qs('.notifications');
 			var searchTerm = this.value;
 			e.preventDefault();
-			console.log(searchTerm);
 			if (searchTerm === '') {
 				if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
 					UTILS.removeClass(notificationsWrap, 'active-ajax');
@@ -566,19 +540,14 @@ var searchBox = {
 			// Get the first and third tabs, iterate on their options. If a match exists -
 			// activate the tab and option and break the function.
 			var tab1 = UTILS.qs('.tab1');
-			console.log(tab1);
 			var panel1 = tabsObj.getPanel(tab1);
 			var tab3 = UTILS.qs('.tab3');
 			var panel3 = tabsObj.getPanel(tab3);
-			console.log(tab3);
 			var select1 = panel1.querySelector('.site-select');
 			var options1 = select1.querySelectorAll('option');
-			console.log(options1);
 			var select3 = panel3.querySelector('.site-select');
 			var options3 = select3.querySelectorAll('option');
-			console.log(options3);
 			for (var i = 0; i < options1.length; i++) {
-				console.log(options1[i]);
 				if (options1[i].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					// Activate tab.
 					tab1.click();
@@ -594,7 +563,6 @@ var searchBox = {
 				}
 			}
 			for (var j = 0; j < options3.length; j++) {
-				console.log(options1[j]);
 				if (options3[j].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					// Activate tab.
 					tab3.click();
@@ -619,7 +587,6 @@ var searchBox = {
 };
 
 var searchElm = UTILS.qs('input[type="search"]');
-console.log(searchElm);
 UTILS.addEvent(searchElm, 'keydown', searchBox.searchHandler.bind(searchElm));
 
 
