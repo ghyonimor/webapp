@@ -104,6 +104,36 @@ var tabsObj = {
 			console.log(tabNodes);
 			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes['form1'];
 			UTILS.qs('#my-team-folders-panel').innerHTML = tabNodes['form2'];
+			if (UTILS.qsa('#quick-reports-panel .site-select option')) {
+				var options1 = UTILS.qsa('#quick-reports-panel .site-select option');
+				var j = 0;
+				for (var i = options1.length - 1; i >= 0; i--) {
+					var option = options1[i];
+					console.log(option);
+					var name = option.innerText;
+					var value = option.getAttribute('value');
+					var inputs = UTILS.qsa('#form1 .form-group input');
+					inputs[j].value = name;
+					inputs[j + 1].value = value;
+					j = j + 2;
+				}
+			}
+
+			if (UTILS.qsa('#my-team-folders-panel .site-select option')) {
+				var options2 = UTILS.qsa('#my-team-folders-panel .site-select option');
+				var j = 0;
+				for (var i = options2.length - 1; i >= 0; i--) {
+					var option = options2[i];
+					console.log(option);
+					var name = option.innerText;
+					var value = option.getAttribute('value');
+					var inputs = UTILS.qsa('#form2 .form-group input');
+					inputs[j].value = name;
+					inputs[j + 1].value = value;
+					j = j + 2;
+				}
+			}
+
 		}
 	},
 
