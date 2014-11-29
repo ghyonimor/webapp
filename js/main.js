@@ -83,11 +83,15 @@ var tabsObj = {
 		 */
 		var quickReports = UTILS.qs('#quick-reports-panel').innerHTML;
 		var myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML;
-		console.log(quickReports);
-		console.log(myTeamFolders);
+		var selectedIndex1 = UTILS.qs('#quick-reports-panel .site-select').selectedIndex;
+		var selectedIndex2 = UTILS.qs('#my-team-folders-panel .site-select').selectedIndex;
+		console.log(selectedIndex1);
+		console.log(selectedIndex2);
 		var formsObj = {
 			form1 : quickReports,
-			form2: myTeamFolders
+			form2: myTeamFolders,
+			i1: selectedIndex1,
+			i2: selectedIndex2
 		};
 		if (localStorage.setItem('forms', JSON.stringify(formsObj))) {
 			localStorage.setItem('forms', JSON.stringify(formsObj));
@@ -117,6 +121,21 @@ var tabsObj = {
 					inputs[j + 1].value = value;
 					j = j + 2;
 				}
+
+				if (tabNodes['i1'] >= 0) {
+					var select1 = UTILS.qs('#quick-reports-panel .site-select');
+					select1.selectedIndex = tabNodes['i1'];
+					console.log(tabNodes['i1']);
+					console.log(select1.options);
+					var value1 = select1.options[select1.selectedIndex].value;
+					console.log(value1);
+					var iframe1 = UTILS.qs('#quick-reports-panel iframe');
+					// Get the button.
+					var button1 = UTILS.qs('#quick-reports-panel .to-website');
+					// CHange atributes.
+					iframe1.setAttribute('src', value1);
+					button1.setAttribute('href', value1);
+				}
 			}
 
 			if (UTILS.qsa('#my-team-folders-panel .site-select option')) {
@@ -132,8 +151,20 @@ var tabsObj = {
 					inputs[j + 1].value = value;
 					j = j + 2;
 				}
-			}
 
+				if (tabNodes['i2'] >= 0) {
+					var select2 = UTILS.qs('#my-team-folders-panel .site-select');
+					select2.selectedIndex = tabNodes['i2'];
+					var value2 = select2.options[select2.selectedIndex].value;
+					console.log(value2);
+					var iframe2 = UTILS.qs('#my-team-folders-panel iframe');
+					// Get the button.
+					var button2 = UTILS.qs('#my-team-folders-panel .to-website');
+					// CHange atributes.
+					iframe2.setAttribute('src', value2);
+					button2.setAttribute('href', value2);
+				}
+			}
 		}
 	},
 
@@ -461,6 +492,7 @@ var interactivityObj = {
 			// CHange atributes.
 			iframe.setAttribute('src', getValue);
 			button.setAttribute('href', getValue);
+			tabsObj.exportData();
 		}
 	}
 
