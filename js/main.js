@@ -451,9 +451,18 @@ SEARCH BOX BEHAVIOR.
 var searchBox = {
 	searchHandler: function(e) {
 		if (e.which === 13 || e.keyCode === 13) {
+			var notificationsWrap = UTILS.qs('.notifications-wrap');
+			var notifications = UTILS.qs('.notifications');
 			var searchTerm = this.value;
 			e.preventDefault();
 			console.log(searchTerm);
+			if (searchTerm === '') {
+				if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText === 'Search term not found!') {
+					UTILS.removeClass(notificationsWrap, 'active-ajax');
+					notifications.style.display = 'none';
+				}
+				return;
+			}
 			// Search 'searchTerm' in every select.option.value.
 			// Get the first and third tabs, iterate on their options. If a match exists -
 			// activate the tab and option and break the function.
@@ -469,8 +478,6 @@ var searchBox = {
 			var select3 = panel3.querySelector('.site-select');
 			var options3 = select3.querySelectorAll('option');
 			console.log(options3);
-			var notificationsWrap = UTILS.qs('.notifications-wrap');
-			var notifications = UTILS.qs('.notifications');
 			for (var i = 0; i < options1.length; i++) {
 				console.log(options1[i]);
 				if (options1[i].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
@@ -489,7 +496,7 @@ var searchBox = {
 			}
 			for (var j = 0; j < options3.length; j++) {
 				console.log(options1[j]);
-				if (options3[j].textContent.toLowerCase() === searchTerm.toLowerCase()) {
+				if (options3[j].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					// Activate tab.
 					tab3.click();
 					// Select the option.
