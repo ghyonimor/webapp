@@ -129,7 +129,6 @@ var tabsObj = {
 			window.location.hash = 'quick-reports';
 			this.activate(tabs[0]);
 		}
-		this.importData();
 	}
 
 };
@@ -137,6 +136,7 @@ var tabsObj = {
 // Hash change event listener.
 UTILS.addEvent(window, 'hashchange', tabsObj.hash.bind(tabsObj));
 // On page load.
+tabsObj.importData();
 tabsObj.hash();
 
 // Attach keydown listener to anchorts (click on enter or space).
