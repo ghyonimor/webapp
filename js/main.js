@@ -524,7 +524,7 @@ var searchBox = {
 			e.preventDefault();
 			console.log(searchTerm);
 			if (searchTerm === '') {
-				if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText === 'Search term not found!') {
+				if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
 					UTILS.removeClass(notificationsWrap, 'active-ajax');
 					notifications.style.display = 'none';
 				}
@@ -554,7 +554,7 @@ var searchBox = {
 					select1.selectedIndex = i;
 					panel1.querySelector('iframe').setAttribute('src', options1[i].value);
 					panel1.querySelector('.to-website').setAttribute('href', options1[i].value);
-					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText === 'Search term not found!') {
+					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
 						UTILS.removeClass(notificationsWrap, 'active-ajax');
 						notifications.style.display = 'none';
 					}
@@ -570,7 +570,7 @@ var searchBox = {
 					select3.selectedIndex = j;
 					panel3.querySelector('iframe').setAttribute('src', options3[j].value);
 					panel3.querySelector('.to-website').setAttribute('href', options3[j].value);
-					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText === 'Search term not found!') {
+					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
 						UTILS.removeClass(notificationsWrap, 'active-ajax');
 						notifications.style.display = 'none';
 					}
@@ -581,7 +581,7 @@ var searchBox = {
 				UTILS.addClass(notificationsWrap, 'active-ajax');
 			}
 			notifications.style.display = 'block';
-			notifications.innerText = 'Search term not found!';
+			notifications.innerText = 'The searched report "' + searchTerm + '" was not found.';
 		}
 	}
 };
