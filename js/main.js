@@ -72,6 +72,41 @@ var tabsObj = {
 		}
 	},
 
+	exportData: function() {
+		// Create a local storage with all sites.
+		/**
+		 * Get 2 forms:
+		 * {
+		 * form1: value;
+		 * form2: value
+		 * }
+		 */
+		var quickReports = UTILS.qs('#quick-reports-panel').innerHTML;
+		var myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML;
+		console.log(quickReports);
+		console.log(myTeamFolders);
+		var formsObj = {
+			form1 : quickReports,
+			form2: myTeamFolders
+		};
+		if (localStorage.setItem('forms', JSON.stringify(formsObj))) {
+			localStorage.setItem('forms', JSON.stringify(formsObj));
+			console.log(localStorage);
+		}
+	},
+
+	importData: function() {
+		/**
+		 * Display site data on page load. (called on hash()).
+		 */
+		if (localStorage.getItem('forms')) {
+			var tabNodes = JSON.parse(localStorage.getItem('forms'));
+			console.log(tabNodes);
+			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes['form1'];
+			UTILS.qs('#my-team-folders-panel').innerHTML = tabNodes['form2'];
+		}
+	},
+
 	// This function triggers tab activation on 2 cases:
 	// 1. On hash change.
 	// 2. On page load according to hash.
@@ -94,6 +129,7 @@ var tabsObj = {
 			window.location.hash = 'quick-reports';
 			this.activate(tabs[0]);
 		}
+		this.importData();
 	}
 
 };
@@ -336,7 +372,6 @@ var interactivityObj = {
 		}
 	},
 
-	// Validate form input using HTML5 'required'.
 	// Validate URL if a site name was entered.
 	validateForm: function(form) {
 		return function(e) {
@@ -375,6 +410,7 @@ var interactivityObj = {
 				e.preventDefault();
 				// Catch valid objects containing site name and site URL (inside of siteArray).
 				this.displayWebsites(form, siteArray);
+				tabsObj.exportData();
 			}
 		};
 	},
@@ -448,6 +484,7 @@ for (var i = 0; i < selects.length; i++) {
 SEARCH BOX BEHAVIOR.
 ================================================*/
 
+// This needs to be simplified into smaller functions.
 var searchBox = {
 	searchHandler: function(e) {
 		if (e.which === 13 || e.keyCode === 13) {
