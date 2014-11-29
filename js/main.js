@@ -469,15 +469,21 @@ var searchBox = {
 			var select3 = panel3.querySelector('.site-select');
 			var options3 = select3.querySelectorAll('option');
 			console.log(options3);
+			var notificationsWrap = UTILS.qs('.notifications-wrap');
+			var notifications = UTILS.qs('.notifications');
 			for (var i = 0; i < options1.length; i++) {
 				console.log(options1[i]);
-				if (options1[i].textContent.toLowerCase() === searchTerm.toLowerCase()) {
+				if (options1[i].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					// Activate tab.
 					tab1.click();
 					// Select the option.
 					select1.selectedIndex = i;
 					panel1.querySelector('iframe').setAttribute('src', options1[i].value);
 					panel1.querySelector('.to-website').setAttribute('href', options1[i].value);
+					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText === 'Search term not found!') {
+						UTILS.removeClass(notificationsWrap, 'active-ajax');
+						notifications.style.display = 'none';
+					}
 					return;
 				}
 			}
@@ -490,9 +496,18 @@ var searchBox = {
 					select3.selectedIndex = j;
 					panel3.querySelector('iframe').setAttribute('src', options3[j].value);
 					panel3.querySelector('.to-website').setAttribute('href', options3[j].value);
+					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText === 'Search term not found!') {
+						UTILS.removeClass(notificationsWrap, 'active-ajax');
+						notifications.style.display = 'none';
+					}
 					return;
 				}
 			}
+			if (!UTILS.hasClass(notificationsWrap, 'active-ajax')) {
+				UTILS.addClass(notificationsWrap, 'active-ajax');
+			}
+			notifications.style.display = 'block';
+			notifications.innerText = 'Search term not found!';
 		}
 	}
 };
