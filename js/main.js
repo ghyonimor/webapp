@@ -90,11 +90,9 @@ var tabsObj = {
 		var formValues2 = [];
 		for (var i = 0; i < formInputs1.length; i++) {
 			formValues1.push(formInputs1[i].value);
-			console.log(formInputs1[i].value);
 		}
 		for (var j = 0; j < formInputs2.length; j++) {
 			formValues2.push(formInputs2[j].value);
-			console.log(formInputs1[j].value);
 		}
 		var formsObj = {
 			form1 : quickReports,
