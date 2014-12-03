@@ -60,6 +60,7 @@ var tabsObj = {
 				// Set aria-hidden='true' to previously active panel.
 				activePanel.setAttribute('aria-hidden', 'true');
 			}
+
 			// Activate new tab.
 			UTILS.addClass(tab, 'active-tab');
 			// Add aria-selected='true' attribute.
@@ -73,13 +74,6 @@ var tabsObj = {
 
 	exportData: function() {
 		// Create a local storage with all sites.
-		/**
-		 * Get 2 forms:
-		 * {
-		 * form1: value;
-		 * form2: value
-		 * }
-		 */
 		var quickReports = UTILS.qs('#quick-reports-panel').innerHTML;
 		var myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML;
 		var selectedIndex1 = UTILS.qs('#quick-reports-panel .site-select').selectedIndex;
@@ -88,12 +82,16 @@ var tabsObj = {
 		var formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
 		var formValues1 = [];
 		var formValues2 = [];
+
 		for (var i = 0; i < formInputs1.length; i++) {
 			formValues1.push(formInputs1[i].value);
 		}
+
 		for (var j = 0; j < formInputs2.length; j++) {
 			formValues2.push(formInputs2[j].value);
 		}
+
+		// JSON object.
 		var formsObj = {
 			form1 : quickReports,
 			form2: myTeamFolders,
@@ -102,15 +100,14 @@ var tabsObj = {
 			val1: formValues1,
 			val2: formValues2
 		};
+
 		if (localStorage.setItem('forms', JSON.stringify(formsObj))) {
 			localStorage.setItem('forms', JSON.stringify(formsObj));
 		}
 	},
 
 	importData: function() {
-		/**
-		 * Display site data on page load. (called on hash()).
-		 */
+		// Import data on page load.
 		if (localStorage.getItem('forms')) {
 			var tabNodes = JSON.parse(localStorage.getItem('forms'));
 			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes['form1'];
@@ -124,26 +121,24 @@ var tabsObj = {
 				formInputs2[j].value = tabNodes['val2'][j];
 			}
 
+			// Display last selected element on 'quick-reports' tab.
 			if (tabNodes['i1'] >= 0) {
 				var select1 = UTILS.qs('#quick-reports-panel .site-select');
 				select1.selectedIndex = tabNodes['i1'];
 				var value1 = select1.options[select1.selectedIndex].value;
 				var iframe1 = UTILS.qs('#quick-reports-panel iframe');
-				// Get the button.
 				var button1 = UTILS.qs('#quick-reports-panel .to-website');
-				// CHange atributes.
 				iframe1.setAttribute('src', value1);
 				button1.setAttribute('href', value1);
 			}
 
+			// Display last selected element on 'my-team-folders' tab.
 			if (tabNodes['i2'] >= 0) {
 				var select2 = UTILS.qs('#my-team-folders-panel .site-select');
 				select2.selectedIndex = tabNodes['i2'];
 				var value2 = select2.options[select2.selectedIndex].value;
 				var iframe2 = UTILS.qs('#my-team-folders-panel iframe');
-				// Get the button.
 				var button2 = UTILS.qs('#my-team-folders-panel .to-website');
-				// CHange atributes.
 				iframe2.setAttribute('src', value2);
 				button2.setAttribute('href', value2);
 			}
@@ -519,14 +514,15 @@ for (var i = 0; i < selects.length; i++) {
 SEARCH BOX BEHAVIOR.
 ================================================*/
 
-// This needs to be simplified into smaller functions.
 var searchBox = {
+	// Handle search.
 	searchHandler: function(e) {
 		if (e.which === 13 || e.keyCode === 13) {
 			var notificationsWrap = UTILS.qs('.notifications-wrap');
 			var notifications = UTILS.qs('.notifications');
 			var searchTerm = this.value;
 			e.preventDefault();
+			// Handle empty search term.
 			if (searchTerm === '') {
 				if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
 					UTILS.removeClass(notificationsWrap, 'active-ajax');
@@ -535,8 +531,6 @@ var searchBox = {
 				return;
 			}
 			// Search 'searchTerm' in every select.option.value.
-			// Get the first and third tabs, iterate on their options. If a match exists -
-			// activate the tab and option and break the function.
 			var tab1 = UTILS.qs('.tab1');
 			var panel1 = tabsObj.getPanel(tab1);
 			var tab3 = UTILS.qs('.tab3');
@@ -545,6 +539,7 @@ var searchBox = {
 			var options1 = select1.querySelectorAll('option');
 			var select3 = panel3.querySelector('.site-select');
 			var options3 = select3.querySelectorAll('option');
+			// Iterate 'quick-reports' tab.
 			for (var i = 0; i < options1.length; i++) {
 				if (options1[i].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					// Activate tab.
@@ -560,6 +555,8 @@ var searchBox = {
 					return;
 				}
 			}
+
+			// Iterate 'my-team-folders' tab.
 			for (var j = 0; j < options3.length; j++) {
 				if (options3[j].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					// Activate tab.
@@ -575,6 +572,8 @@ var searchBox = {
 					return;
 				}
 			}
+
+			// Add a notification if the report was not found.
 			if (!UTILS.hasClass(notificationsWrap, 'active-ajax')) {
 				UTILS.addClass(notificationsWrap, 'active-ajax');
 			}
