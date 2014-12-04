@@ -4,10 +4,10 @@
 TABS BEHAVIOR.
 ================================================*/
 
-var tabsObj = {
+var tabs = {
 
 	init: function() {
-		UTILS.addEvent(window, 'hashchange', tabsObj.hash.bind(tabsObj));
+		UTILS.addEvent(window, 'hashchange', tabs.hash.bind(tabs));
 		this.importData();
 		this.hash();
 
@@ -120,9 +120,9 @@ var tabsObj = {
 	hash: function() {
 		var count = 0;
 		var hashVal = window.location.hash;
-		var tabs = UTILS.qsa('.tab');
-		for (var i = 0; i < tabs.length; i++) {
-			var tab = tabs[i];
+		var tabsGroup = UTILS.qsa('.tab');
+		for (var i = 0; i < tabsGroup.length; i++) {
+			var tab = tabsGroup[i];
 			var anchor = tab.getAttribute('href');
 			if (anchor === hashVal) {
 				this.activate(tab);
@@ -131,7 +131,7 @@ var tabsObj = {
 		}
 		if (count === 0) {
 			window.location.hash = 'quick-reports';
-			this.activate(tabs[0]);
+			this.activate(tabsGroup[0]);
 		}
 	}
 
@@ -141,17 +141,17 @@ var tabsObj = {
 DROPDOWNS BEHAVIOR.
 ================================================*/
 
-var dropdownsObj = {
+var dropdowns = {
 
 	init: function() {
 		var nav = document.getElementById('navigation');
 
 		UTILS.addEvent(nav, 'keydown', function(e) {
 			if (UTILS.isEnterOrSpace(e)) {
-				dropdownsObj.openDropdown.call(dropdownsObj, e);
+				dropdowns.openDropdown.call(dropdowns, e);
 			}
 		});
-		UTILS.addEvent(nav, 'mouseover', dropdownsObj.closeDropdown);
+		UTILS.addEvent(nav, 'mouseover', dropdowns.closeDropdown);
 	},
 
 	closeDropdown: function() {
@@ -176,34 +176,34 @@ var dropdownsObj = {
 };
 
 /*================================================
-TAB PANELS INTERACTIVITY.
+FORMS BEHAVIOR.
 ================================================*/
 
-var interactivityObj = {
+var formsBehavior = {
 
 	init: function() {
 		var controls = UTILS.qsa('.form-control');
 		for (var i = 0; i < controls.length; i++) {
 			var control = controls[i];
-			UTILS.addEvent(control, 'click', interactivityObj.displayOrHideForm.bind(interactivityObj));
+			UTILS.addEvent(control, 'click', formsBehavior.displayOrHideForm.bind(formsBehavior));
 		}
 
 		var cancels = UTILS.qsa('.cancel');
 		for (var i = 0; i < cancels.length; i++) {
 			var cancel = cancels[i];
-			UTILS.addEvent(cancel, 'click', interactivityObj.hideForm.bind(interactivityObj));
+			UTILS.addEvent(cancel, 'click', formsBehavior.hideForm.bind(formsBehavior));
 		}
 
 		var forms = UTILS.qsa('.enter-site');
 		for (var i = 0; i < forms.length; i++) {
 			var form = forms[i];
-			UTILS.addEvent(form, 'submit', interactivityObj.validateForm(form).bind(interactivityObj));
+			UTILS.addEvent(form, 'submit', formsBehavior.validateForm(form).bind(formsBehavior));
 			var inputs = form.querySelectorAll('input');
 			for (var j = 0; j < inputs.length; j++) {
 				var input = inputs[j];
 				UTILS.addEvent(input, 'keydown', function(e){
 					if (e.keyCode === 27 || e.which === 27) {
-						interactivityObj.hideForm.call(interactivityObj);
+						formsBehavior.hideForm.call(formsBehavior);
 					}
 				});
 			}
@@ -212,7 +212,7 @@ var interactivityObj = {
 		var selects = UTILS.qsa('.site-select');
 		for (var i = 0; i < selects.length; i++) {
 			var select = selects[i];
-			UTILS.addEvent(select, 'change', interactivityObj.selectHandler.bind(interactivityObj));
+			UTILS.addEvent(select, 'change', formsBehavior.selectHandler.bind(formsBehavior));
 		}
 	},
 
@@ -389,7 +389,7 @@ var interactivityObj = {
 			else {
 				e.preventDefault();
 				this.displayWebsites(form, siteArray);
-				tabsObj.exportData();
+				tabs.exportData();
 			}
 		};
 	},
@@ -403,7 +403,7 @@ var interactivityObj = {
 			var button = panel.querySelector('.to-website');
 			iframe.setAttribute('src', getValue);
 			button.setAttribute('href', getValue);
-			tabsObj.exportData();
+			tabs.exportData();
 		}
 	}
 
@@ -434,9 +434,9 @@ var searchBox = {
 				return;
 			}
 			var tab1 = UTILS.qs('.tab1');
-			var panel1 = tabsObj.getPanel(tab1);
+			var panel1 = tabs.getPanel(tab1);
 			var tab3 = UTILS.qs('.tab3');
-			var panel3 = tabsObj.getPanel(tab3);
+			var panel3 = tabs.getPanel(tab3);
 			var select1 = panel1.querySelector('.site-select');
 			var options1 = select1.querySelectorAll('option');
 			var select3 = panel3.querySelector('.site-select');
@@ -498,9 +498,9 @@ var initSite = function() {
 		}
 
 	});
-	tabsObj.init();
-	dropdownsObj.init();
-	interactivityObj.init();
+	tabs.init();
+	dropdowns.init();
+	formsBehavior.init();
 	searchBox.init();
 };
 
