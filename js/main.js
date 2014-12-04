@@ -1,30 +1,6 @@
 /* globals UTILS */
 
 /*================================================
-AJAX NOTIFICATION.
-================================================*/
-
-UTILS.ajax('../Web-App/data/notification.txt', {
-
-	method: 'GET',
-
-	done: function (response) {
-		if (response && response !== '') {
-			var message = UTILS.qs('.notifications');
-			message.innerHTML = response;
-			message.style.display = 'block';
-			var container = UTILS.qs('.notifications-wrap');
-			UTILS.addClass(container, 'active-ajax');
-		}
-	},
-
-	fail: function (err) {
-		console.log('error in the AJAX request');
-	}
-
-});
-
-/*================================================
 TABS BEHAVIOR.
 ================================================*/
 
@@ -503,6 +479,25 @@ var searchBox = {
 };
 
 var initSite = function() {
+	UTILS.ajax('../Web-App/data/notification.txt', {
+
+		method: 'GET',
+
+		done: function (response) {
+			if (response && response !== '') {
+				var message = UTILS.qs('.notifications');
+				message.innerHTML = response;
+				message.style.display = 'block';
+				var container = UTILS.qs('.notifications-wrap');
+				UTILS.addClass(container, 'active-ajax');
+			}
+		},
+
+		fail: function (err) {
+			console.log('error in the AJAX request');
+		}
+
+	});
 	tabsObj.init();
 	dropdownsObj.init();
 	interactivityObj.init();
