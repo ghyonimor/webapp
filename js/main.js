@@ -1,6 +1,44 @@
 /* globals UTILS */
 
 /*================================================
+DROPDOWNS BEHAVIOR.
+================================================*/
+
+var dropdowns = {
+
+	init: function() {
+		var nav = document.getElementById('navigation');
+
+		UTILS.addEvent(nav, 'keydown', function(e) {
+			if (UTILS.isEnterOrSpace(e)) {
+				dropdowns.openDropdown.call(dropdowns, e);
+			}
+		});
+		UTILS.addEvent(nav, 'mouseover', dropdowns.closeDropdown);
+	},
+
+	closeDropdown: function() {
+	    if (UTILS.qs('.active-menu')) {
+		    var activeMenu = UTILS.qs('.active-menu');
+		    UTILS.removeClass(activeMenu, 'active-menu');
+	   	}
+	   	return activeMenu;
+	},
+
+	openDropdown: function(e) {
+		var target = e.target;
+	    if (UTILS.hasClass(target, 'nav-section')) {
+	    	e.preventDefault();
+		    var activeMenu = this.closeDropdown();
+			if (activeMenu !== target) {
+				UTILS.addClass(target, 'active-menu');
+			}
+		}
+	}
+
+};
+
+/*================================================
 TABS BEHAVIOR.
 ================================================*/
 
@@ -67,7 +105,7 @@ var tabs = {
 			formValues2.push(formInputs2[j].value);
 		}
 
-		var formsObj = {
+		var forms = {
 			form1 : quickReports,
 			form2: myTeamFolders,
 			i1: selectedIndex1,
@@ -76,8 +114,8 @@ var tabs = {
 			val2: formValues2
 		};
 
-		if (localStorage.setItem('forms', JSON.stringify(formsObj))) {
-			localStorage.setItem('forms', JSON.stringify(formsObj));
+		if (localStorage.setItem('forms', JSON.stringify(forms))) {
+			localStorage.setItem('forms', JSON.stringify(forms));
 		}
 	},
 
@@ -132,44 +170,6 @@ var tabs = {
 		if (count === 0) {
 			window.location.hash = 'quick-reports';
 			this.activate(tabsGroup[0]);
-		}
-	}
-
-};
-
-/*================================================
-DROPDOWNS BEHAVIOR.
-================================================*/
-
-var dropdowns = {
-
-	init: function() {
-		var nav = document.getElementById('navigation');
-
-		UTILS.addEvent(nav, 'keydown', function(e) {
-			if (UTILS.isEnterOrSpace(e)) {
-				dropdowns.openDropdown.call(dropdowns, e);
-			}
-		});
-		UTILS.addEvent(nav, 'mouseover', dropdowns.closeDropdown);
-	},
-
-	closeDropdown: function() {
-	    if (UTILS.qs('.active-menu')) {
-		    var activeMenu = UTILS.qs('.active-menu');
-		    UTILS.removeClass(activeMenu, 'active-menu');
-	   	}
-	   	return activeMenu;
-	},
-
-	openDropdown: function(e) {
-		var target = e.target;
-	    if (UTILS.hasClass(target, 'nav-section')) {
-	    	e.preventDefault();
-		    var activeMenu = this.closeDropdown();
-			if (activeMenu !== target) {
-				UTILS.addClass(target, 'active-menu');
-			}
 		}
 	}
 
@@ -304,11 +304,11 @@ var formsBehavior = {
 		}
 		this.validateURL(url, e);
 		if (!UTILS.hasClass(name, 'invalid') && !UTILS.hasClass(url, 'invalid')) {
-			var obj = {
+			var siteInfo = {
 				siteName: name.value,
 				siteUrl: url.value
 			};
-			siteArray.unshift(obj);
+			siteArray.unshift(siteInfo);
 		}
 	},
 
@@ -478,7 +478,12 @@ var searchBox = {
 	}
 };
 
+/**
+ * Initialize all components.
+ */
+
 var initSite = function() {
+
 	UTILS.ajax('../Web-App/data/notification.txt', {
 
 		method: 'GET',
@@ -498,11 +503,16 @@ var initSite = function() {
 		}
 
 	});
-	tabs.init();
+
 	dropdowns.init();
+	tabs.init();
 	formsBehavior.init();
 	searchBox.init();
 };
+
+/**
+ * On page load.
+ */
 
 initSite();
 
