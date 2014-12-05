@@ -426,6 +426,9 @@ TABS
 }
 
 .site-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     background: url('../img/arrow.png') right no-repeat;
     background-position: 86% 50%;
     background-color: white;

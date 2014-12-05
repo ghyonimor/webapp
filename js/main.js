@@ -20,16 +20,20 @@ var dropdowns = {
 	closeDropdown: function() {
 	    if (UTILS.qs('.active-menu')) {
 		    var activeMenu = UTILS.qs('.active-menu');
+
 		    UTILS.removeClass(activeMenu, 'active-menu');
+		    return activeMenu;
 	   	}
-	   	return activeMenu;
 	},
 
 	openDropdown: function(e) {
 		var target = e.target;
+
 	    if (UTILS.hasClass(target, 'nav-section')) {
+	    	var activeMenu = this.closeDropdown();
+
 	    	e.preventDefault();
-		    var activeMenu = this.closeDropdown();
+
 			if (activeMenu !== target) {
 				UTILS.addClass(target, 'active-menu');
 			}
@@ -58,8 +62,9 @@ var tabs = {
 	},
 
 	getPanel: function(tab) {
-		var anchor = tab.getAttribute('href');
-		var panel = document.getElementById(anchor.replace('#', '') + '-panel');
+		var anchor = tab.getAttribute('href'),
+		panel = document.getElementById(anchor.replace('#', '') + '-panel');
+
 		return panel;
 	},
 
@@ -69,12 +74,14 @@ var tabs = {
 		}
 		else {
 			var panel = this.getPanel(tab);
+
 			if (UTILS.qs('.active-tab')) {
-				var activeTab = UTILS.qs('.active-tab');
+				var activeTab = UTILS.qs('.active-tab'),
+				activePanel = this.getPanel(activeTab);
+
 				UTILS.removeClass(activeTab, 'active-tab');
 				activeTab.removeAttribute('aria-selected');
 				activeTab.setAttribute('aria-selected', 'false');
-				var activePanel = this.getPanel(activeTab);
 				UTILS.removeClass(activePanel, 'active-panel');
 				activePanel.removeAttribute('aria-hidden');
 				activePanel.setAttribute('aria-hidden', 'true');
@@ -88,14 +95,14 @@ var tabs = {
 	},
 
 	exportData: function() {
-		var quickReports = UTILS.qs('#quick-reports-panel').innerHTML;
-		var myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML;
-		var selectedIndex1 = UTILS.qs('#quick-reports-panel .site-select').selectedIndex;
-		var selectedIndex2 = UTILS.qs('#my-team-folders-panel .site-select').selectedIndex;
-		var formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input');
-		var formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
-		var formValues1 = [];
-		var formValues2 = [];
+		var quickReports = UTILS.qs('#quick-reports-panel').innerHTML,
+		myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML,
+		selectedIndex1 = UTILS.qs('#quick-reports-panel .site-select').selectedIndex,
+		selectedIndex2 = UTILS.qs('#my-team-folders-panel .site-select').selectedIndex,
+		formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input'),
+		formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input'),
+		formValues1 = [],
+		formValues2 = [];
 
 		for (var i = 0; i < formInputs1.length; i++) {
 			formValues1.push(formInputs1[i].value);
@@ -121,34 +128,44 @@ var tabs = {
 
 	importData: function() {
 		if (localStorage.getItem('forms')) {
-			var tabNodes = JSON.parse(localStorage.getItem('forms'));
-			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes['form1'];
-			UTILS.qs('#my-team-folders-panel').innerHTML = tabNodes['form2'];
-			var formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input');
-			var formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
+			var tabNodes = JSON.parse(localStorage.getItem('forms')),
+			formInputs1,
+			formInputs2;
+			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes.form1;
+			UTILS.qs('#my-team-folders-panel').innerHTML = tabNodes.form2;
+			formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input');
+			formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
+
 			for (var i = 0; i < formInputs1.length; i++) {
-				formInputs1[i].value = tabNodes['val1'][i];
-			}
-			for (var j = 0; j < formInputs2.length; j++) {
-				formInputs2[j].value = tabNodes['val2'][j];
+				formInputs1[i].value = tabNodes.val1[i];
 			}
 
-			if (tabNodes['i1'] >= 0) {
-				var select1 = UTILS.qs('#quick-reports-panel .site-select');
-				select1.selectedIndex = tabNodes['i1'];
-				var value1 = select1.options[select1.selectedIndex].value;
-				var iframe1 = UTILS.qs('#quick-reports-panel iframe');
-				var button1 = UTILS.qs('#quick-reports-panel .to-website');
+			for (var j = 0; j < formInputs2.length; j++) {
+				formInputs2[j].value = tabNodes.val2[j];
+			}
+
+			if (tabNodes.i1 >= 0) {
+				var select1 = UTILS.qs('#quick-reports-panel .site-select'),
+				value1,
+				iframe1,
+				button1;
+				select1.selectedIndex = tabNodes.i1;
+				value1 = select1.options[select1.selectedIndex].value;
+				iframe1 = UTILS.qs('#quick-reports-panel iframe');
+				button1 = UTILS.qs('#quick-reports-panel .to-website');
 				iframe1.setAttribute('src', value1);
 				button1.setAttribute('href', value1);
 			}
 
-			if (tabNodes['i2'] >= 0) {
-				var select2 = UTILS.qs('#my-team-folders-panel .site-select');
-				select2.selectedIndex = tabNodes['i2'];
-				var value2 = select2.options[select2.selectedIndex].value;
-				var iframe2 = UTILS.qs('#my-team-folders-panel iframe');
-				var button2 = UTILS.qs('#my-team-folders-panel .to-website');
+			if (tabNodes.i2 >= 0) {
+				var select2 = UTILS.qs('#my-team-folders-panel .site-select'),
+				value2,
+				iframe2,
+				button2;
+				select2.selectedIndex = tabNodes.i2;
+				value2 = select2.options[select2.selectedIndex].value;
+				iframe2 = UTILS.qs('#my-team-folders-panel iframe');
+				button2 = UTILS.qs('#my-team-folders-panel .to-website');
 				iframe2.setAttribute('src', value2);
 				button2.setAttribute('href', value2);
 			}
@@ -156,12 +173,12 @@ var tabs = {
 	},
 
 	hash: function() {
-		var count = 0;
-		var hashVal = window.location.hash;
-		var tabsGroup = UTILS.qsa('.tab');
+		var count = 0,
+		hashVal = window.location.hash,
+		tabsGroup = UTILS.qsa('.tab');
 		for (var i = 0; i < tabsGroup.length; i++) {
-			var tab = tabsGroup[i];
-			var anchor = tab.getAttribute('href');
+			var tab = tabsGroup[i],
+			anchor = tab.getAttribute('href');
 			if (anchor === hashVal) {
 				this.activate(tab);
 				count = count + 1;
@@ -189,29 +206,25 @@ var formsBehavior = {
 		}
 
 		var cancels = UTILS.qsa('.cancel');
-		for (var i = 0; i < cancels.length; i++) {
-			var cancel = cancels[i];
+		for (var j = 0; j < cancels.length; j++) {
+			var cancel = cancels[j];
 			UTILS.addEvent(cancel, 'click', formsBehavior.hideForm.bind(formsBehavior));
 		}
 
 		var forms = UTILS.qsa('.enter-site');
-		for (var i = 0; i < forms.length; i++) {
-			var form = forms[i];
+		for (var k = 0; k < forms.length; k++) {
+			var form = forms[k];
 			UTILS.addEvent(form, 'submit', formsBehavior.validateForm(form).bind(formsBehavior));
 			var inputs = form.querySelectorAll('input');
-			for (var j = 0; j < inputs.length; j++) {
-				var input = inputs[j];
-				UTILS.addEvent(input, 'keydown', function(e){
-					if (e.keyCode === 27 || e.which === 27) {
-						formsBehavior.hideForm.call(formsBehavior);
-					}
-				});
+			for (var l = 0; l < inputs.length; l++) {
+				var input = inputs[l];
+				UTILS.addEvent(input, 'keydown', formsBehavior.escapePress.bind(formsBehavior));
 			}
 		}
 
 		var selects = UTILS.qsa('.site-select');
-		for (var i = 0; i < selects.length; i++) {
-			var select = selects[i];
+		for (var m = 0; m < selects.length; m++) {
+			var select = selects[m];
 			UTILS.addEvent(select, 'change', formsBehavior.selectHandler.bind(formsBehavior));
 		}
 	},
@@ -231,6 +244,12 @@ var formsBehavior = {
 	hideForm: function() {
 		var connectedForm = this.getFormWrap();
 		UTILS.removeClass(connectedForm, 'visible-form');
+	},
+
+	escapePress: function(e) {
+		if (e.keyCode === 27 || e.which === 27) {
+			this.hideForm();
+		}
 	},
 
 	displayOrHideForm: function() {
@@ -515,7 +534,3 @@ var initSite = function() {
  */
 
 initSite();
-
-
-
-
