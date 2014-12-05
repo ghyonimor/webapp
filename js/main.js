@@ -33,7 +33,6 @@ var dropdowns = {
 	    	var activeMenu = this.closeDropdown();
 
 	    	e.preventDefault();
-
 			if (activeMenu !== target) {
 				UTILS.addClass(target, 'active-menu');
 			}
@@ -52,7 +51,6 @@ var tabs = {
 		UTILS.addEvent(window, 'hashchange', tabs.hash.bind(tabs));
 		this.importData();
 		this.hash();
-
 		UTILS.addEvent(document, 'keydown', function(e) {
 			if (UTILS.isEnterOrSpace(e) && e.target.tagName === 'A') {
 				e.target.click();
@@ -102,7 +100,8 @@ var tabs = {
 		formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input'),
 		formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input'),
 		formValues1 = [],
-		formValues2 = [];
+		formValues2 = [],
+		forms;
 
 		for (var i = 0; i < formInputs1.length; i++) {
 			formValues1.push(formInputs1[i].value);
@@ -112,7 +111,7 @@ var tabs = {
 			formValues2.push(formInputs2[j].value);
 		}
 
-		var forms = {
+		forms = {
 			form1 : quickReports,
 			form2: myTeamFolders,
 			i1: selectedIndex1,
@@ -176,9 +175,11 @@ var tabs = {
 		var count = 0,
 		hashVal = window.location.hash,
 		tabsGroup = UTILS.qsa('.tab');
+
 		for (var i = 0; i < tabsGroup.length; i++) {
 			var tab = tabsGroup[i],
 			anchor = tab.getAttribute('href');
+
 			if (anchor === hashVal) {
 				this.activate(tab);
 				count = count + 1;
@@ -200,49 +201,62 @@ var formsBehavior = {
 
 	init: function() {
 		var controls = UTILS.qsa('.form-control');
+
 		for (var i = 0; i < controls.length; i++) {
 			var control = controls[i];
+
 			UTILS.addEvent(control, 'click', formsBehavior.displayOrHideForm.bind(formsBehavior));
 		}
 
 		var cancels = UTILS.qsa('.cancel');
+
 		for (var j = 0; j < cancels.length; j++) {
 			var cancel = cancels[j];
+
 			UTILS.addEvent(cancel, 'click', formsBehavior.hideForm.bind(formsBehavior));
 		}
 
 		var forms = UTILS.qsa('.enter-site');
+
 		for (var k = 0; k < forms.length; k++) {
 			var form = forms[k];
+
 			UTILS.addEvent(form, 'submit', formsBehavior.validateForm(form).bind(formsBehavior));
 			var inputs = form.querySelectorAll('input');
+
 			for (var l = 0; l < inputs.length; l++) {
 				var input = inputs[l];
+
 				UTILS.addEvent(input, 'keydown', formsBehavior.escapePress.bind(formsBehavior));
 			}
 		}
 
 		var selects = UTILS.qsa('.site-select');
+
 		for (var m = 0; m < selects.length; m++) {
 			var select = selects[m];
+
 			UTILS.addEvent(select, 'change', formsBehavior.selectHandler.bind(formsBehavior));
 		}
 	},
 
 	getFormWrap: function() {
-		var activePanel = UTILS.qs('.active-panel');
-		var formWrap = activePanel.querySelector('.form-wrap');
+		var activePanel = UTILS.qs('.active-panel'),
+		formWrap = activePanel.querySelector('.form-wrap');
+
 		return formWrap;
 	},
 
 	displayForm: function() {
 		var connectedForm = this.getFormWrap();
+
 		UTILS.addClass(connectedForm, 'visible-form');
 		connectedForm.querySelector('input').focus();
 	},
 
 	hideForm: function() {
 		var connectedForm = this.getFormWrap();
+
 		UTILS.removeClass(connectedForm, 'visible-form');
 	},
 
@@ -254,6 +268,7 @@ var formsBehavior = {
 
 	displayOrHideForm: function() {
 		var connectedForm = this.getFormWrap();
+
 		if (UTILS.hasClass(connectedForm, 'visible-form')) {
 			this.hideForm();
 		}
@@ -264,6 +279,7 @@ var formsBehavior = {
 
 	isValidUrlRegex: function(url) {
 		var re = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+
 		if (re.test(url.value)) {
 			return true;
 		}
@@ -274,6 +290,7 @@ var formsBehavior = {
 
 	setHttp: function(url) {
 		var re = /^(https?:\/\/)/i;
+
 		if (re.test(url.value)) {
 			url.value = url.value.toLowerCase();
 			return;
@@ -327,15 +344,18 @@ var formsBehavior = {
 				siteName: name.value,
 				siteUrl: url.value
 			};
+
 			siteArray.unshift(siteInfo);
 		}
 	},
 
 	displayWebsites: function(form, siteArray) {
-		var selector = '.' + UTILS.qs('.active-panel').querySelector('.form-wrap').id;
-		var elements = UTILS.qsa(selector);
+		var selector = '.' + UTILS.qs('.active-panel').querySelector('.form-wrap').id,
+		elements = UTILS.qsa(selector);
+
 		for (var i = 0; i < elements.length; i++) {
 			var elm = elements[i];
+
 			if (!siteArray[0] && !UTILS.hasClass(elm, 'hidden')) {
 				if (elm.removeAttribute('src')) {
 					elm.removeAttribute('src', siteArray[0].siteUrl);
@@ -369,8 +389,9 @@ var formsBehavior = {
 					    elm.removeChild(elm.firstChild);
 					}
 					for (var j = 0; j < siteArray.length; j ++) {
-						var option = document.createElement('OPTION');
-						var text = document.createTextNode(siteArray[j].siteName);
+						var option = document.createElement('OPTION'),
+						text = document.createTextNode(siteArray[j].siteName);
+
 						option.appendChild(text);
 						option.setAttribute('value', siteArray[j].siteUrl);
 						elm.appendChild(option);
@@ -383,12 +404,14 @@ var formsBehavior = {
 
 	validateForm: function(form) {
 		return function(e) {
-			var siteArray = [];
-			var sets = form.getElementsByTagName('FIELDSET');
+			var siteArray = [],
+			sets = form.getElementsByTagName('FIELDSET');
+
 			for (var i = 0; i < sets.length; i++) {
-				var set = sets[i];
-				var name = set.getElementsByTagName('INPUT')[0];
-				var url = set.getElementsByTagName('INPUT')[1];
+				var set = sets[i],
+				name = set.getElementsByTagName('INPUT')[0],
+				url = set.getElementsByTagName('INPUT')[1];
+
 				if (name.value !== '' || url.value !== '') {
 					this.validateFieldset(e, name, url, siteArray);
 				}
@@ -415,11 +438,12 @@ var formsBehavior = {
 
 	selectHandler: function(e) {
 		if (e.target.tagName === 'SELECT') {
-			var target = e.target;
-			var getValue = target.options[target.selectedIndex].value;
-			var panel = UTILS.qs('.active-panel');
-			var iframe = panel.querySelector('iframe');
-			var button = panel.querySelector('.to-website');
+			var target = e.target,
+			getValue = target.options[target.selectedIndex].value,
+			panel = UTILS.qs('.active-panel'),
+			iframe = panel.querySelector('iframe'),
+			button = panel.querySelector('.to-website');
+
 			iframe.setAttribute('src', getValue);
 			button.setAttribute('href', getValue);
 			tabs.exportData();
@@ -436,14 +460,16 @@ var searchBox = {
 
 	init: function() {
 		var searchElm = UTILS.qs('input[type="search"]');
+
 		UTILS.addEvent(searchElm, 'keydown', searchBox.searchHandler.bind(searchElm));
 	},
 
 	searchHandler: function(e) {
 		if (e.which === 13 || e.keyCode === 13) {
-			var notificationsWrap = UTILS.qs('.notifications-wrap');
-			var notifications = UTILS.qs('.notifications');
-			var searchTerm = this.value;
+			var notificationsWrap = UTILS.qs('.notifications-wrap'),
+			notifications = UTILS.qs('.notifications'),
+			searchTerm = this.value;
+
 			e.preventDefault();
 			if (searchTerm === '') {
 				if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
@@ -452,14 +478,15 @@ var searchBox = {
 				}
 				return;
 			}
-			var tab1 = UTILS.qs('.tab1');
-			var panel1 = tabs.getPanel(tab1);
-			var tab3 = UTILS.qs('.tab3');
-			var panel3 = tabs.getPanel(tab3);
-			var select1 = panel1.querySelector('.site-select');
-			var options1 = select1.querySelectorAll('option');
-			var select3 = panel3.querySelector('.site-select');
-			var options3 = select3.querySelectorAll('option');
+			var tab1 = UTILS.qs('.tab1'),
+			panel1 = tabs.getPanel(tab1),
+			tab3 = UTILS.qs('.tab3'),
+			panel3 = tabs.getPanel(tab3),
+			select1 = panel1.querySelector('.site-select'),
+			options1 = select1.querySelectorAll('option'),
+			select3 = panel3.querySelector('.site-select'),
+			options3 = select3.querySelectorAll('option');
+
 			for (var i = 0; i < options1.length; i++) {
 				if (options1[i].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
 					tab1.click();
@@ -502,17 +529,17 @@ var searchBox = {
  */
 
 var initSite = function() {
-
 	UTILS.ajax('../Web-App/data/notification.txt', {
 
 		method: 'GET',
 
 		done: function (response) {
 			if (response && response !== '') {
-				var message = UTILS.qs('.notifications');
+				var message = UTILS.qs('.notifications'),
+				container = UTILS.qs('.notifications-wrap');
+
 				message.innerHTML = response;
 				message.style.display = 'block';
-				var container = UTILS.qs('.notifications-wrap');
 				UTILS.addClass(container, 'active-ajax');
 			}
 		},
@@ -522,7 +549,6 @@ var initSite = function() {
 		}
 
 	});
-
 	dropdowns.init();
 	tabs.init();
 	formsBehavior.init();
