@@ -6,6 +6,9 @@ DROPDOWNS BEHAVIOR.
 
 var dropdowns = {
 
+	/**
+	 * Add 'mouseover' and 'keydown' events to open / close dropdowns.
+	 */
 	init: function() {
 		var nav = document.getElementById('navigation');
 
@@ -17,6 +20,9 @@ var dropdowns = {
 		UTILS.addEvent(nav, 'mouseover', dropdowns.closeDropdown);
 	},
 
+	/**
+	 * Remove 'active-menu' class from a dropdown and return it.
+	 */
 	closeDropdown: function() {
 	    if (UTILS.qs('.active-menu')) {
 		    var activeMenu = UTILS.qs('.active-menu');
@@ -26,6 +32,9 @@ var dropdowns = {
 	   	}
 	},
 
+	/**
+	 * Close an already active dropdown, and add an 'active-menu' class to the target element.
+	 */
 	openDropdown: function(e) {
 		var target = e.target;
 
@@ -47,6 +56,10 @@ TABS BEHAVIOR.
 
 var tabs = {
 
+	/**
+	 * Initialize tabs, add 'hashchange' and 'keydown' events and import local storage data.
+	 * Initialize 'A' tag 'keydown' behavior.
+	 */
 	init: function() {
 		UTILS.addEvent(window, 'hashchange', tabs.hash.bind(tabs));
 		this.importData();
@@ -59,6 +72,10 @@ var tabs = {
 		});
 	},
 
+	/**
+	 * Input: tab.
+	 * Output: Related tab panel.
+	 */
 	getPanel: function(tab) {
 		var anchor = tab.getAttribute('href'),
 		panel = document.getElementById(anchor.replace('#', '') + '-panel');
@@ -66,7 +83,10 @@ var tabs = {
 		return panel;
 	},
 
-	removeAria: function() {
+	/**
+	 * Get an active tab and panel, update their WAI-ARIA attributes.
+	 */
+	updateAria: function() {
 		var activeTab = UTILS.qs('.active-tab'),
 		activePanel = this.getPanel(activeTab);
 
@@ -78,6 +98,9 @@ var tabs = {
 		activePanel.setAttribute('aria-hidden', 'true');
 	},
 
+	/**
+	 * Close previously active tab and panel, open new ones and update WAI-ARIA attributes.
+	 */
 	activate: function(tab) {
 		if (UTILS.qs('.active-tab') && tab === UTILS.qs('.active-tab')) {
 			return;
@@ -86,7 +109,7 @@ var tabs = {
 			var panel = this.getPanel(tab);
 
 			if (UTILS.qs('.active-tab')) {
-				this.removeAria();
+				this.updateAria();
 			}
 
 			UTILS.addClass(tab, 'active-tab');
@@ -96,6 +119,9 @@ var tabs = {
 		}
 	},
 
+	/**
+	 * Export forms HTML and data via local storage.
+	 */
 	exportData: function() {
 		var panels = [UTILS.qs('#quick-reports-panel'), UTILS.qs('#my-team-folders-panel')],
 		data = [];
@@ -122,13 +148,15 @@ var tabs = {
 		}
 	},
 
+	/**
+	 * Import forms HTML and data via local storage.
+	 */
 	importData: function() {
 		if (localStorage.getItem('data')) {
 			var data = JSON.parse(localStorage.getItem('data')),
 			panels = [UTILS.qs('#quick-reports-panel'), UTILS.qs('#my-team-folders-panel')];
 
 			for (var i = 0; i < data.length; i++) {
-				// form html,values, select value, iframe src, button href,
 				var dataset = data[i],
 				formHtml = dataset[0],
 				index = dataset[1],
@@ -160,6 +188,9 @@ var tabs = {
 		}
 	},
 
+	/**
+	 * Handle 'hashchange' event and default state, activate the prebiously active tab and panel.
+	 */
 	hash: function() {
 		var count = 0,
 		hashVal = window.location.hash,
@@ -188,63 +219,65 @@ FORMS BEHAVIOR.
 
 var formsBehavior = {
 
+	/**
+	 * Initialize form behavior - control button, cancel button, to website button and site select list.
+	 */
 	init: function() {
 
-		this.controlButton();
+		var panels = [UTILS.qs('#quick-reports-panel'), UTILS.qs('#my-team-folders-panel')];
 
-		this.cancelButton();
+		for (var i = 0; i < panels.length; i++) {
+			var panel = panels[i];
 
-		this.toWebsiteButton();
+			this.controlEvent(panel);
 
-		this.siteSelect();
+			this.cancelEvent(panel);
+
+			this.formEvents(panel);
+
+			this.selectEvent(panel);
+		}
 
 	},
 
-	controlButton: function() {
-		var controls = UTILS.qsa('.form-control');
+	/**
+	 * Add a 'click' event to form controls.
+	 */
+	controlEvent: function(panel) {
+		var control = panel.querySelector('.form-control');
 
-		for (var i = 0; i < controls.length; i++) {
-			var control = controls[i];
+		UTILS.addEvent(control, 'click', formsBehavior.displayOrHideForm.bind(formsBehavior));
+	},
 
-			UTILS.addEvent(control, 'click', formsBehavior.displayOrHideForm.bind(formsBehavior));
+	/**
+	 * Add a 'click' event to cancel button.
+	 */
+	cancelEvent: function(panel) {
+		var cancel = panel.querySelector('.cancel');
+
+		UTILS.addEvent(cancel, 'click', formsBehavior.hideForm.bind(formsBehavior));
+	},
+
+	/**
+	 * Add 'submit' events to forms and esc. 'keydown' events to inputs.
+	 */
+	formEvents: function (panel) {
+		var form = panel.querySelector('.enter-site'),
+		inputs = form.querySelectorAll('input');
+
+		UTILS.addEvent(form, 'submit', formsBehavior.validateForm(form).bind(formsBehavior));
+
+		for (var i = 0; i < inputs.length; i++) {
+			var input = inputs[i];
+
+			UTILS.addEvent(input, 'keydown', formsBehavior.escapePress.bind(formsBehavior));
 		}
 	},
 
-	cancelButton: function() {
-		var cancels = UTILS.qsa('.cancel');
+	selectEvent: function(panel) {
+		var select = panel.querySelector('.site-select');
 
-		for (var j = 0; j < cancels.length; j++) {
-			var cancel = cancels[j];
-
-			UTILS.addEvent(cancel, 'click', formsBehavior.hideForm.bind(formsBehavior));
-		}
-	},
-
-	toWebsiteButton: function () {
-		var forms = UTILS.qsa('.enter-site');
-
-		for (var k = 0; k < forms.length; k++) {
-			var form = forms[k];
-
-			UTILS.addEvent(form, 'submit', formsBehavior.validateForm(form).bind(formsBehavior));
-			var inputs = form.querySelectorAll('input');
-
-			for (var l = 0; l < inputs.length; l++) {
-				var input = inputs[l];
-
-				UTILS.addEvent(input, 'keydown', formsBehavior.escapePress.bind(formsBehavior));
-			}
-		}
-	},
-
-	siteSelect: function() {
-		var selects = UTILS.qsa('.site-select');
-
-		for (var m = 0; m < selects.length; m++) {
-			var select = selects[m];
-
-			UTILS.addEvent(select, 'change', formsBehavior.selectHandler.bind(formsBehavior));
-		}
+		UTILS.addEvent(select, 'change', formsBehavior.selectHandler.bind(formsBehavior));
 	},
 
 	getFormWrap: function() {
@@ -509,6 +542,7 @@ var searchBox = {
 		if (!UTILS.hasClass(notificationsWrap, 'active-ajax')) {
 			UTILS.addClass(notificationsWrap, 'active-ajax');
 		}
+
 		notifications.style.display = 'block';
 		notifications.innerText = 'The searched report "' + searchTerm + '" was not found.';
 	},
