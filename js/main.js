@@ -66,6 +66,18 @@ var tabs = {
 		return panel;
 	},
 
+	removeAria: function() {
+		var activeTab = UTILS.qs('.active-tab'),
+		activePanel = this.getPanel(activeTab);
+
+		UTILS.removeClass(activeTab, 'active-tab');
+		activeTab.removeAttribute('aria-selected');
+		activeTab.setAttribute('aria-selected', 'false');
+		UTILS.removeClass(activePanel, 'active-panel');
+		activePanel.removeAttribute('aria-hidden');
+		activePanel.setAttribute('aria-hidden', 'true');
+	},
+
 	activate: function(tab) {
 		if (UTILS.qs('.active-tab') && tab === UTILS.qs('.active-tab')) {
 			return;
@@ -74,15 +86,7 @@ var tabs = {
 			var panel = this.getPanel(tab);
 
 			if (UTILS.qs('.active-tab')) {
-				var activeTab = UTILS.qs('.active-tab'),
-				activePanel = this.getPanel(activeTab);
-
-				UTILS.removeClass(activeTab, 'active-tab');
-				activeTab.removeAttribute('aria-selected');
-				activeTab.setAttribute('aria-selected', 'false');
-				UTILS.removeClass(activePanel, 'active-panel');
-				activePanel.removeAttribute('aria-hidden');
-				activePanel.setAttribute('aria-hidden', 'true');
+				this.removeAria();
 			}
 
 			UTILS.addClass(tab, 'active-tab');
@@ -93,80 +97,65 @@ var tabs = {
 	},
 
 	exportData: function() {
-		var quickReports = UTILS.qs('#quick-reports-panel').innerHTML,
-		myTeamFolders = UTILS.qs('#my-team-folders-panel').innerHTML,
-		selectedIndex1 = UTILS.qs('#quick-reports-panel .site-select').selectedIndex,
-		selectedIndex2 = UTILS.qs('#my-team-folders-panel .site-select').selectedIndex,
-		formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input'),
-		formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input'),
-		formValues1 = [],
-		formValues2 = [],
-		forms;
+		var panels = [UTILS.qs('#quick-reports-panel'), UTILS.qs('#my-team-folders-panel')],
+		data = [];
 
-		for (var i = 0; i < formInputs1.length; i++) {
-			formValues1.push(formInputs1[i].value);
+		for (var i = 0; i < panels.length; i++) {
+			var panel = panels[i],
+			formHtml = panel.innerHTML,
+			inputs = panel.querySelectorAll('.form-group input'),
+			selectedIndex = panel.querySelector('select').selectedIndex,
+			formValues = [];
+
+			for (var j = 0; j < inputs.length; j++) {
+				var input = inputs[j];
+				formValues.push(input.value);
+
+			}
+
+			data[i] = [formHtml, selectedIndex, formValues];
+
 		}
 
-		for (var j = 0; j < formInputs2.length; j++) {
-			formValues2.push(formInputs2[j].value);
-		}
-
-		forms = {
-			form1 : quickReports,
-			form2: myTeamFolders,
-			i1: selectedIndex1,
-			i2: selectedIndex2,
-			val1: formValues1,
-			val2: formValues2
-		};
-
-		if (localStorage.setItem('forms', JSON.stringify(forms))) {
-			localStorage.setItem('forms', JSON.stringify(forms));
+		if (localStorage.setItem('data', JSON.stringify(data))) {
+			localStorage.setItem('data', JSON.stringify(data));
 		}
 	},
 
 	importData: function() {
-		if (localStorage.getItem('forms')) {
-			var tabNodes = JSON.parse(localStorage.getItem('forms')),
-			formInputs1,
-			formInputs2;
-			UTILS.qs('#quick-reports-panel').innerHTML = tabNodes.form1;
-			UTILS.qs('#my-team-folders-panel').innerHTML = tabNodes.form2;
-			formInputs1 = UTILS.qsa('#quick-reports-panel .form-group input');
-			formInputs2 = UTILS.qsa('#my-team-folders-panel .form-group input');
+		if (localStorage.getItem('data')) {
+			var data = JSON.parse(localStorage.getItem('data')),
+			panels = [UTILS.qs('#quick-reports-panel'), UTILS.qs('#my-team-folders-panel')];
 
-			for (var i = 0; i < formInputs1.length; i++) {
-				formInputs1[i].value = tabNodes.val1[i];
-			}
+			for (var i = 0; i < data.length; i++) {
+				// form html,values, select value, iframe src, button href,
+				var dataset = data[i],
+				formHtml = dataset[0],
+				index = dataset[1],
+				val = dataset[2],
+				panel = panels[i],
+				inputs,
+				select,
+				value,
+				iframe,
+				button;
 
-			for (var j = 0; j < formInputs2.length; j++) {
-				formInputs2[j].value = tabNodes.val2[j];
-			}
+				panel.innerHTML = formHtml;
+				inputs = panel.querySelectorAll('.form-group input');
 
-			if (tabNodes.i1 >= 0) {
-				var select1 = UTILS.qs('#quick-reports-panel .site-select'),
-				value1,
-				iframe1,
-				button1;
-				select1.selectedIndex = tabNodes.i1;
-				value1 = select1.options[select1.selectedIndex].value;
-				iframe1 = UTILS.qs('#quick-reports-panel iframe');
-				button1 = UTILS.qs('#quick-reports-panel .to-website');
-				iframe1.setAttribute('src', value1);
-				button1.setAttribute('href', value1);
-			}
+				for (var j = 0; j < inputs.length; j++) {
+					inputs[j].value = val[j];
+				}
 
-			if (tabNodes.i2 >= 0) {
-				var select2 = UTILS.qs('#my-team-folders-panel .site-select'),
-				value2,
-				iframe2,
-				button2;
-				select2.selectedIndex = tabNodes.i2;
-				value2 = select2.options[select2.selectedIndex].value;
-				iframe2 = UTILS.qs('#my-team-folders-panel iframe');
-				button2 = UTILS.qs('#my-team-folders-panel .to-website');
-				iframe2.setAttribute('src', value2);
-				button2.setAttribute('href', value2);
+				select = panel.querySelector('select');
+				select.selectedIndex = index;
+				if (index > -1) {
+					value = select.options[select.selectedIndex].value;
+					iframe = panel.querySelector('iframe');
+					iframe.setAttribute('src', value);
+					button = panel.querySelector('.to-website');
+					button.setAttribute('href', value);
+				}
 			}
 		}
 	},
@@ -200,6 +189,18 @@ FORMS BEHAVIOR.
 var formsBehavior = {
 
 	init: function() {
+
+		this.controlButton();
+
+		this.cancelButton();
+
+		this.toWebsiteButton();
+
+		this.siteSelect();
+
+	},
+
+	controlButton: function() {
 		var controls = UTILS.qsa('.form-control');
 
 		for (var i = 0; i < controls.length; i++) {
@@ -207,7 +208,9 @@ var formsBehavior = {
 
 			UTILS.addEvent(control, 'click', formsBehavior.displayOrHideForm.bind(formsBehavior));
 		}
+	},
 
+	cancelButton: function() {
 		var cancels = UTILS.qsa('.cancel');
 
 		for (var j = 0; j < cancels.length; j++) {
@@ -215,7 +218,9 @@ var formsBehavior = {
 
 			UTILS.addEvent(cancel, 'click', formsBehavior.hideForm.bind(formsBehavior));
 		}
+	},
 
+	toWebsiteButton: function () {
 		var forms = UTILS.qsa('.enter-site');
 
 		for (var k = 0; k < forms.length; k++) {
@@ -230,7 +235,9 @@ var formsBehavior = {
 				UTILS.addEvent(input, 'keydown', formsBehavior.escapePress.bind(formsBehavior));
 			}
 		}
+	},
 
+	siteSelect: function() {
 		var selects = UTILS.qsa('.site-select');
 
 		for (var m = 0; m < selects.length; m++) {
@@ -349,6 +356,48 @@ var formsBehavior = {
 		}
 	},
 
+	initTab: function(elm, siteArray) {
+		if (elm.removeAttribute('src')) {
+			elm.removeAttribute('src', siteArray[0].siteUrl);
+		}
+		if (elm.removeAttribute('href')) {
+			elm.removeAttribute('href', siteArray[0].siteUrl);
+		}
+		if (elm.tagName === 'SELECT') {
+			while (elm.firstChild) {
+			    elm.removeChild(elm.firstChild);
+			}
+		}
+		UTILS.addClass(elm, 'hidden');
+	},
+
+	fillTabContent: function(form, elm, siteArray) {
+		if (UTILS.hasClass(elm, 'hidden')) {
+			UTILS.removeClass(elm, 'hidden');
+		}
+		if (elm.tagName === 'IFRAME') {
+			elm.setAttribute('src', siteArray[0].siteUrl);
+		}
+		if (UTILS.hasClass(elm, 'to-website')) {
+			elm.setAttribute('href', siteArray[0].siteUrl);
+		}
+
+		if (elm.tagName === 'SELECT') {
+			while (elm.firstChild) {
+			    elm.removeChild(elm.firstChild);
+			}
+			for (var j = 0; j < siteArray.length; j ++) {
+				var option = document.createElement('OPTION'),
+				text = document.createTextNode(siteArray[j].siteName);
+
+				option.appendChild(text);
+				option.setAttribute('value', siteArray[j].siteUrl);
+				elm.appendChild(option);
+			}
+		}
+		UTILS.removeClass(form.parentNode, 'visible-form');
+	},
+
 	displayWebsites: function(form, siteArray) {
 		var selector = '.' + UTILS.qs('.active-panel').querySelector('.form-wrap').id,
 		elements = UTILS.qsa(selector);
@@ -357,47 +406,17 @@ var formsBehavior = {
 			var elm = elements[i];
 
 			if (!siteArray[0] && !UTILS.hasClass(elm, 'hidden')) {
-				if (elm.removeAttribute('src')) {
-					elm.removeAttribute('src', siteArray[0].siteUrl);
-				}
-				if (elm.removeAttribute('href')) {
-					elm.removeAttribute('href', siteArray[0].siteUrl);
-				}
-				if (elm.tagName === 'SELECT') {
-					while (elm.firstChild) {
-					    elm.removeChild(elm.firstChild);
-					}
-				}
-				UTILS.addClass(elm, 'hidden');
+
+				this.initTab(elm, siteArray);
+
 			}
 			else if (!siteArray[0]) {
 				console.log();
 			}
 			else {
-				if (UTILS.hasClass(elm, 'hidden')) {
-					UTILS.removeClass(elm, 'hidden');
-				}
-				if (elm.tagName === 'IFRAME') {
-					elm.setAttribute('src', siteArray[0].siteUrl);
-				}
-				if (UTILS.hasClass(elm, 'to-website')) {
-					elm.setAttribute('href', siteArray[0].siteUrl);
-				}
 
-				if (elm.tagName === 'SELECT') {
-					while (elm.firstChild) {
-					    elm.removeChild(elm.firstChild);
-					}
-					for (var j = 0; j < siteArray.length; j ++) {
-						var option = document.createElement('OPTION'),
-						text = document.createTextNode(siteArray[j].siteName);
+				this.fillTabContent(form, elm, siteArray);
 
-						option.appendChild(text);
-						option.setAttribute('value', siteArray[j].siteUrl);
-						elm.appendChild(option);
-					}
-				}
-				UTILS.removeClass(form.parentNode, 'visible-form');
 			}
 		}
 	},
@@ -464,6 +483,36 @@ var searchBox = {
 		UTILS.addEvent(searchElm, 'keydown', searchBox.searchHandler.bind(searchElm));
 	},
 
+	searchSite: function(tabGroup, searchTerm, notificationsWrap, notifications) {
+		for (var i = 0; i < tabGroup.length; i++) {
+			var tab = tabGroup[i],
+			panel = tabs.getPanel(tab),
+			select = panel.querySelector('.site-select'),
+			options = select.querySelectorAll('option');
+
+			for (var j = 0; j < options.length; j++) {
+				if (options[j].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
+					tab.click();
+					select.selectedIndex = j;
+					panel.querySelector('iframe').setAttribute('src', options[j].value);
+					panel.querySelector('.to-website').setAttribute('href', options[j].value);
+					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
+						UTILS.removeClass(notificationsWrap, 'active-ajax');
+						notifications.style.display = 'none';
+					}
+					return;
+				}
+
+			}
+		}
+
+		if (!UTILS.hasClass(notificationsWrap, 'active-ajax')) {
+			UTILS.addClass(notificationsWrap, 'active-ajax');
+		}
+		notifications.style.display = 'block';
+		notifications.innerText = 'The searched report "' + searchTerm + '" was not found.';
+	},
+
 	searchHandler: function(e) {
 		if (e.which === 13 || e.keyCode === 13) {
 			var notificationsWrap = UTILS.qs('.notifications-wrap'),
@@ -478,48 +527,10 @@ var searchBox = {
 				}
 				return;
 			}
-			var tab1 = UTILS.qs('.tab1'),
-			panel1 = tabs.getPanel(tab1),
-			tab3 = UTILS.qs('.tab3'),
-			panel3 = tabs.getPanel(tab3),
-			select1 = panel1.querySelector('.site-select'),
-			options1 = select1.querySelectorAll('option'),
-			select3 = panel3.querySelector('.site-select'),
-			options3 = select3.querySelectorAll('option');
 
-			for (var i = 0; i < options1.length; i++) {
-				if (options1[i].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
-					tab1.click();
-					select1.selectedIndex = i;
-					panel1.querySelector('iframe').setAttribute('src', options1[i].value);
-					panel1.querySelector('.to-website').setAttribute('href', options1[i].value);
-					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
-						UTILS.removeClass(notificationsWrap, 'active-ajax');
-						notifications.style.display = 'none';
-					}
-					return;
-				}
-			}
+			var tabGroup = [UTILS.qs('.tab1'), UTILS.qs('.tab3')];
 
-			for (var j = 0; j < options3.length; j++) {
-				if (options3[j].textContent.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0) {
-					tab3.click();
-					select3.selectedIndex = j;
-					panel3.querySelector('iframe').setAttribute('src', options3[j].value);
-					panel3.querySelector('.to-website').setAttribute('href', options3[j].value);
-					if (UTILS.hasClass(notificationsWrap, 'active-ajax') && notifications.innerText.indexOf('The searched report') === 0) {
-						UTILS.removeClass(notificationsWrap, 'active-ajax');
-						notifications.style.display = 'none';
-					}
-					return;
-				}
-			}
-
-			if (!UTILS.hasClass(notificationsWrap, 'active-ajax')) {
-				UTILS.addClass(notificationsWrap, 'active-ajax');
-			}
-			notifications.style.display = 'block';
-			notifications.innerText = 'The searched report "' + searchTerm + '" was not found.';
+			searchBox.searchSite(tabGroup, searchTerm, notificationsWrap, notifications);
 		}
 	}
 };
