@@ -265,7 +265,7 @@ var formsBehavior = {
 		var form = panel.querySelector('.enter-site'),
 		inputs = form.querySelectorAll('input');
 
-		UTILS.addEvent(form, 'submit', formsBehavior.validateForm(form).bind(formsBehavior));
+		UTILS.addEvent(form, 'submit', formsBehavior.validateForm(panel, form).bind(formsBehavior));
 
 		for (var i = 0; i < inputs.length; i++) {
 			var input = inputs[i];
@@ -274,12 +274,18 @@ var formsBehavior = {
 		}
 	},
 
+	/**
+	 * Add 'change' event to site selection list.
+	 */
 	selectEvent: function(panel) {
 		var select = panel.querySelector('.site-select');
 
 		UTILS.addEvent(select, 'change', formsBehavior.selectHandler.bind(formsBehavior));
 	},
 
+	/**
+	 * Get the '.form-wrap' element in an active tab.
+	 */
 	getFormWrap: function() {
 		var activePanel = UTILS.qs('.active-panel'),
 		formWrap = activePanel.querySelector('.form-wrap');
@@ -287,6 +293,9 @@ var formsBehavior = {
 		return formWrap;
 	},
 
+	/**
+	 *Display a form based on an active tab.
+	 */
 	displayForm: function() {
 		var connectedForm = this.getFormWrap();
 
@@ -294,18 +303,27 @@ var formsBehavior = {
 		connectedForm.querySelector('input').focus();
 	},
 
+	/**
+	 * Hide a form based on an active tab.
+	 */
 	hideForm: function() {
 		var connectedForm = this.getFormWrap();
 
 		UTILS.removeClass(connectedForm, 'visible-form');
 	},
 
+	/**
+	 * Handle esc press.
+	 */
 	escapePress: function(e) {
 		if (e.keyCode === 27 || e.which === 27) {
 			this.hideForm();
 		}
 	},
 
+	/**
+	 * Conditions for desplaying / hiding form.
+	 */
 	displayOrHideForm: function() {
 		var connectedForm = this.getFormWrap();
 
@@ -317,6 +335,10 @@ var formsBehavior = {
 		}
 	},
 
+	/**
+	 * Input: a URL.
+	 * Output: true if valid according to given regex, false if not.
+	 */
 	isValidUrlRegex: function(url) {
 		var re = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
@@ -328,6 +350,9 @@ var formsBehavior = {
 		}
 	},
 
+	/**
+	 * Add 'http' to the beginning of a URL string if it doesn't exist.
+	 */
 	setHttp: function(url) {
 		var re = /^(https?:\/\/)/i;
 
@@ -338,9 +363,11 @@ var formsBehavior = {
 		else {
 			url.value = 'http://' + url.value.toLowerCase();
 		}
-	    return;
 	},
 
+	/**
+	 * Set 'invalid' class to invalid URLs.
+	 */
 	validateURL: function(url, e) {
 		if (url.value === '') {
 			e.preventDefault();
@@ -366,6 +393,9 @@ var formsBehavior = {
 		}
 	},
 
+	/**
+	 * Validate 'name' and 'URL' fields in a fieldset, push valid pairs to an array for later use in 'select'.
+	 */
 	validateFieldset: function(e, name, url, siteArray) {
 		if (name.value === '') {
 			e.preventDefault();
@@ -389,12 +419,16 @@ var formsBehavior = {
 		}
 	},
 
+
+	/**
+	 * Remove data from an element (can be iframe, to-website button and site selection list).
+	 */
 	initTab: function(elm, siteArray) {
 		if (elm.removeAttribute('src')) {
-			elm.removeAttribute('src', siteArray[0].siteUrl);
+			elm.removeAttribute('src');
 		}
 		if (elm.removeAttribute('href')) {
-			elm.removeAttribute('href', siteArray[0].siteUrl);
+			elm.removeAttribute('href');
 		}
 		if (elm.tagName === 'SELECT') {
 			while (elm.firstChild) {
@@ -404,6 +438,9 @@ var formsBehavior = {
 		UTILS.addClass(elm, 'hidden');
 	},
 
+	/**
+	 * Add data to an element (can be iframe, to-website button and site selection list).
+	 */
 	fillTabContent: function(form, elm, siteArray) {
 		if (UTILS.hasClass(elm, 'hidden')) {
 			UTILS.removeClass(elm, 'hidden');
@@ -431,9 +468,11 @@ var formsBehavior = {
 		UTILS.removeClass(form.parentNode, 'visible-form');
 	},
 
-	displayWebsites: function(form, siteArray) {
-		var selector = '.' + UTILS.qs('.active-panel').querySelector('.form-wrap').id,
-		elements = UTILS.qsa(selector);
+	/**
+	 * Get elements related a panel, and do manipulations on them.
+	 */
+	displayWebsites: function(panel, siteArray) {
+		var elements = [panel.querySelector('.site-select'), panel.querySelector('.to-website'), panel.querySelector('iframe')];
 
 		for (var i = 0; i < elements.length; i++) {
 			var elm = elements[i];
@@ -448,13 +487,17 @@ var formsBehavior = {
 			}
 			else {
 
-				this.fillTabContent(form, elm, siteArray);
+				this.fillTabContent(panel.querySelector('form'), elm, siteArray);
 
 			}
 		}
 	},
 
-	validateForm: function(form) {
+	/**
+	 * Input: form.
+	 * Output: true if valid, false if not.
+	 */
+	validateForm: function(panel, form) {
 		return function(e) {
 			var siteArray = [],
 			sets = form.getElementsByTagName('FIELDSET');
@@ -482,12 +525,15 @@ var formsBehavior = {
 			}
 			else {
 				e.preventDefault();
-				this.displayWebsites(form, siteArray);
+				this.displayWebsites(panel, siteArray);
 				tabs.exportData();
 			}
 		};
 	},
 
+	/**
+	 * Handle 'change' events in a 'select'.
+	 */
 	selectHandler: function(e) {
 		if (e.target.tagName === 'SELECT') {
 			var target = e.target,
@@ -510,12 +556,18 @@ SEARCH BOX BEHAVIOR.
 
 var searchBox = {
 
+	/**
+	 * Add a 'keydown' event to search box.
+	 */
 	init: function() {
 		var searchElm = UTILS.qs('input[type="search"]');
 
 		UTILS.addEvent(searchElm, 'keydown', searchBox.searchHandler.bind(searchElm));
 	},
 
+	/**
+	 * Search for a site and return it or an error notification to the user.
+	 */
 	searchSite: function(tabGroup, searchTerm, notificationsWrap, notifications) {
 		for (var i = 0; i < tabGroup.length; i++) {
 			var tab = tabGroup[i],
@@ -547,6 +599,9 @@ var searchBox = {
 		notifications.innerText = 'The searched report "' + searchTerm + '" was not found.';
 	},
 
+	/**
+	 * Handle search ('keydown') event cases.
+	 */
 	searchHandler: function(e) {
 		if (e.which === 13 || e.keyCode === 13) {
 			var notificationsWrap = UTILS.qs('.notifications-wrap'),
