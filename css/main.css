@@ -108,6 +108,8 @@ html, body {
 body {
     background: url('../img/body-background.jpg') no-repeat fixed;
     background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/body-background.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/body-background.jpg', sizingMethod='scale')";
     position: relative;
 }
 
